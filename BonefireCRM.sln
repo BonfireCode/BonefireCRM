@@ -1,0 +1,83 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35728.132
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BonefireCRM.AppHost", "BonefireCRM.AppHost\BonefireCRM.AppHost.csproj", "{E095C646-A46E-44C1-BDFD-006D6BF800CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BonefireCRM.ServiceDefaults", "BonefireCRM.ServiceDefaults\BonefireCRM.ServiceDefaults.csproj", "{AD34B735-5637-48D7-9711-2A878184C941}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BonefireCRM.Domain", "BonefireCRM.Domain\BonefireCRM.Domain.csproj", "{17C24B49-5AF1-4F09-8E84-D31ECDEE81E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Aspire", "Aspire", "{5AD6C034-6913-4EA3-A4C5-E444C835DCDB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BonefireCRM.API.Contrat", "BonefireCRM.API.Contrat\BonefireCRM.API.Contrat.csproj", "{80FC01CB-D149-4B0E-8B48-00B14F12ABF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BonefireCRM.Infrastructure", "BonefireCRM.Infrastructure\BonefireCRM.Infrastructure.csproj", "{4593684F-DF36-451B-B7B0-3F9073390D80}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7C7CF5B6-CF6E-41BD-8B68-2000C7742BC3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		Directory.Packages.props = Directory.Packages.props
+		stylecop.json = stylecop.json
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BonefireCRM.API", "BonefireCRM.API\BonefireCRM.API.csproj", "{D686FB08-426C-ABBB-EFBF-8B7349522801}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BonefireCRM.Web.Server", "BonefireCRM.Web\BonefireCRM.Web.Server\BonefireCRM.Web.Server.csproj", "{192CFE82-4615-98B6-46AC-530B855C0811}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "bonefirecrm.web.client", "BonefireCRM.Web\bonefirecrm.web.client\bonefirecrm.web.client.esproj", "{747288AB-DBA0-DE23-6E45-8D0EE557D06D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E095C646-A46E-44C1-BDFD-006D6BF800CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E095C646-A46E-44C1-BDFD-006D6BF800CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E095C646-A46E-44C1-BDFD-006D6BF800CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E095C646-A46E-44C1-BDFD-006D6BF800CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD34B735-5637-48D7-9711-2A878184C941}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD34B735-5637-48D7-9711-2A878184C941}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD34B735-5637-48D7-9711-2A878184C941}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD34B735-5637-48D7-9711-2A878184C941}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17C24B49-5AF1-4F09-8E84-D31ECDEE81E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17C24B49-5AF1-4F09-8E84-D31ECDEE81E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17C24B49-5AF1-4F09-8E84-D31ECDEE81E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17C24B49-5AF1-4F09-8E84-D31ECDEE81E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80FC01CB-D149-4B0E-8B48-00B14F12ABF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80FC01CB-D149-4B0E-8B48-00B14F12ABF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80FC01CB-D149-4B0E-8B48-00B14F12ABF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80FC01CB-D149-4B0E-8B48-00B14F12ABF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4593684F-DF36-451B-B7B0-3F9073390D80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4593684F-DF36-451B-B7B0-3F9073390D80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4593684F-DF36-451B-B7B0-3F9073390D80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4593684F-DF36-451B-B7B0-3F9073390D80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D686FB08-426C-ABBB-EFBF-8B7349522801}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D686FB08-426C-ABBB-EFBF-8B7349522801}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D686FB08-426C-ABBB-EFBF-8B7349522801}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D686FB08-426C-ABBB-EFBF-8B7349522801}.Release|Any CPU.Build.0 = Release|Any CPU
+		{192CFE82-4615-98B6-46AC-530B855C0811}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{192CFE82-4615-98B6-46AC-530B855C0811}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{192CFE82-4615-98B6-46AC-530B855C0811}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{192CFE82-4615-98B6-46AC-530B855C0811}.Release|Any CPU.Build.0 = Release|Any CPU
+		{747288AB-DBA0-DE23-6E45-8D0EE557D06D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{747288AB-DBA0-DE23-6E45-8D0EE557D06D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{747288AB-DBA0-DE23-6E45-8D0EE557D06D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{747288AB-DBA0-DE23-6E45-8D0EE557D06D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{747288AB-DBA0-DE23-6E45-8D0EE557D06D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{747288AB-DBA0-DE23-6E45-8D0EE557D06D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E095C646-A46E-44C1-BDFD-006D6BF800CF} = {5AD6C034-6913-4EA3-A4C5-E444C835DCDB}
+		{AD34B735-5637-48D7-9711-2A878184C941} = {5AD6C034-6913-4EA3-A4C5-E444C835DCDB}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {135C3C23-9E76-427E-A6F0-516737B8D2CF}
+	EndGlobalSection
+EndGlobal
