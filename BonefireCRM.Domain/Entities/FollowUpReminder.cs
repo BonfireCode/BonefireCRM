@@ -2,23 +2,17 @@
 
 namespace BonefireCRM.Domain.Entities
 {
-    // --- New Entities for FollowUpReminder and Tags ---
-
     /// <summary>
     /// Represents a follow-up reminder.
     /// </summary>
-    public class FollowUpReminder
+    public class FollowUpReminder : BaseEntity
     {
-        public Guid Id { get; set; }
-        public string Title { get; set; } = string.Empty; // A brief title for the reminder
+        public string Title { get; set; } = string.Empty;
         public string? Notes { get; set; }
-        public DateTime ReminderDateTime { get; set; } // When the reminder is due
+        public DateTime ReminderDateTime { get; set; }
         public bool IsCompleted { get; set; } = false;
         public DateTime? CompletedDateTime { get; set; }
         public ReminderPriority Priority { get; set; } = ReminderPriority.Normal;
-
-        public DateTime DateCreated { get; set; } = DateTime.UtcNow;
-        public DateTime LastModifiedDate { get; set; } = DateTime.UtcNow;
 
         // Foreign Key for the User who created the reminder
         public Guid CreatedByUserId { get; set; }
@@ -36,7 +30,4 @@ namespace BonefireCRM.Domain.Entities
         public Guid? DealId { get; set; }
         public virtual Deal? Deal { get; set; }
     }
-
-    // --- DTOs for Dashboard/Reporting (as before) ---
-    // ...
 }

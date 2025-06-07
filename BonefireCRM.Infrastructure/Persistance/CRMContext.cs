@@ -1,5 +1,6 @@
 ﻿using BonefireCRM.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace BonefireCRM.Infrastructure.Persistance
 {
@@ -22,7 +23,7 @@ namespace BonefireCRM.Infrastructure.Persistance
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(CRMContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }

@@ -1,32 +1,42 @@
-﻿using BonefireCRM.Domain.Interfaces;
+﻿using BonefireCRM.Domain.Infrastructure.Persistance;
 
 namespace BonefireCRM.Infrastructure.Persistance
 {
     internal class BaseRepository<T> : IBaseRepository<T> where T : class
     {
-        public Task<int> CreateAsync(T entity)
+        private readonly CRMContext _context;
+
+        public BaseRepository(CRMContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<int> DeleteAsync(Guid id)
+        public IEnumerable<T> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return _context.Set<T>().AsEnumerable();
         }
 
-        public Task<IEnumerable<T>> GetAllAsync()
+        public async Task<T?> GetAsync(Guid id, CancellationToken ct)
         {
-            throw new NotImplementedException();
+            return await _context.FindAsync<T>(id, ct);
         }
 
-        public Task<T> GetAsync(Guid id)
+        public async Task<int> CreateAsync(T entity, CancellationToken ct)
         {
-            throw new NotImplementedException();
+            await _context.AddAsync(entity, ct);
+            return await _context.SaveChangesAsync(ct);
         }
 
-        public Task<int> UpdateAsync(Guid id, T entity)
+        public async Task<int> DeleteAsync(T entity, CancellationToken ct)
         {
-            throw new NotImplementedException();
+            _context.Remove(entity);
+            return await _context.SaveChangesAsync(ct);
+        }
+
+        public async Task<int> UpdateAsync(Guid id, T entity, CancellationToken ct)
+        {
+            _context.Update(entity);
+            return await _context.SaveChangesAsync(ct);
         }
     }
 }

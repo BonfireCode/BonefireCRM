@@ -18,7 +18,7 @@
         public virtual ICollection<Contact> ContactsManaged { get; set; } = [];
         public virtual ICollection<Deal> DealsAssigned { get; set; } = [];
         public virtual ICollection<Interaction> InteractionsLogged { get; set; } = [];
-        public virtual ICollection<FollowUpReminder> FollowUpRemindersAssigned { get; set; } = []; // Reminders assigned to this user
-        public virtual ICollection<FollowUpReminder> FollowUpRemindersCreated { get; set; } = []; // Reminders created by this user
+        public virtual ICollection<FollowUpReminder> FollowUpRemindersAssigned { get; set; } = [];
+        public virtual ICollection<FollowUpReminder> FollowUpRemindersCreated { get; set; } = [];
     }
 }

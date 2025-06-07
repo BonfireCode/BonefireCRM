@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BonefireCRM.Infrastructure.Persistance.Configurations
 {
-    internal class ContactTypeConfiguration : IEntityTypeConfiguration<Contact>
+    internal class ContactConfiguration : IEntityTypeConfiguration<Contact>
     {
         public void Configure(EntityTypeBuilder<Contact> builder)
         {

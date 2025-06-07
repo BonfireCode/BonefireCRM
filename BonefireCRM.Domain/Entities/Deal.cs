@@ -20,8 +20,6 @@ namespace BonefireCRM.Domain.Entities
 
         public virtual ICollection<Interaction> Interactions { get; set; } = [];
         public virtual ICollection<Contact> AssociatedContacts { get; set; } = [];
-
-        // --- New Addition for FollowUpReminder ---
         public virtual ICollection<FollowUpReminder> FollowUpReminders { get; set; } = [];
     }
 }

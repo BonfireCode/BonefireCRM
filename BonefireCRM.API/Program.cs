@@ -1,4 +1,12 @@
+// <copyright file="Program.cs" company="Bonefire">
+// Copyright (c) Bonefire. All rights reserved.
+// </copyright>
+
+using BonefireCRM.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.AddInfrastructure();
 
 // Add service defaults & Aspire client integrations.
 builder.AddServiceDefaults();
