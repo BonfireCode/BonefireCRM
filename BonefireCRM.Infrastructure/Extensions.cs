@@ -9,7 +9,7 @@ namespace BonefireCRM.Infrastructure
 {
     public static class Extensions
     {
-        public static TBuilder AddInfrastructure<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
+        public static TBuilder AddInfrastructureDependencies<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
         {
             var connectionString = builder.Configuration.GetConnectionString("BonefireCRM_Db");
             builder.Services.AddDbContext<CRMContext>(options =>

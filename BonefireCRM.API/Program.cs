@@ -2,11 +2,14 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
+using BonefireCRM.Domain;
 using BonefireCRM.Infrastructure;
+using FastEndpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.AddInfrastructure();
+builder.AddDomainDependencies();
+builder.AddInfrastructureDependencies();
 
 // Add service defaults & Aspire client integrations.
 builder.AddServiceDefaults();
@@ -26,6 +29,8 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+app.UseFastEndpoints();
 
 string[] summaries = ["Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"];
 

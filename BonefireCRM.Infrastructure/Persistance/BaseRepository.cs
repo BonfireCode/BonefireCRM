@@ -21,22 +21,29 @@ namespace BonefireCRM.Infrastructure.Persistance
             return await _context.FindAsync<T>(id, ct);
         }
 
-        public async Task<int> CreateAsync(T entity, CancellationToken ct)
+        public async Task<T> AddAsync(T entity, CancellationToken ct)
         {
             await _context.AddAsync(entity, ct);
-            return await _context.SaveChangesAsync(ct);
+            await _context.SaveChangesAsync(ct);
+
+            return entity;
         }
 
-        public async Task<int> DeleteAsync(T entity, CancellationToken ct)
-        {
-            _context.Remove(entity);
-            return await _context.SaveChangesAsync(ct);
-        }
-
-        public async Task<int> UpdateAsync(Guid id, T entity, CancellationToken ct)
+        public async Task<T> UpdateAsync(T entity, CancellationToken ct)
         {
             _context.Update(entity);
-            return await _context.SaveChangesAsync(ct);
+            await _context.SaveChangesAsync(ct);
+
+            return entity;
+        }
+
+        public async Task<bool> DeleteAsync(T entity, CancellationToken ct)
+        {
+            _context.Attach(entity);
+            _context.Remove(entity);
+            await _context.SaveChangesAsync(ct);
+
+            return true;
         }
     }
 }
