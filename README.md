@@ -11,3 +11,5 @@
 [SimpleCRM_Functional_Requirements_Document Gemini generated.docx](https://github.com/user-attachments/files/22031160/SimpleCRM_Functional_Requirements_Document.Gemini.generated.docx)
 
 [CRM Mermaid DeepSeek Diagram.txt](https://github.com/user-attachments/files/22031165/CRM.Mermaid.DeepSeek.Diagram.txt)
+
+[CRM MVP.md](https://github.com/user-attachments/files/22031295/CRM.MVP.md)
