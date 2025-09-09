@@ -2,12 +2,11 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
-using BonefireCRM.Domain;
-using BonefireCRM.Infrastructure;
 using FastEndpoints;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.UseKestrel(options => options.AddServerHeader = false);
 
 builder.Services.AddFastEndpoints();
 
@@ -35,6 +34,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseFastEndpoints();
+
+app.MapIdentityApi();
 
 app.MapDefaultEndpoints();
 

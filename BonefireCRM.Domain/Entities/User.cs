@@ -20,5 +20,7 @@
         public virtual ICollection<Interaction> InteractionsLogged { get; set; } = [];
         public virtual ICollection<FollowUpReminder> FollowUpRemindersAssigned { get; set; } = [];
         public virtual ICollection<FollowUpReminder> FollowUpRemindersCreated { get; set; } = [];
+
+
     }
 }

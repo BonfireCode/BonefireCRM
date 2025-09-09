@@ -1,8 +1,7 @@
 ﻿using BonefireCRM.Domain.Services;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace BonefireCRM.Domain
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class Extensions
     {
