@@ -31,4 +31,5 @@ dotnet ef migrations script --context CRMContext -p ../BonefireCRM.Infrastructur
 
 [CRM Mermaid DeepSeek Diagram.txt](https://github.com/user-attachments/files/22031165/CRM.Mermaid.DeepSeek.Diagram.txt)
 
-[CRM MVP.md](https://github.com/user-attachments/files/22031295/CRM.MVP.md)
+[CRM MVP.md](https://github.com/user-attachments/files/22031295/CRM.MVP.md)[Entity Relationship Diagram CRM.txt](https://github.com/user-attachments/files/22307332/Entity.Relationship.Diagram.CRM.txt)
+
