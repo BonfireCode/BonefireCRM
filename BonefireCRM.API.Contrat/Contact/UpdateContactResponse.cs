@@ -1,6 +1,6 @@
-﻿namespace BonefireCRM.API.Contrat
+﻿namespace BonefireCRM.API.Contrat.Contact
 {
-    public class CreateContactResponse
+    public sealed class UpdateContactResponse
     {
         public Guid Id { get; set; }
         public string FirstName { get; set; } = string.Empty;

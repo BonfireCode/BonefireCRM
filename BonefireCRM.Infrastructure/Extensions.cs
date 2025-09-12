@@ -28,7 +28,7 @@ namespace Microsoft.Extensions.DependencyInjection
             });
 
             builder.Services.AddIdentityApiEndpoints<ApplicationUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<AppDbContext>();
             
             builder.Services.AddAuthorizationBuilder()
                 .SetDefaultPolicy(new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build());

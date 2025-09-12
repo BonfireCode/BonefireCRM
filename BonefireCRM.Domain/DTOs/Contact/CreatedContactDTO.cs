@@ -1,4 +1,4 @@
-﻿namespace BonefireCRM.Domain.DTOs
+﻿namespace BonefireCRM.Domain.DTOs.Contact
 {
     public class CreatedContactDTO
     {

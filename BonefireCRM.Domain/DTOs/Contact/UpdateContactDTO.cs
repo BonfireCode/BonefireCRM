@@ -1,6 +1,6 @@
-﻿namespace BonefireCRM.API.Contrat
+﻿namespace BonefireCRM.Domain.DTOs.Contact
 {
-    public class GetContactResponse
+    public class UpdateContactDTO
     {
         public Guid Id { get; set; }
         public string FirstName { get; set; } = string.Empty;

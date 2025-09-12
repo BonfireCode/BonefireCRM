@@ -1,6 +1,5 @@
 ﻿using BonefireCRM.API.Contact.Mappers;
-using BonefireCRM.API.Contrat;
-using BonefireCRM.Domain.DTOs;
+using BonefireCRM.API.Contrat.Contact;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -9,11 +8,11 @@ namespace BonefireCRM.API.Contact.Endpoints
 {
     public class GetContactEndpoint : EndpointWithoutRequest<Results<Ok<GetContactResponse>, NotFound>>
     {
-        private readonly ServiceContact _serviceContact;
+        private readonly ContactService _contactService;
 
-        public GetContactEndpoint(ServiceContact serviceContact)
+        public GetContactEndpoint(ContactService contactService)
         {
-            _serviceContact = serviceContact;
+            _contactService = contactService;
         }
 
         public override void Configure()
@@ -26,7 +25,7 @@ namespace BonefireCRM.API.Contact.Endpoints
         {
             var id = Route<Guid>("id");
 
-            var result = await _serviceContact.GetContactAsync(id, ct);
+            var result = await _contactService.GetContactAsync(id, ct);
 
             var response = result.Match<Results<Ok<GetContactResponse>, NotFound>>
             (

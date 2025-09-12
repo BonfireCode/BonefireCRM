@@ -1,4 +1,4 @@
-﻿using BonefireCRM.Domain.DTOs;
+﻿using BonefireCRM.Domain.DTOs.Contact;
 using BonefireCRM.Domain.Entities;
 
 namespace BonefireCRM.Domain.Mappers

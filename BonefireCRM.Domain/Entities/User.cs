@@ -6,8 +6,8 @@
     /// </summary>
     public class User : BaseEntity
     {
-        public string Username { get; set; } = string.Empty;
-        public string PasswordHash { get; set; } = string.Empty;
+        public string RegisterId { get; set; } = string.Empty;
+        public string UserName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string FirstName { get; set; } = string.Empty;
         public string? LastName { get; set; }
@@ -20,7 +20,5 @@
         public virtual ICollection<Interaction> InteractionsLogged { get; set; } = [];
         public virtual ICollection<FollowUpReminder> FollowUpRemindersAssigned { get; set; } = [];
         public virtual ICollection<FollowUpReminder> FollowUpRemindersCreated { get; set; } = [];
-
-
     }
 }

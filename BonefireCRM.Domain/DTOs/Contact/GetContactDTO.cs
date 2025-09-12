@@ -1,7 +1,8 @@
-﻿namespace BonefireCRM.API.Contrat
+﻿namespace BonefireCRM.Domain.DTOs.Contact
 {
-    public class CreateContactRequest
+    public class GetContactDTO
     {
+        public Guid Id { get; set; }
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string? Email { get; set; }

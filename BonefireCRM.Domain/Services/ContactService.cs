@@ -1,4 +1,4 @@
-﻿using BonefireCRM.Domain.DTOs;
+﻿using BonefireCRM.Domain.DTOs.Contact;
 using BonefireCRM.Domain.Entities;
 using BonefireCRM.Domain.Exceptions;
 using BonefireCRM.Domain.Infrastructure.Persistance;
@@ -8,11 +8,11 @@ using LanguageExt.Common;
 
 namespace BonefireCRM.Domain.Services
 {
-    public class ServiceContact
+    public class ContactService
     {
         private readonly IBaseRepository<Contact> _contactRepository;
 
-        public ServiceContact(IBaseRepository<Contact> contactRepository)
+        public ContactService(IBaseRepository<Contact> contactRepository)
         {
             _contactRepository = contactRepository;
         }
@@ -48,7 +48,7 @@ namespace BonefireCRM.Domain.Services
             var createdContact = await _contactRepository.AddAsync(contact, ct);
             if (createdContact is null)
             {
-                return new Result<CreatedContactDTO>(new AddEntityException());
+                return new Result<CreatedContactDTO>(new AddEntityException<Contact>());
             }
 
             return createdContact.MapToCreatedDto();
@@ -63,7 +63,7 @@ namespace BonefireCRM.Domain.Services
             var updatedContact = await _contactRepository.UpdateAsync(contact, ct);
             if (updatedContact is null)
             {
-                return new Result<UpdatedContactDTO>(new UpdateEntityException());
+                return new Result<UpdatedContactDTO>(new UpdateEntityException<Contact>());
             }
 
             return updatedContact.MapToUpdatedDto();

@@ -7,7 +7,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static TBuilder AddDomainDependencies<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
         {
-            builder.Services.AddScoped<ServiceContact>();
+            builder.Services.AddScoped<ContactService>();
 
             return builder;
         }

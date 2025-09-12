@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+public class AppDbContext : IdentityDbContext<ApplicationUser>
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) :
+    public AppDbContext(DbContextOptions<AppDbContext> options) :
         base(options)
     { 
 

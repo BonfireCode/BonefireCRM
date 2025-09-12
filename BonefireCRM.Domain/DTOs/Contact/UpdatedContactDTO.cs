@@ -1,6 +1,6 @@
-﻿namespace BonefireCRM.Domain.DTOs
+﻿namespace BonefireCRM.Domain.DTOs.Contact
 {
-    public class UpdateContactDTO
+    public class UpdatedContactDTO
     {
         public Guid Id { get; set; }
         public string FirstName { get; set; } = string.Empty;
