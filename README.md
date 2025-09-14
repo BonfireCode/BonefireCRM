@@ -1,6 +1,6 @@
 # 📌 BonefireCRM
 
-[![.NET](https://img.shields.io/badge/.NET-8.0-blueviolet)](https://dotnet.microsoft.com/)  
+[![.NET](https://img.shields.io/badge/.NET-9.0-blueviolet)](https://dotnet.microsoft.com/)  
 A lightweight, modular CRM system built with **.NET 9** — focused on **Contacts, Companies, Deals, Activities, and Follow-ups**. 
 
 ---
