@@ -14,7 +14,7 @@ A lightweight, modular CRM system built with **.NET 9** — focused on **Contact
 ---
 
 ## 🏗️ Tech Stack
-- **Backend:** .NET 8, Entity Framework Core  
+- **Backend:** .NET 9, Entity Framework Core  
 - **Database:** SQLLITE (default, but swappable)  
 - **Diagrams:** Mermaid.js for ERD & flows
 - **Versioning:** GitHub  
