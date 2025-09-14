@@ -35,3 +35,12 @@ dotnet ef migrations script --context CRMContext -p ../BonefireCRM.Infrastructur
 
 [Entity Relationship Diagram CRM.txt](https://github.com/user-attachments/files/22307332/Entity.Relationship.Diagram.CRM.txt)
 
+[Entity Relationship Diagram CRM.txt](https://github.com/user-attachments/files/22324047/Entity.Relationship.Diagram.CRM.txt)
+
+[Follow-up Reminders Flow.txt](https://github.com/user-attachments/files/22324048/Follow-up.Reminders.Flow.txt)
+
+[Contacts & Companies Flow.txt](https://github.com/user-attachments/files/22324050/Contacts.Companies.Flow.txt)
+
+[Activities Flow.txt](https://github.com/user-attachments/files/22324049/Activities.Flow.txt)
+
+
