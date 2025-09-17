@@ -11,10 +11,6 @@ namespace BonefireCRM.Domain.Mappers
             {
                 Id = contact.Id,
                 Email = contact.Email,
-                FirstName = contact.FirstName,
-                LastName = contact.LastName,
-                JobTitle = contact.JobTitle,
-                PhoneNumber = contact.PhoneNumber,
             };
         }
 
@@ -24,10 +20,6 @@ namespace BonefireCRM.Domain.Mappers
             {
                 Id = contact.Id,
                 Email = contact.Email,
-                FirstName = contact.FirstName,
-                LastName = contact.LastName,
-                JobTitle = contact.JobTitle,
-                PhoneNumber = contact.PhoneNumber,
             };
         }
 
@@ -37,10 +29,6 @@ namespace BonefireCRM.Domain.Mappers
             {
                 Id = contact.Id,
                 Email = contact.Email,
-                FirstName = contact.FirstName,
-                LastName = contact.LastName,
-                JobTitle = contact.JobTitle,
-                PhoneNumber = contact.PhoneNumber,
             };
         }
     }

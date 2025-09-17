@@ -6,17 +6,16 @@ namespace BonefireCRM.Infrastructure.Persistance.Configurations
 {
     internal class FollowUpReminderConfiguration : IEntityTypeConfiguration<FollowUpReminder>
     {
-        public void Configure(EntityTypeBuilder<FollowUpReminder> builder)
+        public void Configure(EntityTypeBuilder<FollowUpReminder> entity)
         {
-            builder
-                .HasOne(f => f.CreatedByUser)
-                .WithMany(u => u.FollowUpRemindersCreated)
-                .HasForeignKey(d => d.CreatedByUserId);
+            entity.Property(r => r.Note).IsRequired().HasMaxLength(500);
 
-            builder
-                .HasOne(f => f.AssignedToUser)
-                .WithMany(u => u.FollowUpRemindersAssigned)
-                .HasForeignKey(d => d.AssignedToUserId);
+            entity.HasOne(r => r.Activity)
+                .WithMany()
+                .HasForeignKey(r => r.ActivityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasIndex(r => r.DueDate);
         }
     }
 }

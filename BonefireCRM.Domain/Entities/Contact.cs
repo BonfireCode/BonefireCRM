@@ -8,22 +8,22 @@ namespace BonefireCRM.Domain.Entities
     /// </summary>
     public class Contact : BaseEntity
     {
-        public string FirstName { get; set; } = string.Empty;
-        public string LastName { get; set; } = string.Empty;
+        public string FullName { get; set; } = null!;
         public string? Email { get; set; }
-        public string? PhoneNumber { get; set; }
-        public string? JobTitle { get; set; }
+        public string? Phone { get; set; }
+        public string? Role { get; set; }
+        public DateTime CreatedAt { get; set; }
 
-        public Guid? CreatedByUserId { get; set; }
-        public virtual User? CreatedByUser { get; set; }
+        public Guid LifecycleStageId { get; set; }
 
-        public Guid? CompanyId { get; set; }
-        public virtual Company? Company { get; set; }
+        public LifecycleStage LifecycleStage { get; set; } = null!;
 
-        // Navigation properties
-        public virtual ICollection<Deal> Deals { get; set; } = [];
-        public virtual ICollection<Interaction> Interactions { get; set; } = [];
-        public virtual ICollection<FollowUpReminder> FollowUpReminders { get; set; } = [];
-        public virtual ICollection<Tag> Tags { get; set; } = [];
+        public Guid? CompanyId { get; set; } // Nullable in B2C
+        public Company? Company { get; set; }
+
+        public Guid UserId { get; set; }
+        public User User { get; set; } = null!;
+
+        public ICollection<DealContact> DealContacts { get; set; } = new List<DealContact>();
     }
 }

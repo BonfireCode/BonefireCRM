@@ -7,19 +7,22 @@ namespace BonefireCRM.Domain.Entities
     /// </summary>
     public class Deal : BaseEntity
     {
-        public string Name { get; set; } = string.Empty;
-        public decimal EstimatedValue { get; set; }
-        public DateTime? ExpectedCloseDate { get; set; }
-        public SalesStage Stage { get; set; } = SalesStage.Lead;
+        public string Title { get; set; } = null!;
+        public decimal Amount { get; set; }
+        public DateTime ExpectedCloseDate { get; set; }
 
-        public Guid PrimaryContactId { get; set; }
-        public virtual Contact PrimaryContact { get; set; } = null!;
+        public Guid StageId { get; set; }
+        public PipelineStage Stage { get; set; } = null!;
 
-        public Guid? AssignedToUserId { get; set; }
-        public virtual User? AssignedToUser { get; set; }
+        public Guid? CompanyId { get; set; }
+        public Company? Company { get; set; }
 
-        public virtual ICollection<Interaction> Interactions { get; set; } = [];
-        public virtual ICollection<Contact> AssociatedContacts { get; set; } = [];
-        public virtual ICollection<FollowUpReminder> FollowUpReminders { get; set; } = [];
+        public Guid? PrimaryContactId { get; set; }
+        public Contact? PrimaryContact { get; set; }
+
+        public Guid UserId { get; set; }
+        public User User { get; set; } = null!;
+
+        public ICollection<DealContact> DealContacts { get; set; } = new List<DealContact>();
     }
 }
