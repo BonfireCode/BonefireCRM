@@ -35,8 +35,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseFastEndpoints();
 
-app.MapIdentityApi();
-
 app.MapDefaultEndpoints();
 
 app.Run();

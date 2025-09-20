@@ -1,12 +1,14 @@
-﻿using BonefireCRM.Infrastructure.Security;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-public class AppDbContext : IdentityDbContext<ApplicationUser>
+namespace BonefireCRM.Infrastructure.Security
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options) :
-        base(options)
-    { 
+    internal class AppDbContext : IdentityDbContext<ApplicationUser>
+    {
+        public AppDbContext(DbContextOptions<AppDbContext> options) :
+            base(options)
+        {
 
+        }
     }
 }

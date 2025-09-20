@@ -1,0 +1,38 @@
+﻿using BonefireCRM.API.Contrat.Security;
+using BonefireCRM.Domain.DTOs.Security;
+
+namespace BonefireCRM.API.Security.Mappers
+{
+    internal static class DtoToResponseMapper
+    {
+        internal static TwoFactorResponse MapToResponse(this TwoFactorResultDTO dto)
+        {
+            return new()
+            {
+                SharedKey = dto.SharedKey,
+                RecoveryCodesLeft = dto.RecoveryCodesLeft,
+                RecoveryCodes = dto.RecoveryCodes,
+                IsMachineRemembered = dto.IsMachineRemembered,
+                IsTwoFactorEnabled = dto.IsTwoFactorEnabled,
+            };
+        }
+
+        internal static GetInfoResponse? MapToResponse(GetInfoResultDTO dto)
+        {
+            return new()
+            {
+                Email = dto.Email,
+                IsEmailConfirmed = dto.IsEmailConfirmed,
+            };
+        }
+
+        internal static CreateInfoResponse MapToResponse(CreateInfoResultDTO dto)
+        {
+            return new()
+            {
+                Email = dto.Email,
+                IsEmailConfirmed = dto.IsEmailConfirmed,
+            };
+        }
+    }
+}

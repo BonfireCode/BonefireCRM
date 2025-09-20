@@ -2,7 +2,7 @@
 
 namespace BonefireCRM.Infrastructure.Security
 {
-    public class ApplicationUser : IdentityUser
+    internal class ApplicationUser : IdentityUser
     {
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BonefireCRM.Domain.DTOs.Contact;
+using BonefireCRM.Domain.DTOs.Security;
 using BonefireCRM.Domain.Entities;
 
 namespace BonefireCRM.Domain.Mappers
@@ -40,6 +41,16 @@ namespace BonefireCRM.Domain.Mappers
                 LastName = dto.LastName,
                 JobTitle = dto.JobTitle,
                 PhoneNumber = dto.PhoneNumber,
+            };
+        }
+
+        internal static User MapToUser(this RegisterDTO dto, string registeredUserId)
+        {
+            return new()
+            {
+                UserName = dto.UserName,
+                Email = dto.Email,
+                RegisterId = registeredUserId
             };
         }
     }
