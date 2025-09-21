@@ -35,7 +35,7 @@ jobs:
       run: dotnet publish --configuration Release --output ./publish --runtime win-x86 
 
     - name: Show files (debug)
-      run: dir ./published -Recurse
+      run: dir ./publish -Recurse
       shell: pwsh
 
     - name: Upload build artifact
@@ -55,7 +55,7 @@ jobs:
         path: ./publish
         
     - name: Show files (debug)
-      run: dir ./published -Recurse
+      run: dir ./publish -Recurse
       shell: pwsh
           
     - name: Deploy solution to MonsterASP.NET via WebDeploy
