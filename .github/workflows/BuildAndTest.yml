@@ -46,6 +46,10 @@ jobs:
       with:
         name: build-output
         path: ./build
+
+    - name: Show files (debug)
+      run: dir ./build -Recurse
+      shell: pwsh
         
     - name: Test solution
       run: dotnet test ./build/*.sln --no-build --verbosity normal
