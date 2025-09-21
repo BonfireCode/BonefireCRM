@@ -1,5 +1,4 @@
-﻿using BonefireCRM.API.Contact.Mappers;
-using BonefireCRM.Domain.Services;
+﻿using BonefireCRM.Domain.Services;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
@@ -7,11 +6,11 @@ namespace BonefireCRM.API.Contact.Endpoints
 {
     public class DeleteContactEndpoint : EndpointWithoutRequest<Results<NoContent, NotFound>>
     {
-        private readonly ServiceContact _serviceContact;
+        private readonly ContactService _contactService;
 
-        public DeleteContactEndpoint(ServiceContact serviceContact)
+        public DeleteContactEndpoint(ContactService contactService)
         {
-            _serviceContact = serviceContact;
+            _contactService = contactService;
         }
 
         public override void Configure()
@@ -24,7 +23,7 @@ namespace BonefireCRM.API.Contact.Endpoints
         {
             var id = Route<Guid>("id");
 
-            var isDeleted = await _serviceContact.DeleteContactAsync(id, ct);
+            var isDeleted = await _contactService.DeleteContactAsync(id, ct);
             if (isDeleted)
             {
                 return TypedResults.NoContent();

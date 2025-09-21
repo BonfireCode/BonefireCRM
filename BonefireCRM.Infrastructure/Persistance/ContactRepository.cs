@@ -12,6 +12,6 @@ namespace BonefireCRM.Infrastructure.Persistance
             _context = context;
         }
 
-        // add specific methods if needed otherwise remove it
+        // add specific methods if needed otherwise remove this class
     }
 }

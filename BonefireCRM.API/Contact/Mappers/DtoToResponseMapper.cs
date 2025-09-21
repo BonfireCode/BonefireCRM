@@ -1,5 +1,5 @@
-﻿using BonefireCRM.API.Contrat;
-using BonefireCRM.Domain.DTOs;
+﻿using BonefireCRM.API.Contrat.Contact;
+using BonefireCRM.Domain.DTOs.Contact;
 
 namespace BonefireCRM.API.Contact.Mappers
 {

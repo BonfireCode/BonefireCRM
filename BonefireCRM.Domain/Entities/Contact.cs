@@ -1,6 +1,4 @@
-﻿using BonefireCRM.Domain.DTOs;
-
-namespace BonefireCRM.Domain.Entities
+﻿namespace BonefireCRM.Domain.Entities
 {
 
     /// <summary>

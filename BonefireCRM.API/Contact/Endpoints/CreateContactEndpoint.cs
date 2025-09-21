@@ -1,5 +1,5 @@
 ﻿using BonefireCRM.API.Contact.Mappers;
-using BonefireCRM.API.Contrat;
+using BonefireCRM.API.Contrat.Contact;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -8,11 +8,11 @@ namespace BonefireCRM.API.Contact.Endpoints
 {
     public class CreateContactEndpoint : Endpoint<CreateContactRequest, Results<Created<CreateContactResponse>, InternalServerError>>
     {
-        private readonly ServiceContact _serviceContact;
+        private readonly ContactService _contactService;
 
-        public CreateContactEndpoint(ServiceContact serviceContact)
+        public CreateContactEndpoint(ContactService contactService)
         {
-            _serviceContact = serviceContact;
+            _contactService = contactService;
         }
 
         public override void Configure()
@@ -25,7 +25,7 @@ namespace BonefireCRM.API.Contact.Endpoints
         {
             var dtoContact = RequestToDtoMapper.MapToDto(request);
 
-            var result = await _serviceContact.CreateContactAsync(dtoContact, ct);
+            var result = await _contactService.CreateContactAsync(dtoContact, ct);
 
             var response = result.Match<Results<Created<CreateContactResponse>, InternalServerError>>
             (

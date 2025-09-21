@@ -1,4 +1,4 @@
-﻿using BonefireCRM.API.Contrat;
+﻿using BonefireCRM.API.Contrat.Contact;
 using FastEndpoints;
 using FluentValidation;
 

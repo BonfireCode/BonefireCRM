@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace BonefireCRM.Domain.Entities
+﻿namespace BonefireCRM.Domain.Entities
 {
     public class Assignment : BaseEntity
     {
