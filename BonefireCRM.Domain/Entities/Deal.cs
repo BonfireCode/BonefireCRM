@@ -3,7 +3,8 @@
 namespace BonefireCRM.Domain.Entities
 {
     /// <summary>
-    /// Represents a sales deal or opportunity.
+    /// Represents a sales opportunity or deal.
+    /// A deal can belong to a company (B2B) or just a contact (B2C).
     /// </summary>
     public class Deal : BaseEntity
     {

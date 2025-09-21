@@ -1,10 +1,7 @@
-﻿using BonefireCRM.Domain.Enums;
-using System.Diagnostics;
-
-namespace BonefireCRM.Domain.Entities
+﻿namespace BonefireCRM.Domain.Entities
 {
     /// <summary>
-    /// Represents a follow-up reminder.
+    /// Represents a reminder to follow up on an activity (task, call, meeting, or email).
     /// </summary>
     public class FollowUpReminder : BaseEntity
     {

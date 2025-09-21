@@ -1,7 +1,7 @@
 ﻿namespace BonefireCRM.Domain.Entities
 {
     /// <summary>
-    /// Base entity for Call, Meeting, Task, Email
+    /// Abstract base class for activities (calls, meetings, tasks, emails).
     /// </summary>
     public abstract class Activity : BaseEntity
     {

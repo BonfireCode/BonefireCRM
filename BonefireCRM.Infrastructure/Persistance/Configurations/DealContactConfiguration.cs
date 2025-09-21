@@ -1,8 +1,6 @@
 ﻿using BonefireCRM.Domain.Entities;
-using LanguageExt;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Reflection.Emit;
 
 namespace BonefireCRM.Infrastructure.Persistance.Configurations
 {

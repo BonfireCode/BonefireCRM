@@ -1,14 +1,14 @@
 ﻿using BonefireCRM.Domain.Services;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace BonefireCRM.Domain
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class Extensions
     {
         public static TBuilder AddDomainDependencies<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
         {
-            builder.Services.AddScoped<ServiceContact>();
+            builder.Services.AddScoped<ContactService>();
+            builder.Services.AddScoped<SecurityService>();
 
             return builder;
         }

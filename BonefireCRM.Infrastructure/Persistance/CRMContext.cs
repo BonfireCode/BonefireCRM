@@ -20,7 +20,7 @@ namespace BonefireCRM.Infrastructure.Persistance
         public DbSet<Call> Calls { get; set; }
         public DbSet<Meeting> Meetings { get; set; }
         public DbSet<Assignment> Tasks { get; set; }
-        public DbSet<Email> Emails { get; set; }
+        public DbSet<Domain.Entities.Email> Emails { get; set; }
         public DbSet<FollowUpReminder> FollowUpReminders { get; set; }
 
         public CRMContext(DbContextOptions<CRMContext> options) : base(options)

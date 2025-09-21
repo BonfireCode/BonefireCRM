@@ -1,8 +1,10 @@
-﻿using System;
-
-namespace BonefireCRM.Domain.Exceptions
+﻿namespace BonefireCRM.Domain.Exceptions
 {
-    internal class AddEntityException : Exception
+    public class AddEntityException<T> : Exception
     {
+        public AddEntityException()
+            : base($"An error occurred on add {typeof(T).Name}.")
+        {
+        }
     }
 }

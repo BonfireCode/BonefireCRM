@@ -154,7 +154,7 @@ csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimenta
 csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimental = true
 csharp_style_allow_blank_line_after_token_in_conditional_expression_experimental = true
 csharp_style_allow_blank_lines_between_consecutive_braces_experimental = true
-csharp_style_allow_embedded_statements_on_same_line_experimental = true
+csharp_style_allow_embedded_statements_on_same_line_experimental = true:silent
 
 #### C# Formatting Rules ####
 
@@ -260,6 +260,9 @@ dotnet_naming_style._fieldname.capitalization = camel_case
 dotnet_diagnostic.SA1200.severity = none
 dotnet_diagnostic.SA1101.severity = none
 dotnet_diagnostic.SA1000.severity = none
+dotnet_diagnostic.SA1309.severity = none
+dotnet_diagnostic.SX1309.severity = none
+dotnet_diagnostic.SA1110.severity = warning
 
 [*.{cs,vb}]
 dotnet_style_operator_placement_when_wrapping = beginning_of_line

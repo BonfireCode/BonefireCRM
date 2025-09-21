@@ -2,7 +2,8 @@
 {
 
     /// <summary>
-    /// Represents a company associated with contacts.
+    /// Represents a company in the CRM system. 
+    /// A company can have multiple contacts and deals.
     /// </summary>
     public class Company : BaseEntity
     {

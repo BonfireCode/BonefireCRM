@@ -1,4 +1,5 @@
-﻿using BonefireCRM.Domain.DTOs;
+﻿using BonefireCRM.Domain.DTOs.Contact;
+using BonefireCRM.Domain.DTOs.Security;
 using BonefireCRM.Domain.Entities;
 
 namespace BonefireCRM.Domain.Mappers
@@ -11,6 +12,10 @@ namespace BonefireCRM.Domain.Mappers
             {
                 Id = dto.Id,
                 Email = dto.Email,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                PhoneNumber = dto.PhoneNumber,
+                JobRole = dto.JobRole
             };
         }
 
@@ -18,7 +23,11 @@ namespace BonefireCRM.Domain.Mappers
         {
             return new()
             {
-                Email = dto.Email
+                Email = dto.Email,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                PhoneNumber = dto.PhoneNumber,
+                JobRole = dto.JobRole
             };
         }
 
@@ -27,7 +36,21 @@ namespace BonefireCRM.Domain.Mappers
             return new()
             {
                 Id = dto.Id,
-                Email = dto.Email
+                Email = dto.Email,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                PhoneNumber = dto.PhoneNumber,
+                JobRole = dto.JobRole
+            };
+        }
+
+        internal static User MapToUser(this RegisterDTO dto, string registeredUserId)
+        {
+            return new()
+            {
+                UserName = dto.UserName,
+                Email = dto.Email,
+                RegisterId = registeredUserId
             };
         }
     }

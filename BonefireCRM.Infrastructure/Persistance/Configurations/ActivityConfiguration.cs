@@ -1,7 +1,6 @@
 ﻿using BonefireCRM.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Assignment = BonefireCRM.Domain.Entities.Assignment;
 
 namespace BonefireCRM.Infrastructure.Persistance.Configurations
 {
@@ -12,7 +11,7 @@ namespace BonefireCRM.Infrastructure.Persistance.Configurations
             // Activity inheritance (TPH)
             entity.HasDiscriminator<string>("ActivityType")
             .HasValue<Call>(nameof(Call))
-            .HasValue<Email>(nameof(Email))
+            .HasValue<Domain.Entities.Email>(nameof(Email))
             .HasValue<Meeting>(nameof(Meeting))
             .HasValue<Assignment>(nameof(Assignment));
 

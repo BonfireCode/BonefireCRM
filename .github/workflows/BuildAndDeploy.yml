@@ -1,0 +1,67 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: Build And Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  Build:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+        
+    - name: Restore dependencies
+      run: dotnet restore
+      
+    - name: Build solution
+      run: dotnet build --configuration Release --no-restore
+      
+    - name: Test solution
+      run: dotnet test --no-build --verbosity normal
+
+    - name: Publish solution
+      run: dotnet publish --configuration Release --output ./publish --runtime win-x86 
+
+    - name: Show files (debug)
+      run: dir ./publish -Recurse
+      shell: pwsh
+
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: app
+        path: ./publish
+          
+  Deploy:
+    needs: Build
+    runs-on: windows-latest
+    steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: app
+        path: ./publish
+        
+    - name: Show files (debug)
+      run: dir ./publish -Recurse
+      shell: pwsh
+          
+    - name: Deploy solution to MonsterASP.NET via WebDeploy
+      uses: rasmusbuchholdt/simply-web-deploy@2.1.0
+      with:
+        website-name: ${{ secrets.WEBSITE_NAME }}
+        server-computer-name: ${{ secrets.SERVER_COMPUTER_NAME }}
+        server-username: ${{ secrets.SERVER_USERNAME }}
+        server-password: ${{ secrets.SERVER_PASSWORD }}

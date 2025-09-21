@@ -1,5 +1,9 @@
 ﻿namespace BonefireCRM.Domain.Entities
 {
+    /// <summary>
+    /// Represents a single stage within a pipeline (e.g., Qualification, Proposal).
+    /// </summary>
+    /// 
     public class PipelineStage : BaseEntity
     {
         public string Name { get; set; } = null!;

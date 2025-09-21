@@ -1,4 +1,4 @@
-﻿using BonefireCRM.Domain.DTOs;
+﻿using BonefireCRM.Domain.DTOs.Contact;
 using BonefireCRM.Domain.Entities;
 
 namespace BonefireCRM.Domain.Mappers
@@ -11,6 +11,10 @@ namespace BonefireCRM.Domain.Mappers
             {
                 Id = contact.Id,
                 Email = contact.Email,
+                FirstName = contact.FirstName,
+                LastName = contact.LastName,
+                PhoneNumber = contact.PhoneNumber,
+                JobRole = contact.JobRole
             };
         }
 
@@ -20,6 +24,10 @@ namespace BonefireCRM.Domain.Mappers
             {
                 Id = contact.Id,
                 Email = contact.Email,
+                FirstName = contact.FirstName,
+                LastName = contact.LastName,
+                PhoneNumber = contact.PhoneNumber,
+                JobRole = contact.JobRole
             };
         }
 

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BonefireCRM.Domain.Entities
+﻿namespace BonefireCRM.Domain.Entities
 {
+    /// <summary>
+    /// Represents a phone call logged in the CRM.
+    /// </summary>
     public class Call : Activity
     {
         public DateTime CallTime { get; set; }

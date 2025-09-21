@@ -1,21 +1,18 @@
-﻿using BonefireCRM.Domain.DTOs;
-
-namespace BonefireCRM.Domain.Entities
+﻿namespace BonefireCRM.Domain.Entities
 {
 
     /// <summary>
-    /// Represents a contact (an individual).
+    /// Represents an individual contact, which may or may not be linked to a company (B2B vs B2C).
     /// </summary>
     public class Contact : BaseEntity
     {
-        public string FullName { get; set; } = null!;
-        public string? Email { get; set; }
-        public string? Phone { get; set; }
-        public string? Role { get; set; }
+        public string FirstName { get; set; } = null!;
+        public string LastName { get; set; } = null!;
+        public string? Email { get; set; } 
+        public string? PhoneNumber { get; set; }
+        public string? JobRole { get; set; }
         public DateTime CreatedAt { get; set; }
-
         public Guid LifecycleStageId { get; set; }
-
         public LifecycleStage LifecycleStage { get; set; } = null!;
 
         public Guid? CompanyId { get; set; } // Nullable in B2C
