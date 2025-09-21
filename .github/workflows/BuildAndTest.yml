@@ -43,7 +43,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: build-output
-        path: ./Build
+        path: ./build
         
     - name: Test solution
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test ./build --no-build --verbosity normal
