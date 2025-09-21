@@ -32,9 +32,7 @@ jobs:
       with:
         name: build-output
         path: |
-          **/bin/Release/net*/
-          **/*.csproj
-          **/*.sln
+          **/*.Tests/bin/Release/net*/
           !**/ref/*           
           
   Test:
@@ -52,4 +50,4 @@ jobs:
       shell: pwsh
         
     - name: Test solution
-      run: dotnet test ./build/*.sln --no-build --verbosity normal
+      run: ./build/*.Tests.exe
