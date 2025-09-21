@@ -50,4 +50,6 @@ jobs:
       shell: pwsh
         
     - name: Test solution
-      run: ./build/*.Tests.exe
+      run: |
+          TEST_EXE=$(find ./build -type f -name "*.Tests.exe" | head -n 1)
+          "$TEST_EXE"
