@@ -33,6 +33,8 @@ jobs:
         name: build-output
         path: |
           **/bin/Release/net*/
+          **/*.csproj
+          **/*.sln
           !**/ref/*           
           
   Test:
@@ -46,4 +48,4 @@ jobs:
         path: ./build
         
     - name: Test solution
-      run: dotnet test ./build --no-build --verbosity normal
+      run: dotnet test ./build/*.sln --no-build --verbosity normal
