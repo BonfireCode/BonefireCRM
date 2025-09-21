@@ -51,5 +51,5 @@ jobs:
         
     - name: Test solution
       run: |
-          TEST_EXE=$(find ./build -type f -name "*.Tests.exe" | head -n 1)
-          "$TEST_EXE"
+          $TEST_EXE = Get-ChildItem -Path . -Recurse -Filter '*.Tests.exe' | Select-Object -First 1
+          & $TEST_EXE.FullName
