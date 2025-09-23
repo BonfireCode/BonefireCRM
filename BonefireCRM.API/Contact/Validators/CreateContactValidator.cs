@@ -1,4 +1,8 @@
-﻿using BonefireCRM.API.Contrat.Contact;
+﻿// <copyright file="CreateContactValidator.cs" company="Bonefire">
+// Copyright (c) Bonefire. All rights reserved.
+// </copyright>
+
+using BonefireCRM.API.Contrat.Contact;
 using FastEndpoints;
 using FluentValidation;
 

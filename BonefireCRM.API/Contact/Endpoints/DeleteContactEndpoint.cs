@@ -1,4 +1,8 @@
-﻿using BonefireCRM.Domain.Services;
+﻿// <copyright file="DeleteContactEndpoint.cs" company="Bonefire">
+// Copyright (c) Bonefire. All rights reserved.
+// </copyright>
+
+using BonefireCRM.Domain.Services;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 

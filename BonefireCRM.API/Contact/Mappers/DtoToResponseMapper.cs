@@ -1,4 +1,8 @@
-﻿using BonefireCRM.API.Contrat.Contact;
+﻿// <copyright file="DtoToResponseMapper.cs" company="Bonefire">
+// Copyright (c) Bonefire. All rights reserved.
+// </copyright>
+
+using BonefireCRM.API.Contrat.Contact;
 using BonefireCRM.Domain.DTOs.Contact;
 
 namespace BonefireCRM.API.Contact.Mappers
