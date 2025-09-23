@@ -11,15 +11,7 @@ namespace BonefireCRM.Infrastructure.Persistance.Configurations
             entity.Property(c => c.Name).IsRequired().HasMaxLength(200);
             entity.Property(c => c.Industry).HasMaxLength(100);
             entity.Property(c => c.Address).HasMaxLength(300);
-            entity.Property(c => c.Phone).HasMaxLength(50);
-
-            entity.HasMany(c => c.Contacts)
-                .WithOne(cn => cn.Company)
-                .HasForeignKey(cn => cn.CompanyId);
-
-            entity.HasMany(c => c.Deals)
-                .WithOne(d => d.Company)
-                .HasForeignKey(d => d.CompanyId);
+            entity.Property(c => c.PhoneNumber).HasMaxLength(50);
         }
     }
 }

@@ -6,12 +6,13 @@
     public class FollowUpReminder : BaseEntity
     {
         public int ReminderId { get; set; }
-        public string Note { get; set; } = null!;
+
+        public string Note { get; set; } = string.Empty;
+
         public DateTime DueDate { get; set; }
+
         public bool IsCompleted { get; set; }
-        public DateTime CreatedAt { get; set; }
 
         public Guid ActivityId { get; set; }
-        public Activity Activity { get; set; } = null!;
     }
 }

@@ -5,10 +5,10 @@
     /// </summary>
     public class Pipeline : BaseEntity
     {
-        public string Name { get; set; } = null!;
+        public string Name { get; set; } = string.Empty;
+
         public bool IsDefault { get; set; }
 
-        // Navigation
-        public ICollection<PipelineStage> Stages { get; set; } = new List<PipelineStage>();
+        public ICollection<PipelineStage> Stages { get; set; } = [];
     }
 }

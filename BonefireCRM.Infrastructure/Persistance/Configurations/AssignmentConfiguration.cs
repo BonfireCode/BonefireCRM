@@ -10,7 +10,6 @@ namespace BonefireCRM.Infrastructure.Persistance.Configurations
         {
             entity.Property(t => t.Subject).IsRequired().HasMaxLength(200);
             entity.Property(t => t.Description).HasMaxLength(2000);
-
             entity.HasIndex(t => t.DueDate);
         }
     }

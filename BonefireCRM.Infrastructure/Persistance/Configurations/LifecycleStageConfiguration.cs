@@ -8,9 +8,7 @@ namespace BonefireCRM.Infrastructure.Persistance.Configurations
     {
         public void Configure(EntityTypeBuilder<LifecycleStage> entity)
         {
-            entity.Property(ls => ls.Name)
-                .IsRequired()
-                .HasMaxLength(100);
+            entity.Property(ls => ls.Name).IsRequired().HasMaxLength(100);
         }
     }
 }

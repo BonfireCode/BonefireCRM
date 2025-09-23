@@ -10,7 +10,7 @@ namespace BonefireCRM.Infrastructure.Persistance.Configurations
         {
             entity.Property(r => r.Note).IsRequired().HasMaxLength(500);
 
-            entity.HasOne(r => r.Activity)
+            entity.HasOne<Activity>()
                 .WithMany()
                 .HasForeignKey(r => r.ActivityId)
                 .OnDelete(DeleteBehavior.Cascade);

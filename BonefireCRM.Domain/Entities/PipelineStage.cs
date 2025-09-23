@@ -1,4 +1,6 @@
-﻿namespace BonefireCRM.Domain.Entities
+﻿using BonefireCRM.Domain.Enums;
+
+namespace BonefireCRM.Domain.Entities
 {
     /// <summary>
     /// Represents a single stage within a pipeline (e.g., Qualification, Proposal).
@@ -6,15 +8,16 @@
     /// 
     public class PipelineStage : BaseEntity
     {
-        public string Name { get; set; } = null!;
+        public string Name { get; set; } = string.Empty;
+
         public int OrderIndex { get; set; }
-        public bool IsClosedWon { get; set; }
-        public bool IsClosedLost { get; set; }
+
+        public DealClosureStatus? Status { get; set; }
+
+        public string LossReason { get; set; } = string.Empty;
 
         public Guid PipelineId { get; set; }
 
-        // Navigation
-        public Pipeline Pipeline { get; set; } = null!;
-        public ICollection<Deal> Deals { get; set; } = new List<Deal>();
+        public ICollection<Deal> Deals { get; set; } = [];
     }
 }

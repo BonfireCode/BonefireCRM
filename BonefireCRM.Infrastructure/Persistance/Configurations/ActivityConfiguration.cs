@@ -15,22 +15,22 @@ namespace BonefireCRM.Infrastructure.Persistance.Configurations
             .HasValue<Meeting>(nameof(Meeting))
             .HasValue<Assignment>(nameof(Assignment));
 
-            entity.HasOne(a => a.User)
+            entity.HasOne<User>()
                 .WithMany(u => u.Activities)
                 .HasForeignKey(a => a.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            entity.HasOne(a => a.Contact)
+            entity.HasOne<Contact>()
                 .WithMany()
                 .HasForeignKey(a => a.ContactId)
                 .OnDelete(DeleteBehavior.SetNull);
 
-            entity.HasOne(a => a.Company)
+            entity.HasOne<Company>()
                 .WithMany()
                 .HasForeignKey(a => a.CompanyId)
                 .OnDelete(DeleteBehavior.SetNull);
 
-            entity.HasOne(a => a.Deal)
+            entity.HasOne<Deal>()
                 .WithMany()
                 .HasForeignKey(a => a.DealId)
                 .OnDelete(DeleteBehavior.SetNull);

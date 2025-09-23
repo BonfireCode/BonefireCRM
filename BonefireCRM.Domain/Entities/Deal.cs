@@ -8,22 +8,27 @@ namespace BonefireCRM.Domain.Entities
     /// </summary>
     public class Deal : BaseEntity
     {
-        public string Title { get; set; } = null!;
+        public string Title { get; set; } = string.Empty;
+
         public decimal Amount { get; set; }
+
         public DateTime ExpectedCloseDate { get; set; }
 
-        public Guid StageId { get; set; }
-        public PipelineStage Stage { get; set; } = null!;
+        public Guid PipelineStageId { get; set; }
 
+        /// <summary>
+        /// Nullable in B2C
+        /// </summary>
         public Guid? CompanyId { get; set; }
-        public Company? Company { get; set; }
 
-        public Guid? PrimaryContactId { get; set; }
-        public Contact? PrimaryContact { get; set; }
+        /// <summary>
+        /// This prop represent Primary Contact Id
+        /// Nullable in B2B
+        /// </summary>
+        public Guid? ContactId { get; set; }
 
         public Guid UserId { get; set; }
-        public User User { get; set; } = null!;
 
-        public ICollection<DealContact> DealContacts { get; set; } = new List<DealContact>();
+        public ICollection<DealParticipant> DealParticipants { get; set; } = [];
     }
 }

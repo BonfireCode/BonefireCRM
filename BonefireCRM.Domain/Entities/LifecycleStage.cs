@@ -5,9 +5,8 @@
     /// </summary>
     public class LifecycleStage : BaseEntity
     {
-        public string Name { get; set; } = null!;
+        public string Name { get; set; } = string.Empty;
 
-        // Navigation
-        public ICollection<Contact> Contacts { get; set; } = new List<Contact>();
+        public ICollection<Contact> Contacts { get; set; } = [];
     }
 }

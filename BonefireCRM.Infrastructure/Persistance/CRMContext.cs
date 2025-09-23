@@ -11,8 +11,8 @@ namespace BonefireCRM.Infrastructure.Persistance
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<LifecycleStage> LifecycleStages { get; set; }
         public DbSet<Deal> Deals { get; set; }
-        public DbSet<DealContactRole> DealContactRoles { get; set; }
-        public DbSet<DealContact> DealContacts { get; set; }
+        public DbSet<DealParticipantRole> DealParticipantRoles { get; set; }
+        public DbSet<DealParticipant> DealParticipants { get; set; }
         public DbSet<Pipeline> Pipelines { get; set; }
         public DbSet<PipelineStage> PipelineStages { get; set; }
         public DbSet<User> Users { get; set; }

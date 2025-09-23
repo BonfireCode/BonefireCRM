@@ -6,7 +6,7 @@ namespace BonefireCRM.Domain.DTOs.Security
     {
         public bool IsTokenRefreshed { get; set; }
 
-        public ClaimsPrincipal ClaimsPrincipal { get; set; }
+        public ClaimsPrincipal ClaimsPrincipal { get; set; } = default!;
 
         public string AuthenticationScheme { get; set; } = string.Empty;
     }

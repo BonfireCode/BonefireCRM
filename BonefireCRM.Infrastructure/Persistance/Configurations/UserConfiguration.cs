@@ -9,12 +9,12 @@ namespace BonefireCRM.Infrastructure.Persistance.Configurations
         public void Configure(EntityTypeBuilder<User> entity)
         {
             entity.HasMany(u => u.Contacts)
-                .WithOne(a => a.User)
+                .WithOne()
                 .HasForeignKey(a => a.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasMany(u => u.Activities)
-                .WithOne(a => a.User)
+                .WithOne()
                 .HasForeignKey(a => a.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
         }

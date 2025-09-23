@@ -6,6 +6,9 @@
     public class Call : Activity
     {
         public DateTime CallTime { get; set; }
-        public string? Notes { get; set; }
+
+        public TimeSpan Duration { get; set; }
+
+        public string Notes { get; set; } = string.Empty;
     }
 }

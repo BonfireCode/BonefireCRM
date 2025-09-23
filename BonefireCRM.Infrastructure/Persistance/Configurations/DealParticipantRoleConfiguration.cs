@@ -4,16 +4,16 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BonefireCRM.Infrastructure.Persistance.Configurations
 {
-    internal class DealContactRoleConfiguration : IEntityTypeConfiguration<DealContactRole>
+    internal class DealParticipantRoleConfiguration : IEntityTypeConfiguration<DealParticipantRole>
     {
-        public void Configure(EntityTypeBuilder<DealContactRole> entity)
+        public void Configure(EntityTypeBuilder<DealParticipantRole> entity)
         {
             entity.Property(r => r.Name).IsRequired().HasMaxLength(100);
             entity.Property(r => r.Description).HasMaxLength(500);
 
-            entity.HasOne(r => r.RegisteredByUser)
+            entity.HasOne<User>()
                 .WithMany()
-                .HasForeignKey(r => r.RegisteredByUserId)
+                .HasForeignKey(r => r.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

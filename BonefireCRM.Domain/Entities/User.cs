@@ -8,16 +8,18 @@ namespace BonefireCRM.Domain.Entities
     /// </summary>
     public class User : BaseEntity
     {
-        public string RegisterId { get; set; } = string.Empty;
-        public string UserName { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public string FirstName { get; set; } = string.Empty;
-        public string? LastName { get; set; }
-        public DateTime? LastLoginDate { get; set; }
-        public bool IsActive { get; set; } = true;
+        public required string RegisterId { get; set; }
 
-        // Navigation
-        public ICollection<Contact> Contacts { get; set; } = new List<Contact>();
-        public ICollection<Activity> Activities { get; set; } = new List<Activity>();
+        public string UserName { get; set; } = string.Empty;
+
+        public string Email { get; set; } = string.Empty;
+
+        public string FirstName { get; set; } = string.Empty;
+
+        public string LastName { get; set; } = string.Empty;
+
+        public ICollection<Contact> Contacts { get; set; } = [];
+
+        public ICollection<Activity> Activities { get; set; } = [];
     }
 }
