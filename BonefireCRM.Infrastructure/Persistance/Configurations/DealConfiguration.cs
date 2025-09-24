@@ -18,7 +18,7 @@ namespace BonefireCRM.Infrastructure.Persistance.Configurations
 
             entity.HasOne<Contact>()
                 .WithMany()
-                .HasForeignKey(d => d.ContactId)
+                .HasForeignKey(d => d.PrimaryContactId)
                 .OnDelete(DeleteBehavior.SetNull);
 
             entity.HasOne<User>()

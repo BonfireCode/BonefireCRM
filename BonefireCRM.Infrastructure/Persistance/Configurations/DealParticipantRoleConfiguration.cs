@@ -13,7 +13,7 @@ namespace BonefireCRM.Infrastructure.Persistance.Configurations
 
             entity.HasOne<User>()
                 .WithMany()
-                .HasForeignKey(r => r.UserId)
+                .HasForeignKey(r => r.RegisteredByUserId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

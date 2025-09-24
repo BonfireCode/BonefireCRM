@@ -34,6 +34,9 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.UseFastEndpoints();
 
 app.MapDefaultEndpoints();

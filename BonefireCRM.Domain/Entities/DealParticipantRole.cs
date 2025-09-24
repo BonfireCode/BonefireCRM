@@ -11,10 +11,9 @@
         public string Description { get; set; } = string.Empty;
 
         /// <summary>
-        /// This prop represent Registered By User Id
         /// Nullable in B2B
         /// </summary>
-        public Guid UserId { get; set; }
+        public Guid RegisteredByUserId { get; set; }
 
         public ICollection<DealParticipant> DealParticipants { get; set; } = [];
     }

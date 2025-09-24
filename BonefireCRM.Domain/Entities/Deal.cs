@@ -22,10 +22,9 @@ namespace BonefireCRM.Domain.Entities
         public Guid? CompanyId { get; set; }
 
         /// <summary>
-        /// This prop represent Primary Contact Id
         /// Nullable in B2B
         /// </summary>
-        public Guid? ContactId { get; set; }
+        public Guid? PrimaryContactId { get; set; }
 
         public Guid UserId { get; set; }
 
