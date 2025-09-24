@@ -1,4 +1,8 @@
-﻿using BonefireCRM.API.Contact.Mappers;
+﻿// <copyright file="GetContactEndpoint.cs" company="Bonefire">
+// Copyright (c) Bonefire. All rights reserved.
+// </copyright>
+
+using BonefireCRM.API.Contact.Mappers;
 using BonefireCRM.API.Contrat.Contact;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
@@ -27,11 +31,9 @@ namespace BonefireCRM.API.Contact.Endpoints
 
             var result = await _contactService.GetContactAsync(id, ct);
 
-            var response = result.Match<Results<Ok<GetContactResponse>, NotFound>>
-            (
+            var response = result.Match<Results<Ok<GetContactResponse>, NotFound>>(
                 dtoContact => TypedResults.Ok(dtoContact.MapToResponse()),
-                TypedResults.NotFound()
-            );
+                TypedResults.NotFound());
 
             return response;
         }

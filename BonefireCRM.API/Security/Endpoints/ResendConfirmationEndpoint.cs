@@ -1,4 +1,8 @@
-﻿using BonefireCRM.API.Contrat.Security;
+﻿// <copyright file="ResendConfirmationEndpoint.cs" company="Bonefire">
+// Copyright (c) Bonefire. All rights reserved.
+// </copyright>
+
+using BonefireCRM.API.Contrat.Security;
 using BonefireCRM.API.Security.Mappers;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;

@@ -6,16 +6,25 @@ namespace BonefireCRM.Infrastructure.Persistance.Configurations
 {
     internal class DealConfiguration : IEntityTypeConfiguration<Deal>
     {
-        public void Configure(EntityTypeBuilder<Deal> builder)
+        public void Configure(EntityTypeBuilder<Deal> entity)
         {
-            builder
-                .HasOne(d => d.PrimaryContact)
-                .WithMany(c => c.Deals)
-                .HasForeignKey(d => d.PrimaryContactId);
+            entity.Property(d => d.Title).IsRequired().HasMaxLength(200);
+            entity.Property(d => d.Amount).HasColumnType("decimal(18,2)");
 
-            builder
-                .HasMany(d => d.AssociatedContacts)
-                .WithMany();
+            entity.HasOne<PipelineStage>()
+                .WithMany(ps => ps.Deals)
+                .HasForeignKey(d => d.PipelineStageId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne<Contact>()
+                .WithMany()
+                .HasForeignKey(d => d.PrimaryContactId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            entity.HasOne<User>()
+                .WithMany()
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

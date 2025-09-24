@@ -29,9 +29,13 @@ app.UseExceptionHandler();
 
 if (app.Environment.IsDevelopment())
 {
+    app.MigrateDatabases();
     app.MapOpenApi();
     app.MapScalarApiReference();
 }
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseFastEndpoints();
 

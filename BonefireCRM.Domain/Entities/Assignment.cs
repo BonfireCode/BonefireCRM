@@ -1,17 +1,16 @@
 ﻿namespace BonefireCRM.Domain.Entities
 {
-    public class Assignment : BaseEntity
+    /// <summary>
+    /// Represents a to-do or task assigned to a user.
+    /// </summary>
+    public class Assignment : Activity
     {
-        public string Title { get; set; } = string.Empty;
+        public string Subject { get; set; } = string.Empty;
+
+        public string Description { get; set; } = string.Empty;
 
         public DateTime DueDate { get; set; }
+
         public bool IsCompleted { get; set; }
-
-        public Guid AssignedToId { get; set; }
-
-        public Guid? ContactId { get; set; }
-
-        public User? AssignedTo { get; set; }
-        public Contact? Contact { get; set; }
     }
 }

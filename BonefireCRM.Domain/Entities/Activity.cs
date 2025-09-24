@@ -1,0 +1,16 @@
+﻿namespace BonefireCRM.Domain.Entities
+{
+    /// <summary>
+    /// Abstract base class for activities (calls, meetings, tasks, emails).
+    /// </summary>
+    public abstract class Activity : BaseEntity
+    {
+        public Guid UserId { get; set; }
+
+        public Guid? ContactId { get; set; }
+
+        public Guid? CompanyId { get; set; }
+
+        public Guid? DealId { get; set; }
+    }
+}

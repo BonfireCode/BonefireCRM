@@ -1,4 +1,8 @@
-﻿using BonefireCRM.API.Contrat.Contact;
+﻿// <copyright file="RequestToDtoMapper.cs" company="Bonefire">
+// Copyright (c) Bonefire. All rights reserved.
+// </copyright>
+
+using BonefireCRM.API.Contrat.Contact;
 using BonefireCRM.Domain.DTOs.Contact;
 
 namespace BonefireCRM.API.Contact.Mappers
@@ -12,7 +16,7 @@ namespace BonefireCRM.API.Contact.Mappers
                 Email = request.Email,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
-                JobTitle = request.JobTitle,
+                JobRole = request.JobRole,
                 PhoneNumber = request.PhoneNumber,
             };
         }
@@ -24,7 +28,7 @@ namespace BonefireCRM.API.Contact.Mappers
                 Email = request.Email,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
-                JobTitle = request.JobTitle,
+                JobRole = request.JobRole,
                 PhoneNumber = request.PhoneNumber,
             };
         }

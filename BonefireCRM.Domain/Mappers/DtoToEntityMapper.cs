@@ -14,8 +14,8 @@ namespace BonefireCRM.Domain.Mappers
                 Email = dto.Email,
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
-                JobTitle = dto.JobTitle,
                 PhoneNumber = dto.PhoneNumber,
+                JobRole = dto.JobRole
             };
         }
 
@@ -26,8 +26,8 @@ namespace BonefireCRM.Domain.Mappers
                 Email = dto.Email,
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
-                JobTitle = dto.JobTitle,
                 PhoneNumber = dto.PhoneNumber,
+                JobRole = dto.JobRole
             };
         }
 
@@ -39,8 +39,8 @@ namespace BonefireCRM.Domain.Mappers
                 Email = dto.Email,
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
-                JobTitle = dto.JobTitle,
                 PhoneNumber = dto.PhoneNumber,
+                JobRole = dto.JobRole,
             };
         }
 

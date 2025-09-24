@@ -2,15 +2,21 @@
 {
 
     /// <summary>
-    /// Represents a company associated with contacts.
+    /// Represents a company in the CRM system. 
+    /// A company can have multiple contacts and deals.
     /// </summary>
     public class Company : BaseEntity
     {
         public string Name { get; set; } = string.Empty;
-        public string? Website { get; set; }
-        public string? Industry { get; set; }
-        public string? Address { get; set; }
 
-        public virtual ICollection<Contact> Contacts { get; set; } = [];
+        public string Industry { get; set; } = string.Empty;
+
+        public string Address { get; set; } = string.Empty;
+
+        public string PhoneNumber { get; set; } = string.Empty;
+
+        public ICollection<Contact> Contacts { get; set; } = [];
+
+        public ICollection<Deal> Deals { get; set; } = [];
     }
 }

@@ -1,4 +1,8 @@
-﻿using BonefireCRM.API.Contact.Mappers;
+﻿// <copyright file="CreateContactEndpoint.cs" company="Bonefire">
+// Copyright (c) Bonefire. All rights reserved.
+// </copyright>
+
+using BonefireCRM.API.Contact.Mappers;
 using BonefireCRM.API.Contrat.Contact;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
@@ -27,11 +31,9 @@ namespace BonefireCRM.API.Contact.Endpoints
 
             var result = await _contactService.CreateContactAsync(dtoContact, ct);
 
-            var response = result.Match<Results<Created<CreateContactResponse>, InternalServerError>>
-            (
+            var response = result.Match<Results<Created<CreateContactResponse>, InternalServerError>>(
                 createdContact => TypedResults.Created($"/contacts/{createdContact.Id}", createdContact.MapToResponse()),
-                _ => TypedResults.InternalServerError()
-            );
+                _ => TypedResults.InternalServerError());
 
             return response;
         }

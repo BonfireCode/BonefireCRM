@@ -1,4 +1,8 @@
-﻿using BonefireCRM.API.Contrat.Security;
+﻿// <copyright file="RequestToDtoMapper.cs" company="Bonefire">
+// Copyright (c) Bonefire. All rights reserved.
+// </copyright>
+
+using BonefireCRM.API.Contrat.Security;
 using BonefireCRM.Domain.DTOs.Security;
 
 namespace BonefireCRM.API.Security.Mappers

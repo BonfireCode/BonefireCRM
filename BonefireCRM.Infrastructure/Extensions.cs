@@ -4,8 +4,6 @@ using BonefireCRM.Domain.Infrastructure.Security;
 using BonefireCRM.Infrastructure.Email;
 using BonefireCRM.Infrastructure.Persistance;
 using BonefireCRM.Infrastructure.Security;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -47,6 +45,37 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IEndpointConventionBuilder MapIdentityApi(this IEndpointRouteBuilder endpoints)
         {
             return endpoints.MapIdentityApi<ApplicationUser>();
+        }
+
+        public static IHost MigrateDatabases(this IHost host)
+        {
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                try
+                {
+                    var crmContext = services.GetRequiredService<CRMContext>();
+                    crmContext.Database.Migrate();
+
+                    var appContext = services.GetRequiredService<AppDbContext>();
+                    appContext.Database.Migrate();
+                }
+                catch (Data.Sqlite.SqliteException ex)
+                {
+                    throw new Exception($"SQLite migration failed: {ex.Message}", ex);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    throw new Exception($"Invalid migration operation: {ex.Message}", ex);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Unexpected migration error: {ex.Message}", ex);
+                }
+            }
+
+            return host;
         }
 
         private static void AddAuth<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
