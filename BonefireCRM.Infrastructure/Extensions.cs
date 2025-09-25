@@ -85,14 +85,17 @@ namespace Microsoft.Extensions.DependencyInjection
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
 
-            builder.Services.AddAuthentication()
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = IdentityConstants.BearerScheme;
+                options.DefaultAuthenticateScheme = "Identity.BearerAndApplication";
+                options.DefaultChallengeScheme = IdentityConstants.BearerScheme;
+
+            })
                 .AddBearerToken(IdentityConstants.BearerScheme)
                 .AddIdentityCookies();
 
             var authorizationPolicy = new AuthorizationPolicyBuilder()
-                .AddAuthenticationSchemes(
-                    IdentityConstants.BearerScheme,
-                    IdentityConstants.ApplicationScheme)
                 .RequireAuthenticatedUser()
                 .Build();
             builder.Services.AddAuthorizationBuilder()
