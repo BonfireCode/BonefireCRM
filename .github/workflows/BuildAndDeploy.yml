@@ -32,29 +32,56 @@ jobs:
           $TEST_EXE = Get-ChildItem -Path . -Recurse -Filter '*.Tests.exe' | Select-Object -First 1
           & $TEST_EXE.FullName
 
-    - name: Publish solution
-      run: dotnet publish --configuration Release --output ./publish --runtime win-x86 
+    - name: Publish API
+      run: dotnet publish ./BonefireCRM.API/BonefireCRM.API.csproj -c Release -o ./publish/api
 
-    - name: Upload build artifact
+    - name: Publish WebApp
+      run: dotnet publish ./BonefireCRM.Web/BonefireCRM.Web.Server/BonefireCRM.Web.Server.csproj -c Release -o ./publish/webapp
+
+    - name: Upload API build artifact
       uses: actions/upload-artifact@v4
       with:
-        name: app
-        path: ./publish
+        name: api
+        path: ./publish/api
+
+    - name: Upload WebApp build artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: webapp
+        path: ./publish/webapp
           
   Deploy:
     needs: Build
     runs-on: windows-latest
     steps:
-    - name: Download artifact
+    - name: Download API artifact
       uses: actions/download-artifact@v4
       with:
-        name: app
-        path: ./publish
+        name: api
+        path: ./publish/api
+
+    - name: Download WebApp artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: webapp
+        path: ./publish/webapp
           
-    - name: Deploy solution to MonsterASP.NET via WebDeploy
+    - name: Deploy API to MonsterASP.NET via WebDeploy
       uses: rasmusbuchholdt/simply-web-deploy@2.1.0
       with:
         website-name: ${{ secrets.WEBSITE_NAME }}
         server-computer-name: ${{ secrets.SERVER_COMPUTER_NAME }}
         server-username: ${{ secrets.SERVER_USERNAME }}
         server-password: ${{ secrets.SERVER_PASSWORD }}
+        source-path: '\publish\api\'
+        target-path: '/api/'
+
+    - name: Deploy WebApp to MonsterASP.NET via WebDeploy
+      uses: rasmusbuchholdt/simply-web-deploy@2.1.0
+      with:
+        website-name: ${{ secrets.WEBSITE_NAME }}
+        server-computer-name: ${{ secrets.SERVER_COMPUTER_NAME }}
+        server-username: ${{ secrets.SERVER_USERNAME }}
+        server-password: ${{ secrets.SERVER_PASSWORD }}
+        source-path: '\publish\webapp\'
+        target-path: '/'
