@@ -75,3 +75,11 @@ jobs:
         server-password: ${{ secrets.API_SERVER_PASSWORD }}
         source-path: '\publish\api\'
 
+    - name: Deploy WebApp to MonsterASP.NET via WebDeploy
+      uses: rasmusbuchholdt/simply-web-deploy@2.1.0
+      with:
+        website-name: ${{ secrets.WEB_WEBSITE_NAME }}
+        server-computer-name: ${{ secrets.WEB_SERVER_COMPUTER_NAME }}
+        server-username: ${{ secrets.WEB_SERVER_USERNAME }}
+        server-password: ${{ secrets.WEB_SERVER_PASSWORD }}
+        source-path: '\publish\webapp\'
