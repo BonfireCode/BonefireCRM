@@ -113,6 +113,17 @@ public static class Extensions
             });
         }
 
+        app.Use(async (context, next) =>
+        {
+            context.Response.OnStarting(() =>
+            {
+                context.Response.Headers.Remove("Server");
+                return Task.CompletedTask;
+            });
+
+            await next();
+        });
+
         return app;
     }
 }
