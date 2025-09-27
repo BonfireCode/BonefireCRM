@@ -39,7 +39,7 @@ namespace BonefireCRM.Domain.Services
             return isDeleted;
         }
 
-        public async Task<Result<CreatedContactDTO>> CreateContactAsync(CreateContactDTO createContactDTO, CancellationToken ct)
+        public async Task<Fin<CreatedContactDTO>> CreateContactAsync(CreateContactDTO createContactDTO, CancellationToken ct)
         {
             //Domain validations if needed
 
@@ -48,13 +48,13 @@ namespace BonefireCRM.Domain.Services
             var createdContact = await _contactRepository.AddAsync(contact, ct);
             if (createdContact is null)
             {
-                return new Result<CreatedContactDTO>(new AddEntityException<Contact>());
+                return Fin<CreatedContactDTO>.Fail(new AddEntityException<Contact>());
             }
 
-            return createdContact.MapToCreatedDto();
+            return Fin<CreatedContactDTO>.Succ(createdContact.MapToCreatedDto());
         }
 
-        public async Task<Result<UpdatedContactDTO>> UpdateContactAsync(UpdateContactDTO updateContactDTO, CancellationToken ct)
+        public async Task<Fin<UpdatedContactDTO>> UpdateContactAsync(UpdateContactDTO updateContactDTO, CancellationToken ct)
         {
             //Domain validations if needed
 
@@ -63,10 +63,10 @@ namespace BonefireCRM.Domain.Services
             var updatedContact = await _contactRepository.UpdateAsync(contact, ct);
             if (updatedContact is null)
             {
-                return new Result<UpdatedContactDTO>(new UpdateEntityException<Contact>());
+                return Fin<UpdatedContactDTO>.Fail(new UpdateEntityException<Contact>());
             }
 
-            return updatedContact.MapToUpdatedDto();
+            return Fin<UpdatedContactDTO>.Succ(updatedContact.MapToUpdatedDto());
         }
     }
 }
