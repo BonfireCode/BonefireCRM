@@ -14,15 +14,15 @@ namespace BonefireCRM.API.Contact.Validators
         {
             RuleFor(x => x.FirstName)
                 .NotEmpty()
-                .WithMessage("your FirstName is required!")
+                .WithMessage("this field is required!")
                 .MinimumLength(5)
-                .WithMessage("your FirstName is too short!");
+                .WithMessage("this field is too short!");
 
             RuleFor(x => x.LastName)
                 .NotEmpty()
-                .WithMessage("your LastName is required!")
+                .WithMessage("this field is required!")
                 .MinimumLength(5)
-                .WithMessage("your LastName is too short!");
+                .WithMessage("this field is too short!");
         }
     }
 }
