@@ -30,7 +30,7 @@ namespace BonefireCRM.API.Company.Endpoints
         {
             var dtoCompany = RequestToDtoMapper.MapToDto(request);
 
-            Result<CreatedCompanyDTO> result = await _companyService.CreateCompanyAsync(dtoCompany, ct);
+            var result = await _companyService.CreateCompanyAsync(dtoCompany, ct);
 
             var response = result.Match<Results<Created<CreateCompanyResponse>, InternalServerError>>(
                 createdCompany => TypedResults.Created($"/Companys/{createdCompany.Id}", createdCompany.MapToResponse()),

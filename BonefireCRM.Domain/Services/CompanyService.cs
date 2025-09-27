@@ -4,7 +4,6 @@ using BonefireCRM.Domain.Exceptions;
 using BonefireCRM.Domain.Infrastructure.Persistance;
 using BonefireCRM.Domain.Mappers;
 using LanguageExt;
-using LanguageExt.Common;
 
 namespace BonefireCRM.Domain.Services
 {
@@ -39,7 +38,7 @@ namespace BonefireCRM.Domain.Services
             return isDeleted;
         }
 
-        public async Task<Result<CreatedCompanyDTO>> CreateCompanyAsync(CreateCompanyDTO createCompanyDTO, CancellationToken ct)
+        public async Task<Fin<CreatedCompanyDTO>> CreateCompanyAsync(CreateCompanyDTO createCompanyDTO, CancellationToken ct)
         {
             //Domain validations if needed
 
@@ -48,13 +47,13 @@ namespace BonefireCRM.Domain.Services
             var createdCompany = await _companyRepository.AddAsync(Company, ct);
             if (createdCompany is null)
             {
-                return new Result<CreatedCompanyDTO>(new AddEntityException<Company>());
+                return Fin<CreatedCompanyDTO>.Fail(new AddEntityException<Company>());
             }
 
-            return createdCompany.MapToCreatedDto();
+            return Fin<CreatedCompanyDTO>.Succ(createdCompany.MapToCreatedDto());
         }
 
-        public async Task<Result<UpdatedCompanyDTO>> UpdateCompanyAsync(UpdateCompanyDTO updateCompanyDTO, CancellationToken ct)
+        public async Task<Fin<UpdatedCompanyDTO>> UpdateCompanyAsync(UpdateCompanyDTO updateCompanyDTO, CancellationToken ct)
         {
             //Domain validations if needed
 
@@ -63,10 +62,10 @@ namespace BonefireCRM.Domain.Services
             var updatedCompany = await _companyRepository.UpdateAsync(Company, ct);
             if (updatedCompany is null)
             {
-                return new Result<UpdatedCompanyDTO>(new UpdateEntityException<Company>());
+                return Fin<UpdatedCompanyDTO>.Fail(new UpdateEntityException<Company>());
             }
 
-            return updatedCompany.MapToUpdatedDto();
+            return Fin<UpdatedCompanyDTO>.Succ(updatedCompany.MapToUpdatedDto());
         }
     }
 }
