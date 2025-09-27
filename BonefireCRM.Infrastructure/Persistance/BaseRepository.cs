@@ -45,5 +45,13 @@ namespace BonefireCRM.Infrastructure.Persistance
 
             return true;
         }
+
+        public async Task<ICollection<T>> AddRangeAsync(ICollection<T> entities, CancellationToken ct)
+        {
+            await _context.AddRangeAsync(entities, ct);
+            await _context.SaveChangesAsync(ct);
+
+            return entities;
+        }
     }
 }

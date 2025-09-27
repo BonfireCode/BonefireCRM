@@ -10,6 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection
             builder.Services.AddScoped<ContactService>();
             builder.Services.AddScoped<CompanyService>();
             builder.Services.AddScoped<SecurityService>();
+            builder.Services.AddScoped<SeedUserDataService>();
 
             return builder;
         }

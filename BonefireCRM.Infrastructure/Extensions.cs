@@ -58,6 +58,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 {
                     var crmContext = services.GetRequiredService<CRMContext>();
                     crmContext.Database.Migrate();
+                    crmContext.Seed();
 
                     var appContext = services.GetRequiredService<AppDbContext>();
                     appContext.Database.Migrate();
