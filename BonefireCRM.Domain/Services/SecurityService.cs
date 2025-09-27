@@ -14,14 +14,15 @@ namespace BonefireCRM.Domain.Services
         private readonly IAppUserManager _appUserManager;
         private readonly IAppSignInManager _appSignInManager;
         private readonly IBaseRepository<User> _userRepository;
-        private readonly IBaseRepository<DealParticipantRole> _dealParticipantRoleRepository;
+        private readonly SeedUserDataService _seedUserDataService;
 
-        public SecurityService(IAppUserManager appUserManager, IAppSignInManager appSignInManager, IBaseRepository<User> userRepository, IBaseRepository<DealParticipantRole> dealParticipantRoleRepository)
+
+        public SecurityService(IAppUserManager appUserManager, IAppSignInManager appSignInManager, IBaseRepository<User> userRepository, SeedUserDataService seedUserDataService)
         {
             _appUserManager = appUserManager;
             _appSignInManager = appSignInManager;
             _userRepository = userRepository;
-            _dealParticipantRoleRepository = dealParticipantRoleRepository;
+            _seedUserDataService = seedUserDataService;
         }
 
         public async Task<Fin<RegisterResultDTO>> RegisterUser(RegisterDTO registerDTO, CancellationToken ct)
@@ -34,32 +35,15 @@ namespace BonefireCRM.Domain.Services
 
             var user = registerDTO.MapToUser(registerResultDTO.UserId);
             var createdUser = await _userRepository.AddAsync(user, ct);
-            await SeedDealParticipantRoles(user, ct);
 
             if (createdUser is null)
             {
                 return Fin<RegisterResultDTO>.Fail(new AddEntityException<User>());
             }
 
+            await _seedUserDataService.DealParticipantRolesAsync(createdUser, ct);
+
             return registerResultDTO;
-        }
-
-        private async Task SeedDealParticipantRoles(User user, CancellationToken ct)
-        {
-            var defaultRoles = new List<DealParticipantRole>
-            {
-                new() { Name = "Decision Maker", Description = "Responsible for final decision-making in the deal" },
-                new() { Name = "Influencer", Description = "Influences the decision but does not have final authority" },
-                new() { Name = "Evaluator", Description = "Evaluates the proposal and provides feedback" },
-                new() { Name = "End User", Description = "Will ultimately use the product or service" }
-            };
-
-            foreach (var role in defaultRoles)
-            {
-                role.RegisteredByUserId = user.Id;
-
-                await _dealParticipantRoleRepository.AddAsync(role, ct);
-            }
         }
 
         public async Task<LoginResultDTO> LoginUser(LoginDTO loginDTO, CancellationToken ct)

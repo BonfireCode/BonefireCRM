@@ -3,11 +3,10 @@ using BonefireCRM.Domain.Enums;
 
 namespace BonefireCRM.Infrastructure.Persistance
 {
-    internal static class CRMContextSeed
+    internal static class CRMContextExtentions
     {
-        public static void Seed(CRMContext context)
+        public static void Seed(this CRMContext context)
         {
-
             SeedPipelines(context);
             SeedLifecycleStages(context);
         }
@@ -15,7 +14,9 @@ namespace BonefireCRM.Infrastructure.Persistance
         private static void SeedPipelines(CRMContext context)
         {
             if (context.Pipelines.Any())
+            {
                 return;
+            }
 
             var defaultPipeline = new Pipeline
             {
@@ -63,7 +64,9 @@ namespace BonefireCRM.Infrastructure.Persistance
         private static void SeedLifecycleStages(CRMContext context)
         {
             if (context.LifecycleStages.Any())
+            {
                 return;
+            }
 
             context.LifecycleStages.AddRange(
                 [
