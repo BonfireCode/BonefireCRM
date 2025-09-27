@@ -30,14 +30,13 @@ namespace BonefireCRM.API.Contact.Endpoints
             var id = Route<Guid>("id");
 
             var dtoContact = RequestToDtoMapper.MapToDto(request);
+            dtoContact.Id = id;
 
             var result = await _contactService.UpdateContactAsync(dtoContact, ct);
 
-            var response = result.Match<Results<Ok<UpdateContactResponse>, NotFound, InternalServerError>>
-            (
+            var response = result.Match<Results<Ok<UpdateContactResponse>, NotFound, InternalServerError>>(
                 updatedContact => TypedResults.Ok(updatedContact.MapToResponse()),
-                _ => TypedResults.InternalServerError()
-            );
+                _ => TypedResults.InternalServerError());
 
             return response;
         }
