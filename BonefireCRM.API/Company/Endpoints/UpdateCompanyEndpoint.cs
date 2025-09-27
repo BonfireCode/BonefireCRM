@@ -6,7 +6,6 @@ using BonefireCRM.API.Company.Mappers;
 using BonefireCRM.API.Contrat.Company;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
-using LanguageExt.Common;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BonefireCRM.API.Company.Endpoints
@@ -25,18 +24,17 @@ namespace BonefireCRM.API.Company.Endpoints
             Put("/companies/{id:guid}");
         }
 
-        public override Task<Results<Created<UpdateCompanyResponse>, InternalServerError>> ExecuteAsync(UpdateCompanyRequest request, CancellationToken ct)
+        public override async Task<Results<Created<UpdateCompanyResponse>, InternalServerError>> ExecuteAsync(UpdateCompanyRequest request, CancellationToken ct)
         {
             var id = Route<Guid>("id");
-            var dtoCompany = RequestToDtoMapper.MapToDto(request);
-            dtoCompany.Id = id;
-            var result = _companyService.UpdateCompanyAsync(dtoCompany, ct).Result;
+            var dtoCompany = RequestToDtoMapper.MapToDto(request, id);
+            var result = await _companyService.UpdateCompanyAsync(dtoCompany, ct);
 
             var response = result.Match<Results<Created<UpdateCompanyResponse>, InternalServerError>>(
                 updatedCompany => TypedResults.Created($"/companies/{updatedCompany.Id}", updatedCompany.MapToResponse()),
                 _ => TypedResults.InternalServerError());
 
-            return Task.FromResult(response);
+            return response;
         }
     }
 }

@@ -20,10 +20,11 @@ namespace BonefireCRM.API.Company.Mappers
             };
         }
 
-        internal static UpdateCompanyDTO MapToDto(UpdateCompanyRequest request)
+        internal static UpdateCompanyDTO MapToDto(UpdateCompanyRequest request, Guid id)
         {
             return new()
             {
+                Id = id,
                 Name = request.Name,
                 Industry = request.Industry,
                 Address = request.Address,
