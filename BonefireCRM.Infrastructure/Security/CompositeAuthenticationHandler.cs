@@ -6,15 +6,11 @@ using System.Text.Encodings.Web;
 
 public class CompositeAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {
-    private readonly IAuthenticationSchemeProvider _schemes;
-
     public CompositeAuthenticationHandler(
-        IAuthenticationSchemeProvider schemes,
         IOptionsMonitor<AuthenticationSchemeOptions> options,
         ILoggerFactory logger,
         UrlEncoder encoder) : base(options, logger, encoder)
     {
-        _schemes = schemes;
     }
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
