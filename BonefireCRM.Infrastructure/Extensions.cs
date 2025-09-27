@@ -4,6 +4,7 @@ using BonefireCRM.Domain.Infrastructure.Security;
 using BonefireCRM.Infrastructure.Email;
 using BonefireCRM.Infrastructure.Persistance;
 using BonefireCRM.Infrastructure.Security;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -89,9 +90,8 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 options.DefaultScheme = IdentityConstants.BearerScheme;
                 options.DefaultAuthenticateScheme = "Identity.BearerAndApplication";
-                options.DefaultChallengeScheme = IdentityConstants.BearerScheme;
-
             })
+                .AddScheme<AuthenticationSchemeOptions, CompositeAuthenticationHandler>("Identity.BearerAndApplication", null)
                 .AddBearerToken(IdentityConstants.BearerScheme)
                 .AddIdentityCookies();
 
