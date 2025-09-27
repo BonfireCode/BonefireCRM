@@ -7,7 +7,6 @@ using FastEndpoints;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.WebHost.UseKestrel(options => options.AddServerHeader = false);
 
 builder.Services.AddFastEndpoints();
 
