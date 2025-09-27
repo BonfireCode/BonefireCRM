@@ -1,4 +1,5 @@
-﻿using BonefireCRM.Domain.DTOs.Contact;
+﻿using BonefireCRM.Domain.DTOs.Company;
+using BonefireCRM.Domain.DTOs.Contact;
 using BonefireCRM.Domain.DTOs.Security;
 using BonefireCRM.Domain.Entities;
 
@@ -41,6 +42,41 @@ namespace BonefireCRM.Domain.Mappers
                 LastName = dto.LastName,
                 PhoneNumber = dto.PhoneNumber,
                 JobRole = dto.JobRole,
+            };
+        }
+
+        internal static Company MapToCompany(this GetCompanyDTO dto)
+        {
+            return new()
+            {
+                Id = dto.Id,
+                Name = dto.Name,
+                Industry = dto.Industry,
+                Address = dto.Address,
+                PhoneNumber = dto.PhoneNumber,
+            };
+        }
+
+        internal static Company MapToCompany(this CreateCompanyDTO dto)
+        {
+            return new()
+            {
+                Name = dto.Name,
+                Industry = dto.Industry,
+                Address = dto.Address,
+                PhoneNumber = dto.PhoneNumber,
+            };
+        }
+
+        internal static Company MapToCompany(this UpdateCompanyDTO dto)
+        {
+            return new()
+            {
+                Id = dto.Id,
+                Name = dto.Name,
+                Industry = dto.Industry,
+                Address = dto.Address,
+                PhoneNumber = dto.PhoneNumber,
             };
         }
 
