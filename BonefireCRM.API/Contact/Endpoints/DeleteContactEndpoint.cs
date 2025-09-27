@@ -19,7 +19,7 @@ namespace BonefireCRM.API.Contact.Endpoints
 
         public override void Configure()
         {
-            Delete("/contacts/{id}");
+            Delete("/contacts/{id:guid}");
             AllowAnonymous();
         }
 
