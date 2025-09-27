@@ -19,7 +19,7 @@ namespace BonefireCRM.API.Company.Endpoints
 
         public override void Configure()
         {
-            Delete("/companies/{id}");
+            Delete("/companies/{id:guid}");
         }
 
         public override async Task<Results<NoContent, NotFound>> ExecuteAsync(CancellationToken ct)
