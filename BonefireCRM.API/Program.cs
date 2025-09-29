@@ -2,13 +2,21 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
-using BonefireCRM.API;
 using FastEndpoints;
+using FastEndpoints.Swagger;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddFastEndpoints();
+builder.Services.AddFastEndpoints()
+    .SwaggerDocument(o =>
+    {
+        o.DocumentSettings = s =>
+        {
+            s.Title = "Bonefire-CRM";
+            s.Version = "v1";
+        };
+    });
 
 builder.AddDomainDependencies();
 builder.AddInfrastructureDependencies();
@@ -19,19 +27,20 @@ builder.AddServiceDefaults();
 // Add services to the container.
 builder.Services.AddProblemDetails();
 
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-// Learn more about configuring OpenAPI for scalar authentication at https://github.com/scalar/scalar/blob/main/integrations/aspnetcore/docs/authentication.md
-builder.Services.AddOpenApiWithBearerAuth();
-
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 app.UseExceptionHandler();
+
+app.UseFastEndpoints(c =>
+{
+    c.Endpoints.RoutePrefix = "api";
+});
 
 if (app.Environment.IsDevelopment())
 {
     app.MigrateDatabases();
-    app.MapOpenApi();
+    app.UseOpenApi(option =>
+    option.Path = "/openapi/{documentName}.json");
 
     app.MapScalarApiReference(options =>
         options.WithPersistentAuthentication());
@@ -39,11 +48,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.UseFastEndpoints(c =>
-{
-    c.Endpoints.RoutePrefix = "api";
-});
 
 app.MapDefaultEndpoints();
 

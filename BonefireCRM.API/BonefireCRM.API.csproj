@@ -7,13 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Services\**" />
-    <Content Remove="Services\**" />
-    <EmbeddedResource Remove="Services\**" />
-    <None Remove="Services\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
   </ItemGroup>
 
@@ -23,10 +16,10 @@
     <ProjectReference Include="..\BonefireCRM.Infrastructure\BonefireCRM.Infrastructure.csproj" />
     <ProjectReference Include="..\BonefireCRM.ServiceDefaults\BonefireCRM.ServiceDefaults.csproj" />
   </ItemGroup>
-
+	
   <ItemGroup>
     <PackageReference Include="FastEndpoints" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+    <PackageReference Include="FastEndpoints.Swagger" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
