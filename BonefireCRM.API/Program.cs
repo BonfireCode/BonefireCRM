@@ -8,6 +8,15 @@ using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.AddDomainDependencies();
+builder.AddInfrastructureDependencies();
+
+// Add service defaults & Aspire client integrations.
+builder.AddServiceDefaults();
+
+// Add services to the container.
+builder.Services.AddProblemDetails();
+
 builder.Services.AddFastEndpoints()
     .SwaggerDocument(o =>
     {
@@ -18,18 +27,12 @@ builder.Services.AddFastEndpoints()
         };
     });
 
-builder.AddDomainDependencies();
-builder.AddInfrastructureDependencies();
-
-// Add service defaults & Aspire client integrations.
-builder.AddServiceDefaults();
-
-// Add services to the container.
-builder.Services.AddProblemDetails();
-
 var app = builder.Build();
 
 app.UseExceptionHandler();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseFastEndpoints(c =>
 {
@@ -39,15 +42,12 @@ app.UseFastEndpoints(c =>
 if (app.Environment.IsDevelopment())
 {
     app.MigrateDatabases();
-    app.UseOpenApi(option =>
-    option.Path = "/openapi/{documentName}.json");
+
+    app.UseOpenApi(c => c.Path = "/openapi/{documentName}.json");
 
     app.MapScalarApiReference(options =>
         options.WithPersistentAuthentication());
 }
-
-app.UseAuthentication();
-app.UseAuthorization();
 
 app.MapDefaultEndpoints();
 

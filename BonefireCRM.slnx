@@ -11,8 +11,8 @@
     <File Path="stylecop.json" />
   </Folder>
   <Project Path="BonefireCRM.API.Contrat/BonefireCRM.API.Contrat.csproj" />
-  <Project Path="BonefireCRM.API.Tests/BonefireCRM.API.Tests.csproj" Id="67e8fa40-1a69-423b-abc1-227c962acc4f" />
   <Project Path="BonefireCRM.API/BonefireCRM.API.csproj" />
+  <Project Path="BonefireCRM.Domain.Tests/BonefireCRM.Domain.Tests.csproj" Id="97c46e46-2baf-43f2-b261-17a55168a866" />
   <Project Path="BonefireCRM.Domain/BonefireCRM.Domain.csproj" />
   <Project Path="BonefireCRM.Infrastructure/BonefireCRM.Infrastructure.csproj" />
   <Project Path="BonefireCRM.Web/bonefirecrm.web.client/bonefirecrm.web.client.esproj">

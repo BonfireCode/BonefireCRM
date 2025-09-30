@@ -4,7 +4,6 @@ using BonefireCRM.Domain.Exceptions;
 using BonefireCRM.Domain.Infrastructure.Persistance;
 using BonefireCRM.Domain.Mappers;
 using LanguageExt;
-using LanguageExt.Common;
 
 namespace BonefireCRM.Domain.Services
 {
@@ -22,7 +21,7 @@ namespace BonefireCRM.Domain.Services
             var contact = await _contactRepository.GetAsync(id, ct);
             if (contact is null)
             {
-                return null;
+                return Option<GetContactDTO>.None;
             }
 
             return contact.MapToGetDto();
@@ -51,7 +50,7 @@ namespace BonefireCRM.Domain.Services
                 return Fin<CreatedContactDTO>.Fail(new AddEntityException<Contact>());
             }
 
-            return Fin<CreatedContactDTO>.Succ(createdContact.MapToCreatedDto());
+            return createdContact.MapToCreatedDto();
         }
 
         public async Task<Fin<UpdatedContactDTO>> UpdateContactAsync(UpdateContactDTO updateContactDTO, CancellationToken ct)
@@ -66,7 +65,7 @@ namespace BonefireCRM.Domain.Services
                 return Fin<UpdatedContactDTO>.Fail(new UpdateEntityException<Contact>());
             }
 
-            return Fin<UpdatedContactDTO>.Succ(updatedContact.MapToUpdatedDto());
+            return updatedContact.MapToUpdatedDto();
         }
     }
 }
