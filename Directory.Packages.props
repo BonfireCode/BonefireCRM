@@ -4,8 +4,11 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="Aspire.Hosting.AppHost" Version="9.4.2" />
+    <PackageVersion Include="AutoFixture" Version="4.18.1" />
     <PackageVersion Include="FastEndpoints" Version="7.0.1" />
     <PackageVersion Include="FastEndpoints.Swagger" Version="7.0.1" />
+    <PackageVersion Include="FluentAssertions" Version="8.7.0" />
+    <PackageVersion Include="FluentAssertions.LanguageExt" Version="0.5.0" />
     <PackageVersion Include="LanguageExt.Core" Version="4.4.9" />
     <PackageVersion Include="MailKit" Version="4.13.0" />
     <PackageVersion Include="Microsoft.AspNetCore.Authentication.Abstractions" Version="2.3.0" />
@@ -31,6 +34,7 @@
     <PackageVersion Include="Microsoft.Extensions.Identity.Stores" Version="9.0.8" />
     <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="9.4.2" />
     <PackageVersion Include="Microsoft.Identity.Web" Version="3.14.0" />
+    <PackageVersion Include="NSubstitute" Version="5.3.0" />
     <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.12.0" />
     <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.12.0" />
     <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.12.0" />
@@ -42,7 +46,9 @@
     <PackageVersion Include="Microsoft.AspNetCore.SpaProxy" Version="9.0.9" />
     <PackageVersion Include="coverlet.collector" Version="6.0.4" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
-    <PackageVersion Include="xunit.v3" Version="2.0.3" />
-    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.4" />
+    <PackageVersion Include="System.Net.Http" Version="4.3.4" />
+    <PackageVersion Include="System.Text.RegularExpressions" Version="4.3.1" />
+    <PackageVersion Include="xunit.v3" Version="3.1.0" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
   </ItemGroup>
 </Project>

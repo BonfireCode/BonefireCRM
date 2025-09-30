@@ -21,7 +21,7 @@ namespace BonefireCRM.Domain.Services
             var Company = await _companyRepository.GetAsync(id, ct);
             if (Company is null)
             {
-                return null;
+                return Option<GetCompanyDTO>.None;
             }
 
             return Company.MapToGetDto();

@@ -32,6 +32,19 @@ namespace BonefireCRM.Domain.Mappers
             };
         }
 
+        internal static UpdatedContactDTO MapToUpdatedDto(this Contact contact)
+        {
+            return new()
+            {
+                Id = contact.Id,
+                Email = contact.Email,
+                FirstName = contact.FirstName,
+                LastName = contact.LastName,
+                PhoneNumber = contact.PhoneNumber,
+                JobRole = contact.JobRole
+            };
+        }
+
         internal static GetCompanyDTO? MapToGetDto(this Company Company)
         {
             return new GetCompanyDTO
@@ -65,15 +78,6 @@ namespace BonefireCRM.Domain.Mappers
                 Industry = Company.Industry,
                 Address = Company.Address,
                 PhoneNumber = Company.PhoneNumber,
-            };
-        }
-
-        internal static UpdatedContactDTO MapToUpdatedDto(this Contact contact)
-        {
-            return new()
-            {
-                Id = contact.Id,
-                Email = contact.Email,
             };
         }
     }
