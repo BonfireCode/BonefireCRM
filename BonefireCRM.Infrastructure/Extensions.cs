@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -19,6 +20,13 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static TBuilder AddInfrastructureDependencies<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
         {
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .WriteTo.Debug()
+                .CreateLogger();
+            builder.Services.AddSerilog();
+
             var connectionString = builder.Configuration.GetConnectionString("BonefireCRM_Db");
 
             builder.Services.AddDbContext<CRMContext>(options =>
