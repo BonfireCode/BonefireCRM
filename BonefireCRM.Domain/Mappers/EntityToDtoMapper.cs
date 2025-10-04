@@ -1,12 +1,13 @@
 ﻿using BonefireCRM.Domain.DTOs.Company;
 using BonefireCRM.Domain.DTOs.Contact;
+using BonefireCRM.Domain.DTOs.User;
 using BonefireCRM.Domain.Entities;
 
 namespace BonefireCRM.Domain.Mappers
 {
     internal static class EntityToDtoMapper
     {
-        internal static GetContactDTO? MapToGetDto(this Contact contact)
+        internal static GetContactDTO MapToGetDto(this Contact contact)
         {
             return new GetContactDTO
             {
@@ -45,7 +46,7 @@ namespace BonefireCRM.Domain.Mappers
             };
         }
 
-        internal static GetCompanyDTO? MapToGetDto(this Company Company)
+        internal static GetCompanyDTO MapToGetDto(this Company Company)
         {
             return new GetCompanyDTO
             {
@@ -78,6 +79,30 @@ namespace BonefireCRM.Domain.Mappers
                 Industry = Company.Industry,
                 Address = Company.Address,
                 PhoneNumber = Company.PhoneNumber,
+            };
+        }
+
+        internal static GetUserDTO MapToGetDto(this User user)
+        {
+            return new GetUserDTO
+            {
+                Id = user.Id,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Contacts = user.Contacts.Select(c => c.MapToGetDto())
+                //Activities = user.Activities.Select(a => a.MapToGetDto())
+            };
+        }
+
+        internal static UpdatedUserDTO MapToUpdatedDto(this User user)
+        {
+            return new()
+            {
+                Id = user.Id,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
             };
         }
     }

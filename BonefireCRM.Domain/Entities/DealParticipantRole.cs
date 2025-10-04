@@ -15,6 +15,6 @@
         /// </summary>
         public Guid RegisteredByUserId { get; set; }
 
-        public ICollection<DealParticipant> DealParticipants { get; set; } = [];
+        public IEnumerable<DealParticipant> DealParticipants { get; set; } = [];
     }
 }

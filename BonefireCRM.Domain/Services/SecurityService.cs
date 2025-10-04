@@ -149,5 +149,16 @@ namespace BonefireCRM.Domain.Services
             var code = await _appUserManager.GenerateTwoFactorCodeAsync(claimsPrincipal);
             return code;
         }
+
+        public async Task<Fin<bool>> DeleteUserAsync(string userId, CancellationToken ct)
+        {
+            var isDeleted = await _appUserManager.DeleteUserAsync(userId);
+            if (!isDeleted)
+            {
+                return Fin<bool>.Fail(new DeleteUserException());
+            }
+
+            return isDeleted;
+        }
     }
 }

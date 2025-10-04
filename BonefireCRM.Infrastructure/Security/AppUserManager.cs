@@ -3,7 +3,6 @@ using BonefireCRM.Domain.Infrastructure.Email;
 using BonefireCRM.Domain.Infrastructure.Security;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using System.Text;
@@ -274,6 +273,14 @@ namespace BonefireCRM.Infrastructure.Security
             var user = await _userManager.GetUserAsync(claimsPrincipal);
             var code = await _userManager.GenerateTwoFactorTokenAsync(user!, TokenOptions.DefaultEmailProvider);
             return code;
+        }
+
+        public async Task<bool> DeleteUserAsync(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            var result = await _userManager.DeleteAsync(user!);
+
+            return result.Succeeded;
         }
     }
 }
