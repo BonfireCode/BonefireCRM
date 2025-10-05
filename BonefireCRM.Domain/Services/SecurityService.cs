@@ -150,7 +150,7 @@ namespace BonefireCRM.Domain.Services
             return code;
         }
 
-        public async Task<Fin<bool>> DeleteUserAsync(string userId, CancellationToken ct)
+        public async Task<Fin<bool>> DeleteUserAsync(Guid userId, CancellationToken ct)
         {
             var isDeleted = await _appUserManager.DeleteUserAsync(userId);
             if (!isDeleted)

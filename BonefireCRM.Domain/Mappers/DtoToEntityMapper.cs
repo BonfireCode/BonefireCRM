@@ -56,7 +56,7 @@ namespace BonefireCRM.Domain.Mappers
             };
         }
 
-        internal static User MapToUser(this RegisterDTO dto, string registeredUserId)
+        internal static User MapToUser(this RegisterDTO dto, Guid registeredUserId)
         {
             return new()
             {

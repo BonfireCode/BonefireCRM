@@ -1,4 +1,5 @@
-﻿using BonefireCRM.Domain.Infrastructure.Email;
+﻿using BonefireCRM.Domain.Entities;
+using BonefireCRM.Domain.Infrastructure.Email;
 using BonefireCRM.Domain.Infrastructure.Persistance;
 using BonefireCRM.Domain.Infrastructure.Security;
 using BonefireCRM.Infrastructure.Email;
@@ -34,6 +35,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 options.UseSqlite(connectionString);
             });
             builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
 
             builder.Services.AddDbContext<AppDbContext>(options =>
             {

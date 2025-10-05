@@ -9,10 +9,10 @@ namespace BonefireCRM.Domain.Services
 {
     public class UserService
     {
-        private readonly IBaseRepository<User> _userRepository;
+        private readonly IUserRepository _userRepository;
         private readonly SecurityService _securityService;
 
-        public UserService(IBaseRepository<User> userRepository, SecurityService securityService)
+        public UserService(IUserRepository userRepository, SecurityService securityService)
         {
             _userRepository = userRepository;
             _securityService = securityService;
@@ -29,7 +29,7 @@ namespace BonefireCRM.Domain.Services
             return user.MapToGetDto();
         }
 
-        public async Task<Fin<bool>> DeleteUserAsync(Guid id, string registerId, CancellationToken ct)
+        public async Task<Fin<bool>> DeleteUserAsync(Guid id, Guid registerId, CancellationToken ct)
         {
             //Domain validations if needed
 
@@ -58,6 +58,12 @@ namespace BonefireCRM.Domain.Services
             }
 
             return updatedUser.MapToUpdatedDto();
+        }
+
+        internal async Task<Guid> GetUserIdAsync(Guid registerId, CancellationToken ct)
+        {
+            var userId = await _userRepository.GetUserIdAsync(registerId, ct);
+            return userId;
         }
     }
 }

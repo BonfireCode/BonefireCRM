@@ -3,7 +3,7 @@
     public class UpdateUserDTO
     {
         public Guid Id { get; set; }
-        public string RegisterId { get; set; } = string.Empty;
+        public Guid RegisterId { get; set; }
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;

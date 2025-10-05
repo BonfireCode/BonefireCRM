@@ -14,6 +14,6 @@ namespace BonefireCRM.Domain.Infrastructure.Security
         Task<GetInfoResultDTO> GetInfo(ClaimsPrincipal claimsPrincipal);
         Task<CreateInfoResultDTO> CreateInfo(CreateInfoDTO createInfoDTO, ClaimsPrincipal claimsPrincipal);
         Task<string> GenerateTwoFactorCodeAsync(ClaimsPrincipal claimsPrincipal);
-        Task<bool> DeleteUserAsync(string userId);
+        Task<bool> DeleteUserAsync(Guid userId);
     }
 }

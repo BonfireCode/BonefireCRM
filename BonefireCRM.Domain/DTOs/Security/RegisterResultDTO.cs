@@ -2,7 +2,7 @@
 {
     public class RegisterResultDTO
     {
-        public string UserId { get; set; } = string.Empty;
+        public Guid UserId { get; set; }
 
         public KeyValuePair<string, string> ValidationError { get; set; }
     }

@@ -9,7 +9,7 @@ namespace BonefireCRM.API.User.Mappers
 {
     internal static class RequestToDtoMapper
     {
-        internal static UpdateUserDTO MapToDto(UpdateUserRequest request, Guid id, string registerId)
+        internal static UpdateUserDTO MapToDto(UpdateUserRequest request, Guid id, Guid registerId)
         {
             return new()
             {

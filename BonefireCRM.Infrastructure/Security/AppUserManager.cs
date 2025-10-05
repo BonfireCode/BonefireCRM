@@ -44,7 +44,7 @@ namespace BonefireCRM.Infrastructure.Security
                 return registerResultDTO;
             }
 
-            registerResultDTO.UserId = await _userManager.GetUserIdAsync(user);
+            registerResultDTO.UserId = Guid.Parse(await _userManager.GetUserIdAsync(user));
 
             var confirmationtoken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             await _emailSender.SendConfirmationEmailAsync(registerResultDTO.UserId, user.Email!, confirmationtoken);
@@ -275,9 +275,9 @@ namespace BonefireCRM.Infrastructure.Security
             return code;
         }
 
-        public async Task<bool> DeleteUserAsync(string userId)
+        public async Task<bool> DeleteUserAsync(Guid userId)
         {
-            var user = await _userManager.FindByIdAsync(userId);
+            var user = await _userManager.FindByIdAsync(userId.ToString());
             var result = await _userManager.DeleteAsync(user!);
 
             return result.Succeeded;

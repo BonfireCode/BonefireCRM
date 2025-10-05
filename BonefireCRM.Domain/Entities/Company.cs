@@ -15,8 +15,8 @@
 
         public string PhoneNumber { get; set; } = string.Empty;
 
-        public IEnumerable<Contact> Contacts { get; set; } = [];
+        public ICollection<Contact> Contacts { get; set; } = [];
 
-        public IEnumerable<Deal> Deals { get; set; } = [];
+        public ICollection<Deal> Deals { get; set; } = [];
     }
 }

@@ -10,7 +10,7 @@ namespace BonefireCRM.Domain.Entities
     /// </summary>
     public class User : BaseEntity
     {
-        public required string RegisterId { get; set; }
+        public required Guid RegisterId { get; set; }
 
         public string UserName { get; set; } = string.Empty;
 
@@ -20,8 +20,8 @@ namespace BonefireCRM.Domain.Entities
 
         public string LastName { get; set; } = string.Empty;
 
-        public IEnumerable<Contact> Contacts { get; set; } = [];
+        public ICollection<Contact> Contacts { get; set; } = [];
 
-        public IEnumerable<Activity> Activities { get; set; } = [];
+        public ICollection<Activity> Activities { get; set; } = [];
     }
 }

@@ -28,9 +28,9 @@ namespace BonefireCRM.API.User.Endpoints
         {
             var id = Route<Guid>("id");
 
-            var registerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var registerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-            var result = await _userService.DeleteUserAsync(id, registerId!, ct);
+            var result = await _userService.DeleteUserAsync(id, registerId, ct);
             var response = result.Match<Results<NoContent, NotFound>>
             (
                 Succ => TypedResults.NoContent(),
