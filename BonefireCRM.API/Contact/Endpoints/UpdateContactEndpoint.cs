@@ -29,7 +29,7 @@ namespace BonefireCRM.API.Contact.Endpoints
         {
             var id = Route<Guid>("id");
 
-            var dtoContact = RequestToDtoMapper.MapToDto(request, id);
+            var dtoContact = request.MapToDto(id);
 
             var result = await _contactService.UpdateContactAsync(dtoContact, ct);
 

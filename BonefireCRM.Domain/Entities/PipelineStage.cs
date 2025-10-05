@@ -18,6 +18,6 @@ namespace BonefireCRM.Domain.Entities
 
         public Guid PipelineId { get; set; }
 
-        public ICollection<Deal> Deals { get; set; } = [];
+        public IEnumerable<Deal> Deals { get; set; } = [];
     }
 }

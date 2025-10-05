@@ -1,4 +1,6 @@
-﻿namespace BonefireCRM.API.Contrat.User
+﻿using BonefireCRM.API.Contrat.Contact;
+
+namespace BonefireCRM.API.Contrat.User
 {
     public sealed class UpdateUserResponse
     {
@@ -6,5 +8,7 @@
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
+        public IEnumerable<UpdateContactResponse> Contacts { get; set; } = [];
+        //public IEnumerable<UpdateActivityResponse> Activities { get; set; } = [];
     }
 }

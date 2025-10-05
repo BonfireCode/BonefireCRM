@@ -60,7 +60,7 @@ namespace BonefireCRM.Domain.Services
             return updatedUser.MapToUpdatedDto();
         }
 
-        internal async Task<Guid> GetUserIdAsync(Guid registerId, CancellationToken ct)
+        public async Task<Guid> GetUserIdAsync(Guid registerId, CancellationToken ct)
         {
             var userId = await _userRepository.GetUserIdAsync(registerId, ct);
             return userId;

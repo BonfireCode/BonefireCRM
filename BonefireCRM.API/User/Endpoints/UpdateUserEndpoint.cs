@@ -32,7 +32,7 @@ namespace BonefireCRM.API.User.Endpoints
 
             var registerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-            var dtoUser = RequestToDtoMapper.MapToDto(request, id, registerId);
+            var dtoUser = request.MapToDto(id, registerId);
 
             var result = await _userService.UpdateUserAsync(dtoUser, ct);
 

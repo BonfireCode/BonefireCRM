@@ -16,7 +16,10 @@ namespace BonefireCRM.Domain.Mappers
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
                 PhoneNumber = dto.PhoneNumber,
-                JobRole = dto.JobRole
+                JobRole = dto.JobRole,
+                UserId = dto.UserId,
+                LifecycleStageId = dto.LifecycleStageId,
+                CompanyId = dto.CompanyId == Guid.Empty ? null : dto.CompanyId,
             };
         }
 
@@ -30,6 +33,8 @@ namespace BonefireCRM.Domain.Mappers
                 LastName = dto.LastName,
                 PhoneNumber = dto.PhoneNumber,
                 JobRole = dto.JobRole,
+                LifecycleStageId = dto.LifecycleStageId,
+                CompanyId = dto.CompanyId == Guid.Empty ? null : dto.CompanyId,
             };
         }
 

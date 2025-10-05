@@ -19,6 +19,9 @@ namespace BonefireCRM.API.Contact.Mappers
                 LastName = dto.LastName,
                 JobRole = dto.JobRole,
                 PhoneNumber = dto.PhoneNumber,
+                LifecycleStageId = dto.LifecycleStageId,
+                CompanyId = dto.CompanyId,
+                UserId = dto.UserId,
             };
         }
 
@@ -32,6 +35,9 @@ namespace BonefireCRM.API.Contact.Mappers
                 LastName = dto.LastName,
                 JobRole = dto.JobRole,
                 PhoneNumber = dto.PhoneNumber,
+                CompanyId = dto.CompanyId,
+                LifecycleStageId = dto.LifecycleStageId,
+                UserId = dto.UserId,
             };
         }
 
@@ -45,6 +51,9 @@ namespace BonefireCRM.API.Contact.Mappers
                 LastName = dto.LastName,
                 JobRole = dto.JobRole,
                 PhoneNumber = dto.PhoneNumber,
+                LifecycleStageId = dto.LifecycleStageId,
+                CompanyId = dto.CompanyId,
+                UserId = dto.UserId,
             };
         }
     }

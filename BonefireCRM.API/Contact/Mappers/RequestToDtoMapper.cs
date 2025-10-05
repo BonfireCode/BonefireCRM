@@ -9,7 +9,7 @@ namespace BonefireCRM.API.Contact.Mappers
 {
     internal static class RequestToDtoMapper
     {
-        internal static CreateContactDTO MapToDto(CreateContactRequest request)
+        internal static CreateContactDTO MapToDto(this CreateContactRequest request, Guid userId)
         {
             return new()
             {
@@ -18,10 +18,13 @@ namespace BonefireCRM.API.Contact.Mappers
                 LastName = request.LastName,
                 JobRole = request.JobRole,
                 PhoneNumber = request.PhoneNumber,
+                LifecycleStageId = request.LifecycleStageId,
+                CompanyId = request.CompanyId,
+                UserId = userId,
             };
         }
 
-        internal static UpdateContactDTO MapToDto(UpdateContactRequest request, Guid id)
+        internal static UpdateContactDTO MapToDto(this UpdateContactRequest request, Guid id)
         {
             return new()
             {
@@ -31,6 +34,8 @@ namespace BonefireCRM.API.Contact.Mappers
                 LastName = request.LastName,
                 JobRole = request.JobRole,
                 PhoneNumber = request.PhoneNumber,
+                LifecycleStageId = request.LifecycleStageId,
+                CompanyId = request.CompanyId,
             };
         }
     }

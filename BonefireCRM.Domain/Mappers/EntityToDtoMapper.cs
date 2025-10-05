@@ -16,7 +16,10 @@ namespace BonefireCRM.Domain.Mappers
                 FirstName = contact.FirstName,
                 LastName = contact.LastName,
                 PhoneNumber = contact.PhoneNumber,
-                JobRole = contact.JobRole
+                JobRole = contact.JobRole,
+                LifecycleStageId = contact.LifecycleStageId,
+                CompanyId = contact.CompanyId ?? Guid.Empty,
+                UserId = contact.UserId,
             };
         }
 
@@ -29,7 +32,10 @@ namespace BonefireCRM.Domain.Mappers
                 FirstName = contact.FirstName,
                 LastName = contact.LastName,
                 PhoneNumber = contact.PhoneNumber,
-                JobRole = contact.JobRole
+                JobRole = contact.JobRole,
+                LifecycleStageId = contact.LifecycleStageId,
+                CompanyId = contact.CompanyId ?? Guid.Empty,
+                UserId = contact.UserId,
             };
         }
 
@@ -42,7 +48,10 @@ namespace BonefireCRM.Domain.Mappers
                 FirstName = contact.FirstName,
                 LastName = contact.LastName,
                 PhoneNumber = contact.PhoneNumber,
-                JobRole = contact.JobRole
+                JobRole = contact.JobRole,
+                LifecycleStageId = contact.LifecycleStageId,
+                CompanyId = contact.CompanyId ?? Guid.Empty,
+                UserId = contact.UserId,
             };
         }
 
@@ -90,7 +99,7 @@ namespace BonefireCRM.Domain.Mappers
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Contacts = user.Contacts.Select(c => c.MapToGetDto())
+                Contacts = user.Contacts.Select(c => c.MapToGetDto()),
                 //Activities = user.Activities.Select(a => a.MapToGetDto())
             };
         }
@@ -103,6 +112,8 @@ namespace BonefireCRM.Domain.Mappers
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
+                Contacts = user.Contacts.Select(c => c.MapToUpdatedDto()),
+                //Activities = user.Activities.Select(a => a.MapToUpdatedDto())
             };
         }
     }

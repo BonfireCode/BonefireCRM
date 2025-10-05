@@ -2,6 +2,7 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
+using BonefireCRM.API.Contact.Mappers;
 using BonefireCRM.API.Contrat.User;
 using BonefireCRM.Domain.DTOs.User;
 
@@ -17,6 +18,8 @@ namespace BonefireCRM.API.User.Mappers
                 Email = dto.Email,
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
+                Contacts = dto.Contacts.Select(c => c.MapToResponse()),
+                //Activities = user.Activities.Select(a => a.MapToResponse())
             };
         }
 
@@ -28,6 +31,8 @@ namespace BonefireCRM.API.User.Mappers
                 Email = dto.Email,
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
+                Contacts = dto.Contacts.Select(c => c.MapToResponse()),
+                //Activities = user.Activities.Select(a => a.MapToResponse())
             };
         }
     }
