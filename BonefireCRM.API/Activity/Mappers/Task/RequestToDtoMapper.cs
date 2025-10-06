@@ -9,10 +9,18 @@ namespace BonefireCRM.API.Company.Mappers.Task
 {
     internal static class RequestToDtoMapper
     {
-        internal static CreateTaskDTO MapToDto(CreateTaskRequest request)
+        internal static CreateTaskDTO MapToDto(CreateTaskRequest request, Guid userId)
         {
             return new()
             {
+                CompanyId = request.CompanyId,
+                ContactId = request.ContactId,
+                DealId = request.DealId,
+                Subject = request.Subject,
+                Description = request.Description,
+                DueDate = request.DueDate,
+                IsCompleted = request.IsCompleted,
+                UserId = userId,
             };
         }
 
@@ -20,6 +28,14 @@ namespace BonefireCRM.API.Company.Mappers.Task
         {
             return new()
             {
+                Id = id,
+                CompanyId = request.CompanyId,
+                ContactId = request.ContactId,
+                DealId = request.DealId,
+                Subject = request.Subject,
+                Description = request.Description,
+                DueDate = request.DueDate,
+                IsCompleted = request.IsCompleted,
             };
         }
     }

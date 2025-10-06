@@ -2,7 +2,7 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
-using BonefireCRM.API.Contrat.Call;
+using BonefireCRM.API.Company.Mappers.Task;
 using BonefireCRM.API.Contrat.Task;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
@@ -26,7 +26,15 @@ namespace BonefireCRM.API.Activity.Endpoints.Task
 
         public override async Task<Results<Ok<GetTaskResponse>, NotFound>> ExecuteAsync(CancellationToken ct)
         {
-            throw new NotImplementedException();
+            var id = Route<Guid>("id");
+
+            var result = await _activityService.GetTaskAsync(id, ct);
+
+            var response = result.Match<Results<Ok<GetTaskResponse>, NotFound>>(
+                dtoTask => TypedResults.Ok(dtoTask.MapToResponse()),
+                TypedResults.NotFound());
+
+            return response;
         }
     }
 }

@@ -24,8 +24,15 @@ namespace BonefireCRM.API.Activity.Endpoints.Task
 
         public override async Task<Results<NoContent, NotFound>> ExecuteAsync(CancellationToken ct)
         {
-            throw new NotImplementedException();
+            var id = Route<Guid>("id");
+
+            var isDeleted = await _activityService.DeleteTaskAsync(id, ct);
+            if (isDeleted)
+            {
+                return TypedResults.NoContent();
+            }
+
+            return TypedResults.NotFound();
         }
     }
-
 }

@@ -15,6 +15,14 @@ namespace BonefireCRM.API.Company.Mappers.Task
         {
             return new()
             {
+                Id = dto.Id,
+                CompanyId = dto.CompanyId,
+                DealId = dto.DealId,
+                ContactId = dto.ContactId,
+                Subject = dto.Subject,
+                Description = dto.Description,
+                DueDate = dto.DueDate,
+                IsCompleted = dto.IsCompleted,
             };
         }
 
@@ -22,6 +30,14 @@ namespace BonefireCRM.API.Company.Mappers.Task
         {
             return new()
             {
+                Id = dto.Id,
+                CompanyId = dto.CompanyId,
+                DealId = dto.DealId,
+                ContactId = dto.ContactId,
+                Subject = dto.Subject,
+                Description = dto.Description,
+                DueDate = dto.DueDate,
+                IsCompleted = dto.IsCompleted,
             };
         }
 
@@ -29,6 +45,14 @@ namespace BonefireCRM.API.Company.Mappers.Task
         {
             return new()
             {
+                Id = dto.Id,
+                CompanyId = dto.CompanyId,
+                DealId = dto.DealId,
+                ContactId = dto.ContactId,
+                Subject = dto.Subject,
+                Description = dto.Description,
+                DueDate = dto.DueDate,
+                IsCompleted = dto.IsCompleted,
             };
         }
     }

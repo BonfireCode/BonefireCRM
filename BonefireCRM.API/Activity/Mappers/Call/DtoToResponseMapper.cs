@@ -13,6 +13,13 @@ namespace BonefireCRM.API.Company.Mappers.Call
         {
             return new()
             {
+                Id = dto.Id,
+                CompanyId = dto.CompanyId,
+                ContactId = dto.ContactId,
+                CallTime = dto.CallTime,
+                Duration = dto.Duration,
+                Notes = dto.Notes,
+                DealId = dto.DealId,
             };
         }
 
@@ -20,6 +27,13 @@ namespace BonefireCRM.API.Company.Mappers.Call
         {
             return new()
             {
+                DealId = dto.DealId,
+                Id = dto.Id,
+                ContactId = dto.ContactId,
+                CompanyId = dto.CompanyId,
+                CallTime = dto.CallTime,
+                Duration = dto.Duration,
+                Notes = dto.Notes,
             };
         }
 
@@ -27,6 +41,13 @@ namespace BonefireCRM.API.Company.Mappers.Call
         {
             return new()
             {
+                Notes = dto.Notes,
+                Id = dto.Id,
+                ContactId = dto.ContactId,
+                CompanyId = dto.CompanyId,
+                CallTime = dto.CallTime,
+                Duration = dto.Duration,
+                DealId = dto.DealId,
             };
         }
     }

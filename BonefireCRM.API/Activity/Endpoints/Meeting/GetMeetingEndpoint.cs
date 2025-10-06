@@ -2,6 +2,8 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
+using BonefireCRM.API.Company.Mappers.Meeting;
+using BonefireCRM.API.Contrat.Meeting;
 using BonefireCRM.API.Contrat.Meeting;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
@@ -25,7 +27,15 @@ namespace BonefireCRM.API.Activity.Endpoints.Meeting
 
         public override async Task<Results<Ok<GetMeetingResponse>, NotFound>> ExecuteAsync(CancellationToken ct)
         {
-            throw new NotImplementedException();
+            var id = Route<Guid>("id");
+
+            var result = await _activityService.GetMeetingAsync(id, ct);
+
+            var response = result.Match<Results<Ok<GetMeetingResponse>, NotFound>>(
+                dtoMeeting => TypedResults.Ok(dtoMeeting.MapToResponse()),
+                TypedResults.NotFound());
+
+            return response;
         }
     }
 }

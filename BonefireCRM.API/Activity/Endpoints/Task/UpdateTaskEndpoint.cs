@@ -2,7 +2,7 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
-using BonefireCRM.API.Contrat.Call;
+using BonefireCRM.API.Company.Mappers.Task;
 using BonefireCRM.API.Contrat.Task;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BonefireCRM.API.Activity.Endpoints.Task
 {
-    public class UpdateTaskEndpoint : Endpoint<UpdateTaskRequest, Results<Created<UpdateTaskResponse>, InternalServerError>>
+    public class UpdateTaskEndpoint : Endpoint<UpdateTaskRequest, Results<Ok<UpdateTaskResponse>, NotFound, InternalServerError>>
     {
         private readonly ActivityService _activityService;
 
@@ -24,9 +24,19 @@ namespace BonefireCRM.API.Activity.Endpoints.Task
             Put("/activity/tasks/{id:guid}");
         }
 
-        public override async Task<Results<Created<UpdateTaskResponse>, InternalServerError>> ExecuteAsync(UpdateTaskRequest request, CancellationToken ct)
+        public override async Task<Results<Ok<UpdateTaskResponse>, NotFound, InternalServerError>> ExecuteAsync(UpdateTaskRequest request, CancellationToken ct)
         {
-            throw new NotImplementedException();
+            var id = Route<Guid>("id");
+
+            var dtoTask = RequestToDtoMapper.MapToDto(request, id);
+
+            var result = await _activityService.UpdateTaskAsync(dtoTask, ct);
+
+            var response = result.Match<Results<Ok<UpdateTaskResponse>, NotFound, InternalServerError>>(
+                updatedTask => TypedResults.Ok(updatedTask.MapToResponse()),
+                _ => TypedResults.InternalServerError());
+
+            return response;
         }
     }
 }
