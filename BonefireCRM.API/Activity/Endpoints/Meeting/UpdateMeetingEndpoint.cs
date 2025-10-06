@@ -2,6 +2,7 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
+using BonefireCRM.API.Company.Mappers.Meeting;
 using BonefireCRM.API.Contrat.Meeting;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
@@ -9,7 +10,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BonefireCRM.API.Activity.Endpoints.Meeting
 {
-    public class UpdateMeetingEndpoint : Endpoint<UpdateMeetingRequest, Results<Created<UpdateMeetingResponse>, InternalServerError>>
+    public class UpdateMeetingEndpoint : Endpoint<UpdateMeetingRequest, Results<Ok<UpdateMeetingResponse>, NotFound, InternalServerError>>
     {
         private readonly ActivityService _activityService;
 
@@ -23,9 +24,19 @@ namespace BonefireCRM.API.Activity.Endpoints.Meeting
             Put("/activity/mettings/{id:guid}");
         }
 
-        public override async Task<Results<Created<UpdateMeetingResponse>, InternalServerError>> ExecuteAsync(UpdateMeetingRequest request, CancellationToken ct)
+        public override async Task<Results<Ok<UpdateMeetingResponse>, NotFound, InternalServerError>> ExecuteAsync(UpdateMeetingRequest request, CancellationToken ct)
         {
-            throw new NotImplementedException();
+            var id = Route<Guid>("id");
+
+            var dtoMeeting = RequestToDtoMapper.MapToDto(request, id);
+
+            var result = await _activityService.UpdateMeetingAsync(dtoMeeting, ct);
+
+            var response = result.Match<Results<Ok<UpdateMeetingResponse>, NotFound, InternalServerError>>(
+                updatedMeeting => TypedResults.Ok(updatedMeeting.MapToResponse()),
+                _ => TypedResults.InternalServerError());
+
+            return response;
         }
     }
 }

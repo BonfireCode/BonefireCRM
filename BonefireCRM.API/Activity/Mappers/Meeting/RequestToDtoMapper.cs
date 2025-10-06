@@ -9,10 +9,18 @@ namespace BonefireCRM.API.Company.Mappers.Meeting
 {
     internal static class RequestToDtoMapper
     {
-        internal static CreateMeetingDTO MapToDto(CreateMeetingRequest request)
+        internal static CreateMeetingDTO MapToDto(CreateMeetingRequest request, Guid userId)
         {
             return new()
             {
+                EndTime = request.EndTime,
+                StartTime = request.StartTime,
+                Notes = request.Notes,
+                Subject = request.Subject,
+                CompanyId = request.CompanyId,
+                ContactId = request.ContactId,
+                DealId = request.DealId,
+                UserId = userId,
             };
         }
 
@@ -20,6 +28,14 @@ namespace BonefireCRM.API.Company.Mappers.Meeting
         {
             return new()
             {
+                Id = id,
+                EndTime = request.EndTime,
+                StartTime = request.StartTime,
+                Notes = request.Notes,
+                Subject = request.Subject,
+                CompanyId = request.CompanyId,
+                ContactId = request.ContactId,
+                DealId = request.DealId,
             };
         }
     }

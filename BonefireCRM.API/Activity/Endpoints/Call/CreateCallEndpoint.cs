@@ -2,6 +2,8 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
+using System.Security.Claims;
+using BonefireCRM.API.Company.Mappers.Call;
 using BonefireCRM.API.Contrat.Call;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
@@ -25,7 +27,16 @@ namespace BonefireCRM.API.Activity.Endpoints.Call
 
         public override async Task<Results<Created<CreateCallResponse>, InternalServerError>> ExecuteAsync(CreateCallRequest request, CancellationToken ct)
         {
-            throw new NotImplementedException();
+            var registerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) !);
+            var dtoCall = RequestToDtoMapper.MapToDto(request, registerId);
+
+            var result = await _activityService.CreateCallAsync(dtoCall, ct);
+
+            var response = result.Match<Results<Created<CreateCallResponse>, InternalServerError>>(
+                createdCall => TypedResults.Created($"/activity/calls/{createdCall.Id}", createdCall.MapToResponse()),
+                _ => TypedResults.InternalServerError());
+
+            return response;
         }
     }
 }

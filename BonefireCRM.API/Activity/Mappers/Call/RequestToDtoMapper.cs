@@ -3,18 +3,23 @@
 // </copyright>
 
 using BonefireCRM.API.Contrat.Call;
-using BonefireCRM.API.Contrat.Company;
 using BonefireCRM.Domain.DTOs.Activity.Call;
-using BonefireCRM.Domain.DTOs.Company;
 
 namespace BonefireCRM.API.Company.Mappers.Call
 {
     internal static class RequestToDtoMapper
     {
-        internal static CreateCallDTO MapToDto(CreateCallRequest request)
+        internal static CreateCallDTO MapToDto(CreateCallRequest request, Guid userId)
         {
             return new()
             {
+                DealId = request.DealId,
+                ContactId = request.ContactId,
+                CompanyId = request.CompanyId,
+                CallTime = request.CallTime,
+                Duration = request.Duration,
+                Notes = request.Notes,
+                UserId = userId,
             };
         }
 
@@ -22,6 +27,13 @@ namespace BonefireCRM.API.Company.Mappers.Call
         {
             return new()
             {
+                Id = id,
+                DealId = request.DealId,
+                ContactId = request.ContactId,
+                CompanyId = request.CompanyId,
+                CallTime = request.CallTime,
+                Duration = request.Duration,
+                Notes = request.Notes,
             };
         }
     }
