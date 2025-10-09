@@ -8,7 +8,7 @@ using MimeKit.Text;
 using System.Text;
 using System.Text.Encodings.Web;
 
-namespace BonefireCRM.Infrastructure.Email
+namespace BonefireCRM.Infrastructure.Emailing
 {
     internal class EmailSender : IEmailSender
     {

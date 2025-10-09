@@ -1,5 +1,4 @@
-﻿using BonefireCRM.Domain.Entities;
-using BonefireCRM.Domain.Infrastructure.Persistance;
+﻿using BonefireCRM.Domain.Infrastructure.Persistance;
 
 namespace BonefireCRM.Infrastructure.Persistance
 {

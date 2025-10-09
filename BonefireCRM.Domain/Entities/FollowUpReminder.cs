@@ -5,8 +5,6 @@
     /// </summary>
     public class FollowUpReminder : BaseEntity
     {
-        public int ReminderId { get; set; }
-
         public string Note { get; set; } = string.Empty;
 
         public DateTime DueDate { get; set; }

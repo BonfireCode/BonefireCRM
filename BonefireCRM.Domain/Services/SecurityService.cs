@@ -13,11 +13,11 @@ namespace BonefireCRM.Domain.Services
     {
         private readonly IAppUserManager _appUserManager;
         private readonly IAppSignInManager _appSignInManager;
-        private readonly IBaseRepository<User> _userRepository;
+        private readonly IUserRepository _userRepository;
         private readonly SeedUserDataService _seedUserDataService;
 
 
-        public SecurityService(IAppUserManager appUserManager, IAppSignInManager appSignInManager, IBaseRepository<User> userRepository, SeedUserDataService seedUserDataService)
+        public SecurityService(IAppUserManager appUserManager, IAppSignInManager appSignInManager, IUserRepository userRepository, SeedUserDataService seedUserDataService)
         {
             _appUserManager = appUserManager;
             _appSignInManager = appSignInManager;
