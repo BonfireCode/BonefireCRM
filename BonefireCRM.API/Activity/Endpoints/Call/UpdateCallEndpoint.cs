@@ -4,7 +4,6 @@
 
 using BonefireCRM.API.Company.Mappers.Call;
 using BonefireCRM.API.Contrat.Call;
-using BonefireCRM.API.Contrat.Call;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
