@@ -22,6 +22,20 @@ namespace BonefireCRM.API.Activity.Endpoints.Call
         public override void Configure()
         {
             Get("/activity/calls/{id:guid}");
+
+            Summary(s =>
+            {
+                s.Summary = "Retrieves a specific call activity by ID.";
+                s.Description = "Fetches detailed information about a call identified by its unique ID.";
+
+                s.Params["id"] = "The unique identifier (GUID) of the call to retrieve.";
+
+                s.Response<Ok<GetCallResponse>>(200, "Call details successfully retrieved.");
+                s.Response<NotFound>(404, "The specified call could not be found.");
+                s.Response<ProblemDetails>(400, "Invalid request. The provided call ID is not valid.");
+                s.Response<UnauthorizedHttpResult>(401, "User is not authorized to access this resource.");
+                s.Response<InternalServerError>(500, "An internal server error occurred while retrieving the call details.");
+            });
         }
 
         public override async Task<Results<Ok<GetCallResponse>, NotFound>> ExecuteAsync(CancellationToken ct)
