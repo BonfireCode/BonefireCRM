@@ -15,10 +15,12 @@ namespace BonefireCRM.API.Activity.Endpoints.Meeting
     public class CreateMeetingEndpoint : Endpoint<CreateMeetingRequest, Results<Created<CreateMeetingResponse>, InternalServerError>>
     {
         private readonly ActivityService _activityService;
+        private readonly UserService _userService;
 
-        public CreateMeetingEndpoint(ActivityService activityService)
+        public CreateMeetingEndpoint(ActivityService activityService, UserService userService)
         {
             _activityService = activityService;
+            _userService = userService;
         }
 
         public override void Configure()
@@ -29,8 +31,9 @@ namespace BonefireCRM.API.Activity.Endpoints.Meeting
         public override async Task<Results<Created<CreateMeetingResponse>, InternalServerError>> ExecuteAsync(CreateMeetingRequest request, CancellationToken ct)
         {
             var registerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) !);
+            var userId = await _userService.GetUserIdAsync(registerId, ct);
 
-            var dtoMeeting = RequestToDtoMapper.MapToDto(request, registerId);
+            var dtoMeeting = RequestToDtoMapper.MapToDto(request, userId);
 
             var result = await _activityService.CreateMeetingAsync(dtoMeeting, ct);
 

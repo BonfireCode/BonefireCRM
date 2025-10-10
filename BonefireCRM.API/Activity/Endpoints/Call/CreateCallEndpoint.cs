@@ -14,10 +14,12 @@ namespace BonefireCRM.API.Activity.Endpoints.Call
     public class CreateCallEndpoint : Endpoint<CreateCallRequest, Results<Created<CreateCallResponse>, InternalServerError>>
     {
         private readonly ActivityService _activityService;
+        private readonly UserService _userService;
 
-        public CreateCallEndpoint(ActivityService activityService)
+        public CreateCallEndpoint(ActivityService activityService, UserService userService)
         {
             _activityService = activityService;
+            _userService = userService;
         }
 
         public override void Configure()
@@ -27,8 +29,10 @@ namespace BonefireCRM.API.Activity.Endpoints.Call
 
         public override async Task<Results<Created<CreateCallResponse>, InternalServerError>> ExecuteAsync(CreateCallRequest request, CancellationToken ct)
         {
-            var registerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) !);
-            var dtoCall = RequestToDtoMapper.MapToDto(request, registerId);
+            var registerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var userId = await _userService.GetUserIdAsync(registerId, ct);
+
+            var dtoCall = RequestToDtoMapper.MapToDto(request, userId);
 
             var result = await _activityService.CreateCallAsync(dtoCall, ct);
 

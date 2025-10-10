@@ -13,10 +13,12 @@ namespace BonefireCRM.API.Activity.Endpoints.Task
     public class CreateTaskEndpoint : Endpoint<CreateTaskRequest, Results<Created<CreateTaskResponse>, InternalServerError>>
     {
         private readonly ActivityService _activityService;
+        private readonly UserService _userService;
 
-        public CreateTaskEndpoint(ActivityService activityService)
+        public CreateTaskEndpoint(ActivityService activityService, UserService userService)
         {
             _activityService = activityService;
+            _userService = userService;
         }
 
         public override void Configure()
@@ -26,9 +28,10 @@ namespace BonefireCRM.API.Activity.Endpoints.Task
 
         public override async Task<Results<Created<CreateTaskResponse>, InternalServerError>> ExecuteAsync(CreateTaskRequest request, CancellationToken ct)
         {
-            var registerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var registerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) !);
+            var userId = await _userService.GetUserIdAsync(registerId, ct);
 
-            var dtoTask = RequestToDtoMapper.MapToDto(request, registerId);
+            var dtoTask = RequestToDtoMapper.MapToDto(request, userId);
 
             var result = await _activityService.CreateTaskAsync(dtoTask, ct);
 
