@@ -32,7 +32,7 @@ namespace BonefireCRM.API.Security.Endpoints
 
             var response = result.Match<Results<Ok<GetInfoResponse>, ProblemHttpResult>>
             (
-                dto => TypedResults.Ok(DtoToResponseMapper.MapToResponse(dto)),
+                dto => TypedResults.Ok(dto.MapToResponse()),
                 error => TypedResults.Problem(error.Message, statusCode: StatusCodes.Status404NotFound)
             );
 

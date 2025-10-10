@@ -27,7 +27,7 @@ namespace BonefireCRM.API.Security.Endpoints
 
         public override async Task<Results<Ok, UnauthorizedHttpResult>> ExecuteAsync(ConfirmEmailRequest request, CancellationToken ct)
         {
-            var confirmEmailDTO = RequestToDtoMapper.MapToDto(request);
+            var confirmEmailDTO = request.MapToDto();
 
             var result = await _securityService.ConfirmUserEmail(confirmEmailDTO, ct);
 

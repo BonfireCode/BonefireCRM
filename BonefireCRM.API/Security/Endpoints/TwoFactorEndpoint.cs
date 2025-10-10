@@ -28,13 +28,13 @@ namespace BonefireCRM.API.Security.Endpoints
         {
             var claimsPrincipal = User;
 
-            var twoFactorDTO = RequestToDtoMapper.MapToDto(request);
+            var twoFactorDTO = request.MapToDto();
 
             var result = await _securityService.ManageUserTwoFactor(twoFactorDTO, claimsPrincipal, ct);
 
             var response = result.Match<Results<Ok<TwoFactorResponse>, ProblemHttpResult>>
             (
-                dto => TypedResults.Ok(DtoToResponseMapper.MapToResponse(dto)),
+                dto => TypedResults.Ok(dto.MapToResponse()),
                 error => TypedResults.Problem(error.Message)
             );
 

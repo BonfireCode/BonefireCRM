@@ -2,6 +2,8 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
+using BonefireCRM.API.Exception;
+using BonefireCRM.API.Telemetry;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using Scalar.AspNetCore;
@@ -14,8 +16,15 @@ builder.AddInfrastructureDependencies();
 // Add service defaults & Aspire client integrations.
 builder.AddServiceDefaults();
 
-// Add services to the container.
-builder.Services.AddProblemDetails();
+builder.Services.AddProblemDetails(options =>
+{
+    options.CustomizeProblemDetails = ctx =>
+    {
+        ctx.ProblemDetails.Instance = $"{ctx.HttpContext.Request.Method} {ctx.HttpContext.Request.Path}";
+        ctx.ProblemDetails.Extensions.TryAdd("requestId", ctx.HttpContext.TraceIdentifier);
+    };
+});
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 builder.Services.AddFastEndpoints()
     .SwaggerDocument(o =>
@@ -37,10 +46,16 @@ app.UseAuthorization();
 app.UseFastEndpoints(c =>
 {
     c.Endpoints.RoutePrefix = "api";
+    c.Endpoints.Configurator = ep =>
+    {
+        ep.Options(b => b.AddEndpointFilter<GlobalLoggingFilter>());
+    };
 });
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
+
     app.MigrateDatabases();
 
     app.UseOpenApi(c => c.Path = "/openapi/{documentName}.json");

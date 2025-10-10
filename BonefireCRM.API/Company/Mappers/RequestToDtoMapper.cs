@@ -9,7 +9,7 @@ namespace BonefireCRM.API.Company.Mappers
 {
     internal static class RequestToDtoMapper
     {
-        internal static CreateCompanyDTO MapToDto(CreateCompanyRequest request)
+        internal static CreateCompanyDTO MapToDto(this CreateCompanyRequest request)
         {
             return new()
             {
@@ -20,7 +20,7 @@ namespace BonefireCRM.API.Company.Mappers
             };
         }
 
-        internal static UpdateCompanyDTO MapToDto(UpdateCompanyRequest request, Guid id)
+        internal static UpdateCompanyDTO MapToDto(this UpdateCompanyRequest request, Guid id)
         {
             return new()
             {

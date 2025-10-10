@@ -7,7 +7,7 @@
     {
         public Guid UserId { get; set; }
 
-        public Guid? ContactId { get; set; }
+        public Guid ContactId { get; set; }
 
         public Guid? CompanyId { get; set; }
 

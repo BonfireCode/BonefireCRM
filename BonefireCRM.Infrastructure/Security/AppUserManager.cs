@@ -3,7 +3,6 @@ using BonefireCRM.Domain.Infrastructure.Email;
 using BonefireCRM.Domain.Infrastructure.Security;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using System.Text;
@@ -45,7 +44,7 @@ namespace BonefireCRM.Infrastructure.Security
                 return registerResultDTO;
             }
 
-            registerResultDTO.UserId = await _userManager.GetUserIdAsync(user);
+            registerResultDTO.UserId = Guid.Parse(await _userManager.GetUserIdAsync(user));
 
             var confirmationtoken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             await _emailSender.SendConfirmationEmailAsync(registerResultDTO.UserId, user.Email!, confirmationtoken);
@@ -274,6 +273,14 @@ namespace BonefireCRM.Infrastructure.Security
             var user = await _userManager.GetUserAsync(claimsPrincipal);
             var code = await _userManager.GenerateTwoFactorTokenAsync(user!, TokenOptions.DefaultEmailProvider);
             return code;
+        }
+
+        public async Task<bool> DeleteUserAsync(Guid userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var result = await _userManager.DeleteAsync(user!);
+
+            return result.Succeeded;
         }
     }
 }

@@ -21,16 +21,17 @@ namespace BonefireCRM.API.Security.Mappers
             };
         }
 
-        internal static GetInfoResponse? MapToResponse(GetInfoResultDTO dto)
+        internal static GetInfoResponse? MapToResponse(this GetInfoResultDTO dto)
         {
             return new()
             {
+                UserId = dto.UserId,
                 Email = dto.Email,
                 IsEmailConfirmed = dto.IsEmailConfirmed,
             };
         }
 
-        internal static CreateInfoResponse MapToResponse(CreateInfoResultDTO dto)
+        internal static CreateInfoResponse MapToResponse(this CreateInfoResultDTO dto)
         {
             return new()
             {

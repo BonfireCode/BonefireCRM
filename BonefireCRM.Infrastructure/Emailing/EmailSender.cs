@@ -1,5 +1,4 @@
 ﻿using BonefireCRM.Domain.DTOs.Email;
-using BonefireCRM.Domain.Entities;
 using BonefireCRM.Domain.Infrastructure.Email;
 using BonefireCRM.Domain.Infrastructure.Security;
 using MailKit.Net.Smtp;
@@ -9,7 +8,7 @@ using MimeKit.Text;
 using System.Text;
 using System.Text.Encodings.Web;
 
-namespace BonefireCRM.Infrastructure.Email
+namespace BonefireCRM.Infrastructure.Emailing
 {
     internal class EmailSender : IEmailSender
     {
@@ -23,7 +22,7 @@ namespace BonefireCRM.Infrastructure.Email
             _appHttpContextAccessor = appHttpContextAccessor;
         }
 
-        public async Task SendConfirmationEmailAsync(string userId, string userEmail, string confirmationToken)
+        public async Task SendConfirmationEmailAsync(Guid userId, string userEmail, string confirmationToken)
         {
             confirmationToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(confirmationToken));
 
@@ -62,7 +61,7 @@ namespace BonefireCRM.Infrastructure.Email
             await SendEmailAsync(email);
         }
 
-        public async Task SendChangeEmailAsync(string userId, string userEmail, string changeToken)
+        public async Task SendChangeEmailAsync(Guid userId, string userEmail, string changeToken)
         {
             changeToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(changeToken));
 

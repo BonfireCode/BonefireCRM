@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="EntityFrameworkCore.Exceptions.Sqlite" />
     <PackageReference Include="MailKit" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Core" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
@@ -26,6 +27,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
+	<PackageReference Include="Serilog" />
+	<PackageReference Include="Serilog.AspNetCore" />
+	<PackageReference Include="Serilog.Sinks.Console" />
+	<PackageReference Include="Serilog.Sinks.Debug" />
   </ItemGroup>
 
 </Project>

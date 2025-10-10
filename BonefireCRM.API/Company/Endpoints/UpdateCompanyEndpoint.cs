@@ -27,7 +27,7 @@ namespace BonefireCRM.API.Company.Endpoints
         public override async Task<Results<Created<UpdateCompanyResponse>, InternalServerError>> ExecuteAsync(UpdateCompanyRequest request, CancellationToken ct)
         {
             var id = Route<Guid>("id");
-            var dtoCompany = RequestToDtoMapper.MapToDto(request, id);
+            var dtoCompany = request.MapToDto(id);
             var result = await _companyService.UpdateCompanyAsync(dtoCompany, ct);
 
             var response = result.Match<Results<Created<UpdateCompanyResponse>, InternalServerError>>(

@@ -9,6 +9,8 @@ namespace BonefireCRM.Infrastructure.Persistance.Configurations
         public void Configure(EntityTypeBuilder<PipelineStage> entity)
         {
             entity.Property(ps => ps.Name).IsRequired().HasMaxLength(150);
+            entity.Property(p => p.Status).HasConversion<string?>();
+
             entity.HasIndex(ps => new { ps.PipelineId, ps.OrderIndex }).IsUnique();
 
             entity.HasOne<Pipeline>()
@@ -16,8 +18,6 @@ namespace BonefireCRM.Infrastructure.Persistance.Configurations
                 .HasForeignKey(ps => ps.PipelineId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            entity.Property(p => p.Status)
-                .HasConversion<string?>();
         }
     }
 }

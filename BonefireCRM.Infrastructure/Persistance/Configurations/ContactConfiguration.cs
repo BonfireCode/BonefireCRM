@@ -17,6 +17,11 @@ namespace BonefireCRM.Infrastructure.Persistance.Configurations
             entity.Property(c => c.PhoneNumber).HasMaxLength(50);
             entity.Property(c => c.JobRole).HasMaxLength(100);
 
+            entity.HasOne<User>()
+                .WithMany(u => u.Contacts)
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             entity.HasOne<Company>()
                 .WithMany(co => co.Contacts)
                 .HasForeignKey(c => c.CompanyId)
@@ -25,7 +30,7 @@ namespace BonefireCRM.Infrastructure.Persistance.Configurations
             entity.HasOne<LifecycleStage>()
                 .WithMany(ls => ls.Contacts)
                 .HasForeignKey(c => c.LifecycleStageId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }
