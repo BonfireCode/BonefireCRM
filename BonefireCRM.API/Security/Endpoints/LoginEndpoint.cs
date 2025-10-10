@@ -30,7 +30,7 @@ namespace BonefireCRM.API.Security.Endpoints
             var useCookies = Query<bool>("useCookies", isRequired: false);
             var useSessionCookies = Query<bool>("useSessionCookies", isRequired: false);
 
-            var loginDTO = RequestToDtoMapper.MapToDto(request, useCookies, useSessionCookies);
+            var loginDTO = request.MapToDto(useCookies, useSessionCookies);
 
             var result = await _securityService.LoginUser(loginDTO, ct);
 

@@ -43,6 +43,7 @@ namespace BonefireCRM.Domain.Services
 
             await _seedUserDataService.DealParticipantRolesAsync(createdUser, ct);
 
+            registerResultDTO.UserId = createdUser.Id;
             return registerResultDTO;
         }
 
@@ -124,6 +125,9 @@ namespace BonefireCRM.Domain.Services
                 return Fin<GetInfoResultDTO>.Fail(new GetInfoException(getInfoResultDTO.ValidationError.Key, getInfoResultDTO.ValidationError.Value));
             }
 
+            var registerUserId = Guid.Parse(claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+            getInfoResultDTO.UserId = await _userRepository.GetUserIdAsync(registerUserId, ct);
             return getInfoResultDTO;
         }
 

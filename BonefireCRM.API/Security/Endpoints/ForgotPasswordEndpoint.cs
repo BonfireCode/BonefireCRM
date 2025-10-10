@@ -27,7 +27,7 @@ namespace BonefireCRM.API.Security.Endpoints
 
         public override async Task<Ok> ExecuteAsync(ForgotPasswordRequest request, CancellationToken ct)
         {
-            var forgotPasswordDTO = RequestToDtoMapper.MapToDto(request);
+            var forgotPasswordDTO = request.MapToDto();
 
             await _securityService.ForgotUserPassword(forgotPasswordDTO, ct);
 

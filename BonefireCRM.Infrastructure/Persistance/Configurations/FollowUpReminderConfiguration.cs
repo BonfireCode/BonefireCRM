@@ -10,12 +10,12 @@ namespace BonefireCRM.Infrastructure.Persistance.Configurations
         {
             entity.Property(r => r.Note).IsRequired().HasMaxLength(500);
 
+            entity.HasIndex(r => r.DueDate);
+
             entity.HasOne<Activity>()
                 .WithMany()
                 .HasForeignKey(r => r.ActivityId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            entity.HasIndex(r => r.DueDate);
         }
     }
 }

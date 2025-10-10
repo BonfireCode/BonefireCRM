@@ -27,7 +27,7 @@ namespace BonefireCRM.API.Security.Endpoints
 
         public override async Task<Ok> ExecuteAsync(ResendConfirmationRequest request, CancellationToken ct)
         {
-            var resendConfirmationDTO = RequestToDtoMapper.MapToDto(request);
+            var resendConfirmationDTO = request.MapToDto();
 
             await _securityService.ResendUserConfirmation(resendConfirmationDTO, ct);
 

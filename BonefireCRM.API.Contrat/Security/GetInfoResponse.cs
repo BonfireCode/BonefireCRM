@@ -3,6 +3,11 @@
     public class GetInfoResponse
     {
         /// <summary>
+        /// The user identification.
+        /// </summary>
+        public required Guid UserId { get; init; }
+
+        /// <summary>
         /// The email address associated with the authenticated user.
         /// </summary>
         public required string Email { get; init; }

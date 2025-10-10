@@ -27,7 +27,7 @@ namespace BonefireCRM.API.Security.Endpoints
 
         public override async Task<Results<Ok<Guid>, ProblemHttpResult>> ExecuteAsync(RegisterRequest request, CancellationToken ct)
         {
-            var registerDTO = RequestToDtoMapper.MapToDto(request);
+            var registerDTO = request.MapToDto();
 
             var result = await _securityService.RegisterUser(registerDTO, ct);
 

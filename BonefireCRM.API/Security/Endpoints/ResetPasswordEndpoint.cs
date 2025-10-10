@@ -27,7 +27,7 @@ namespace BonefireCRM.API.Security.Endpoints
 
         public override async Task<Results<Ok, ProblemHttpResult>> ExecuteAsync(ResetPasswordRequest request, CancellationToken ct)
         {
-            var resetPasswordDTO = RequestToDtoMapper.MapToDto(request);
+            var resetPasswordDTO = request.MapToDto();
 
             var result = await _securityService.ResetUserPassword(resetPasswordDTO, ct);
 

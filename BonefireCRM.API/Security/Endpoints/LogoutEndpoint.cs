@@ -24,8 +24,7 @@ namespace BonefireCRM.API.Security.Endpoints
 
         public override async Task<Results<Ok, UnauthorizedHttpResult>> ExecuteAsync(EmptyRequest request, CancellationToken ct)
         {
-            var authHeader = HttpContext.Request.Headers["Authorization"].ToString();
-            if (!string.IsNullOrEmpty(authHeader))
+            if (User.Identity!.IsAuthenticated)
             {
                 await _securityService.LogoutUser(ct);
                 return TypedResults.Ok();

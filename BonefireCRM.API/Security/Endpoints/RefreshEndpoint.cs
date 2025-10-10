@@ -26,7 +26,7 @@ namespace BonefireCRM.API.Security.Endpoints
 
         public override async Task<Results<SignInHttpResult, ChallengeHttpResult>> ExecuteAsync(RefreshRequest request, CancellationToken ct)
         {
-            var refreshDTO = RequestToDtoMapper.MapToDto(request);
+            var refreshDTO = request.MapToDto();
 
             var result = await _securityService.RefreshUserToken(refreshDTO, ct);
 
