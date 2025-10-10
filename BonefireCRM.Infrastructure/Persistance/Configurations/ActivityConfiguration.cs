@@ -28,12 +28,12 @@ namespace BonefireCRM.Infrastructure.Persistance.Configurations
             entity.HasOne<Company>()
                 .WithMany()
                 .HasForeignKey(a => a.CompanyId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.SetNull);
 
             entity.HasOne<Deal>()
                 .WithMany()
                 .HasForeignKey(a => a.DealId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

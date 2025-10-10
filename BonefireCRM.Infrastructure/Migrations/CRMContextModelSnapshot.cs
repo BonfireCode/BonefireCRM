@@ -31,7 +31,7 @@ namespace BonefireCRM.Infrastructure.Migrations
                     b.Property<Guid?>("CompanyId")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("ContactId")
+                    b.Property<Guid>("ContactId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("DateCreated")
@@ -538,17 +538,18 @@ namespace BonefireCRM.Infrastructure.Migrations
                     b.HasOne("BonefireCRM.Domain.Entities.Company", null)
                         .WithMany()
                         .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("BonefireCRM.Domain.Entities.Contact", null)
                         .WithMany()
                         .HasForeignKey("ContactId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BonefireCRM.Domain.Entities.Deal", null)
                         .WithMany()
                         .HasForeignKey("DealId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("BonefireCRM.Domain.Entities.User", null)
                         .WithMany("Activities")

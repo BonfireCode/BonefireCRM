@@ -6,6 +6,6 @@
 
         public required string Token { get; init; }
 
-        public required string ChangedEmail { get; init; }
+        public string ChangedEmail { get; init; } = string.Empty;
     }
 }
