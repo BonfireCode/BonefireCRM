@@ -13,11 +13,11 @@ namespace BonefireCRM.Domain.Services
     {
         private readonly IAppUserManager _appUserManager;
         private readonly IAppSignInManager _appSignInManager;
-        private readonly IBaseRepository<User> _userRepository;
+        private readonly IUserRepository _userRepository;
         private readonly SeedUserDataService _seedUserDataService;
 
 
-        public SecurityService(IAppUserManager appUserManager, IAppSignInManager appSignInManager, IBaseRepository<User> userRepository, SeedUserDataService seedUserDataService)
+        public SecurityService(IAppUserManager appUserManager, IAppSignInManager appSignInManager, IUserRepository userRepository, SeedUserDataService seedUserDataService)
         {
             _appUserManager = appUserManager;
             _appSignInManager = appSignInManager;
@@ -43,6 +43,7 @@ namespace BonefireCRM.Domain.Services
 
             await _seedUserDataService.DealParticipantRolesAsync(createdUser, ct);
 
+            registerResultDTO.UserId = createdUser.Id;
             return registerResultDTO;
         }
 
@@ -124,6 +125,9 @@ namespace BonefireCRM.Domain.Services
                 return Fin<GetInfoResultDTO>.Fail(new GetInfoException(getInfoResultDTO.ValidationError.Key, getInfoResultDTO.ValidationError.Value));
             }
 
+            var registerUserId = Guid.Parse(claimsPrincipal.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+            getInfoResultDTO.UserId = await _userRepository.GetUserIdAsync(registerUserId, ct);
             return getInfoResultDTO;
         }
 
@@ -148,6 +152,17 @@ namespace BonefireCRM.Domain.Services
         {
             var code = await _appUserManager.GenerateTwoFactorCodeAsync(claimsPrincipal);
             return code;
+        }
+
+        public async Task<Fin<bool>> DeleteUserAsync(Guid userId, CancellationToken ct)
+        {
+            var isDeleted = await _appUserManager.DeleteUserAsync(userId);
+            if (!isDeleted)
+            {
+                return Fin<bool>.Fail(new DeleteUserException());
+            }
+
+            return isDeleted;
         }
     }
 }

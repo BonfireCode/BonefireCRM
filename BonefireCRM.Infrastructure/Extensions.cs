@@ -1,9 +1,10 @@
 ﻿using BonefireCRM.Domain.Infrastructure.Email;
 using BonefireCRM.Domain.Infrastructure.Persistance;
 using BonefireCRM.Domain.Infrastructure.Security;
-using BonefireCRM.Infrastructure.Email;
+using BonefireCRM.Infrastructure.Emailing;
 using BonefireCRM.Infrastructure.Persistance;
 using BonefireCRM.Infrastructure.Security;
+using EntityFramework.Exceptions.Sqlite;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -12,6 +13,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -19,17 +21,25 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static TBuilder AddInfrastructureDependencies<TBuilder>(this TBuilder builder) where TBuilder : IHostApplicationBuilder
         {
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .WriteTo.Debug()
+                .CreateLogger();
+            builder.Services.AddSerilog();
+
             var connectionString = builder.Configuration.GetConnectionString("BonefireCRM_Db");
 
             builder.Services.AddDbContext<CRMContext>(options =>
             {
-                options.UseSqlite(connectionString);
+                options.UseSqlite(connectionString).UseExceptionProcessor();
             });
             builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
 
             builder.Services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseSqlite(connectionString);
+                options.UseSqlite(connectionString).UseExceptionProcessor();
             });
 
             builder.AddAuth();

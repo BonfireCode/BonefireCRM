@@ -11,19 +11,19 @@ namespace BonefireCRM.Infrastructure.Persistance.Configurations
             entity.Property(d => d.Title).IsRequired().HasMaxLength(200);
             entity.Property(d => d.Amount).HasColumnType("decimal(18,2)");
 
-            entity.HasOne<PipelineStage>()
-                .WithMany(ps => ps.Deals)
-                .HasForeignKey(d => d.PipelineStageId)
-                .OnDelete(DeleteBehavior.Restrict);
+            entity.HasOne<User>()
+                .WithMany()
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasOne<Contact>()
                 .WithMany()
                 .HasForeignKey(d => d.PrimaryContactId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Cascade);
 
-            entity.HasOne<User>()
-                .WithMany()
-                .HasForeignKey(d => d.UserId)
+            entity.HasOne<PipelineStage>()
+                .WithMany(ps => ps.Deals)
+                .HasForeignKey(d => d.PipelineStageId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

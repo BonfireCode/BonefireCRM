@@ -7,27 +7,32 @@ using BonefireCRM.API.Contrat.Contact;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
+using System.Security.Claims;
 
 namespace BonefireCRM.API.Contact.Endpoints
 {
     public class CreateContactEndpoint : Endpoint<CreateContactRequest, Results<Created<CreateContactResponse>, InternalServerError>>
     {
         private readonly ContactService _contactService;
+        private readonly UserService _userService;
 
-        public CreateContactEndpoint(ContactService contactService)
+        public CreateContactEndpoint(ContactService contactService, UserService userService)
         {
             _contactService = contactService;
+            _userService = userService;
         }
 
         public override void Configure()
         {
             Post("/contacts");
-            AllowAnonymous();
         }
 
         public override async Task<Results<Created<CreateContactResponse>, InternalServerError>> ExecuteAsync(CreateContactRequest request, CancellationToken ct)
         {
-            var dtoContact = RequestToDtoMapper.MapToDto(request);
+            var registerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var userId = await _userService.GetUserIdAsync(registerId, ct);
+
+            var dtoContact = request.MapToDto(userId);
 
             var result = await _contactService.CreateContactAsync(dtoContact, ct);
 

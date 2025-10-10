@@ -9,7 +9,7 @@ namespace BonefireCRM.API.Security.Mappers
 {
     internal static class RequestToDtoMapper
     {
-        internal static RegisterDTO MapToDto(RegisterRequest request)
+        internal static RegisterDTO MapToDto(this RegisterRequest request)
         {
             return new()
             {
@@ -19,7 +19,7 @@ namespace BonefireCRM.API.Security.Mappers
             };
         }
 
-        internal static LoginDTO MapToDto(LoginRequest request, bool useCookies, bool useSessionCookies)
+        internal static LoginDTO MapToDto(this LoginRequest request, bool useCookies, bool useSessionCookies)
         {
             return new()
             {
@@ -32,7 +32,7 @@ namespace BonefireCRM.API.Security.Mappers
             };
         }
 
-        internal static RefreshDTO MapToDto(RefreshRequest request)
+        internal static RefreshDTO MapToDto(this RefreshRequest request)
         {
             return new()
             {
@@ -40,7 +40,7 @@ namespace BonefireCRM.API.Security.Mappers
             };
         }
 
-        internal static ConfirmEmailDTO MapToDto(ConfirmEmailRequest request)
+        internal static ConfirmEmailDTO MapToDto(this ConfirmEmailRequest request)
         {
             return new()
             {
@@ -50,7 +50,7 @@ namespace BonefireCRM.API.Security.Mappers
             };
         }
 
-        internal static ResendConfirmationDTO MapToDto(ResendConfirmationRequest request)
+        internal static ResendConfirmationDTO MapToDto(this ResendConfirmationRequest request)
         {
             return new()
             {
@@ -58,7 +58,7 @@ namespace BonefireCRM.API.Security.Mappers
             };
         }
 
-        internal static ForgotPasswordDTO MapToDto(ForgotPasswordRequest request)
+        internal static ForgotPasswordDTO MapToDto(this ForgotPasswordRequest request)
         {
             return new()
             {
@@ -66,7 +66,7 @@ namespace BonefireCRM.API.Security.Mappers
             };
         }
 
-        internal static ResetPasswordDTO MapToDto(ResetPasswordRequest request)
+        internal static ResetPasswordDTO MapToDto(this ResetPasswordRequest request)
         {
             return new()
             {
@@ -76,7 +76,7 @@ namespace BonefireCRM.API.Security.Mappers
             };
         }
 
-        internal static TwoFactorDTO MapToDto(TwoFactorRequest request)
+        internal static TwoFactorDTO MapToDto(this TwoFactorRequest request)
         {
             return new()
             {
@@ -88,7 +88,7 @@ namespace BonefireCRM.API.Security.Mappers
             };
         }
 
-        internal static CreateInfoDTO MapToDto(CreateInfoRequest request)
+        internal static CreateInfoDTO MapToDto(this CreateInfoRequest request)
         {
             return new()
             {

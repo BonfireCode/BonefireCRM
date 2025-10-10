@@ -3,7 +3,7 @@
     public sealed class GetMeetingResponse
     {
         public Guid Id { get; set; }
-        public Guid? ContactId { get; set; }
+        public Guid ContactId { get; set; }
         public Guid? CompanyId { get; set; }
         public Guid? DealId { get; set; }
         public DateTime StartTime { get; set; }

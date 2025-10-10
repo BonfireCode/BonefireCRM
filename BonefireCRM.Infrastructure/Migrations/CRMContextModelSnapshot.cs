@@ -31,7 +31,7 @@ namespace BonefireCRM.Infrastructure.Migrations
                     b.Property<Guid?>("CompanyId")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("ContactId")
+                    b.Property<Guid>("ContactId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("DateCreated")
@@ -298,9 +298,6 @@ namespace BonefireCRM.Infrastructure.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("ReminderId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ActivityId");
@@ -419,8 +416,7 @@ namespace BonefireCRM.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("RegisterId")
-                        .IsRequired()
+                    b.Property<Guid>("RegisterId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("UserName")
@@ -547,7 +543,8 @@ namespace BonefireCRM.Infrastructure.Migrations
                     b.HasOne("BonefireCRM.Domain.Entities.Contact", null)
                         .WithMany()
                         .HasForeignKey("ContactId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BonefireCRM.Domain.Entities.Deal", null)
                         .WithMany()
@@ -557,7 +554,7 @@ namespace BonefireCRM.Infrastructure.Migrations
                     b.HasOne("BonefireCRM.Domain.Entities.User", null)
                         .WithMany("Activities")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -571,7 +568,7 @@ namespace BonefireCRM.Infrastructure.Migrations
                     b.HasOne("BonefireCRM.Domain.Entities.LifecycleStage", null)
                         .WithMany("Contacts")
                         .HasForeignKey("LifecycleStageId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.HasOne("BonefireCRM.Domain.Entities.User", null)
@@ -596,12 +593,12 @@ namespace BonefireCRM.Infrastructure.Migrations
                     b.HasOne("BonefireCRM.Domain.Entities.Contact", null)
                         .WithMany()
                         .HasForeignKey("PrimaryContactId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("BonefireCRM.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -631,7 +628,7 @@ namespace BonefireCRM.Infrastructure.Migrations
                     b.HasOne("BonefireCRM.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("RegisteredByUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 

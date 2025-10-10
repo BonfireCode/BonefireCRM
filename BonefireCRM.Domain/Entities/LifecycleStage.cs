@@ -7,6 +7,6 @@
     {
         public string Name { get; set; } = string.Empty;
 
-        public ICollection<Contact> Contacts { get; set; } = [];
+        public IEnumerable<Contact> Contacts { get; set; } = [];
     }
 }

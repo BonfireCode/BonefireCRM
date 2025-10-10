@@ -139,6 +139,7 @@ namespace BonefireCRM.Domain.Tests
                 .Without(c => c.Id)
                 .With(c => c.FirstName, createContactDTO.FirstName)
                 .With(c => c.LastName, createContactDTO.LastName)
+                .With(c => c.UserId, createContactDTO.UserId)
                 .Create();
 
             _contactRepository
@@ -154,6 +155,7 @@ namespace BonefireCRM.Domain.Tests
                 .With(c => c.Id, id)
                 .With(c => c.FirstName, contact.FirstName)
                 .With(c => c.LastName, contact.LastName)
+                .With(c => c.UserId, contact.UserId)
                 .Create();
 
             // Act
@@ -168,6 +170,7 @@ namespace BonefireCRM.Domain.Tests
                 createContactDTO.Id.Should().Be(expectedContact.Id);
                 createContactDTO.FirstName.Should().Be(expectedContact.FirstName);
                 createContactDTO.LastName.Should().Be(expectedContact.LastName);
+                createContactDTO.UserId.Should().Be(expectedContact.UserId);
             });
         }
 

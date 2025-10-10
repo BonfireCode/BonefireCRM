@@ -2,7 +2,7 @@
 {
     public sealed class CreateCallRequest
     {
-        public Guid? ContactId { get; set; }
+        public Guid ContactId { get; set; }
         public Guid? CompanyId { get; set; }
         public Guid? DealId { get; set; }
         public DateTime CallTime { get; set; }

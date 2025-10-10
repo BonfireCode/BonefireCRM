@@ -28,13 +28,13 @@ namespace BonefireCRM.API.Security.Endpoints
         {
             var claimsPrincipal = User;
 
-            var createInfoDTO = RequestToDtoMapper.MapToDto(request);
+            var createInfoDTO = request.MapToDto();
 
             var result = await _securityService.ManageCreateUserInfo(createInfoDTO, claimsPrincipal, ct);
 
             var response = result.Match<Results<Ok<CreateInfoResponse>, ProblemHttpResult>>
             (
-                dto => TypedResults.Ok(DtoToResponseMapper.MapToResponse(dto)),
+                dto => TypedResults.Ok(dto.MapToResponse()),
                 error => TypedResults.Problem(error.Message, statusCode: StatusCodes.Status400BadRequest)
             );
 

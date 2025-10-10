@@ -10,20 +10,20 @@ namespace BonefireCRM.Infrastructure.Persistance.Configurations
         {
             // Activity inheritance (TPH)
             entity.HasDiscriminator<string>("ActivityType")
-            .HasValue<Call>(nameof(Call))
-            .HasValue<Domain.Entities.Email>(nameof(Email))
-            .HasValue<Meeting>(nameof(Meeting))
-            .HasValue<Assignment>(nameof(Assignment));
+                .HasValue<Call>(nameof(Call))
+                .HasValue<Email>(nameof(Email))
+                .HasValue<Meeting>(nameof(Meeting))
+                .HasValue<Assignment>(nameof(Assignment));
 
             entity.HasOne<User>()
                 .WithMany(u => u.Activities)
                 .HasForeignKey(a => a.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasOne<Contact>()
                 .WithMany()
                 .HasForeignKey(a => a.ContactId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasOne<Company>()
                 .WithMany()

@@ -3,7 +3,7 @@
     public sealed class UpdateTaskResponse
     {
         public Guid Id { get; set; }
-        public Guid? ContactId { get; set; }
+        public Guid ContactId { get; set; }
         public Guid? CompanyId { get; set; }
         public Guid? DealId { get; set; }
         public string Subject { get; set; } = string.Empty;
