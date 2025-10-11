@@ -5,11 +5,11 @@
 using BonefireCRM.API.Contrat.Meeting;
 using BonefireCRM.Domain.DTOs.Activity.Meeting;
 
-namespace BonefireCRM.API.Company.Mappers.Meeting
+namespace BonefireCRM.API.Activity.Mappers.Meeting
 {
     internal static class RequestToDtoMapper
     {
-        internal static CreateMeetingDTO MapToDto(CreateMeetingRequest request, Guid userId)
+        internal static CreateMeetingDTO MapToDto(this CreateMeetingRequest request, Guid userId)
         {
             return new()
             {
@@ -24,7 +24,7 @@ namespace BonefireCRM.API.Company.Mappers.Meeting
             };
         }
 
-        internal static UpdateMeetingDTO MapToDto(UpdateMeetingRequest request, Guid id)
+        internal static UpdateMeetingDTO MapToDto(this UpdateMeetingRequest request, Guid id)
         {
             return new()
             {

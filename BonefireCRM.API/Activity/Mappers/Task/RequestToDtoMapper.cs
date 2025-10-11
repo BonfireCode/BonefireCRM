@@ -5,11 +5,11 @@
 using BonefireCRM.API.Contrat.Task;
 using BonefireCRM.Domain.DTOs.Activity.Task;
 
-namespace BonefireCRM.API.Company.Mappers.Task
+namespace BonefireCRM.API.Activity.Mappers.Task
 {
     internal static class RequestToDtoMapper
     {
-        internal static CreateTaskDTO MapToDto(CreateTaskRequest request, Guid userId)
+        internal static CreateTaskDTO MapToDto(this CreateTaskRequest request, Guid userId)
         {
             return new()
             {
@@ -24,7 +24,7 @@ namespace BonefireCRM.API.Company.Mappers.Task
             };
         }
 
-        internal static UpdateTaskDTO MapToDto(UpdateTaskRequest request, Guid id)
+        internal static UpdateTaskDTO MapToDto(this UpdateTaskRequest request, Guid id)
         {
             return new()
             {

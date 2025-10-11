@@ -2,7 +2,7 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
-using BonefireCRM.API.Company.Mappers.Meeting;
+using BonefireCRM.API.Activity.Mappers.Meeting;
 using BonefireCRM.API.Contrat.Meeting;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
@@ -49,7 +49,7 @@ namespace BonefireCRM.API.Activity.Endpoints.Meeting
         {
             var id = Route<Guid>("id");
 
-            var dtoMeeting = RequestToDtoMapper.MapToDto(request, id);
+            var dtoMeeting = request.MapToDto(id);
 
             var result = await _activityService.UpdateMeetingAsync(dtoMeeting, ct);
 

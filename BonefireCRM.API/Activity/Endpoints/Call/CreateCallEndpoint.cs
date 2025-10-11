@@ -3,7 +3,7 @@
 // </copyright>
 
 using System.Security.Claims;
-using BonefireCRM.API.Company.Mappers.Call;
+using BonefireCRM.API.Activity.Mappers.Call;
 using BonefireCRM.API.Contrat.Call;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
@@ -49,7 +49,7 @@ namespace BonefireCRM.API.Activity.Endpoints.Call
             var registerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             var userId = await _userService.GetUserIdAsync(registerId, ct);
 
-            var dtoCall = RequestToDtoMapper.MapToDto(request, userId);
+            var dtoCall = request.MapToDto(userId);
 
             var result = await _activityService.CreateCallAsync(dtoCall, ct);
 

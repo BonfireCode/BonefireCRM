@@ -2,7 +2,7 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
-using BonefireCRM.API.Company.Mappers.Meeting;
+using BonefireCRM.API.Activity.Mappers.Meeting;
 using BonefireCRM.API.Contrat.Meeting;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;

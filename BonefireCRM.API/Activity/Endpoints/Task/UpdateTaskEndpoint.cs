@@ -2,7 +2,7 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
-using BonefireCRM.API.Company.Mappers.Task;
+using BonefireCRM.API.Activity.Mappers.Task;
 using BonefireCRM.API.Contrat.Task;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
@@ -49,7 +49,7 @@ namespace BonefireCRM.API.Activity.Endpoints.Task
         {
             var id = Route<Guid>("id");
 
-            var dtoTask = RequestToDtoMapper.MapToDto(request, id);
+            var dtoTask = request.MapToDto(id);
 
             var result = await _activityService.UpdateTaskAsync(dtoTask, ct);
 
