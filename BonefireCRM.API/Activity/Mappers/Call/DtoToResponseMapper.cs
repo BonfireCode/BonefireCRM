@@ -5,7 +5,7 @@
 using BonefireCRM.API.Contrat.Call;
 using BonefireCRM.Domain.DTOs.Activity.Call;
 
-namespace BonefireCRM.API.Company.Mappers.Call
+namespace BonefireCRM.API.Activity.Mappers.Call
 {
     internal static class DtoToResponseMapper
     {

@@ -2,7 +2,7 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 using System.Security.Claims;
-using BonefireCRM.API.Company.Mappers.Task;
+using BonefireCRM.API.Activity.Mappers.Task;
 using BonefireCRM.API.Contrat.Task;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
@@ -50,7 +50,7 @@ namespace BonefireCRM.API.Activity.Endpoints.Task
             var registerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) !);
             var userId = await _userService.GetUserIdAsync(registerId, ct);
 
-            var dtoTask = RequestToDtoMapper.MapToDto(request, userId);
+            var dtoTask = request.MapToDto(userId);
 
             var result = await _activityService.CreateTaskAsync(dtoTask, ct);
 

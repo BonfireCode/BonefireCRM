@@ -2,8 +2,7 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
-using BonefireCRM.API.Company.Mappers.Meeting;
-using BonefireCRM.API.Contrat.Meeting;
+using BonefireCRM.API.Activity.Mappers.Meeting;
 using BonefireCRM.API.Contrat.Meeting;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
@@ -52,7 +51,7 @@ namespace BonefireCRM.API.Activity.Endpoints.Meeting
             var registerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier) !);
             var userId = await _userService.GetUserIdAsync(registerId, ct);
 
-            var dtoMeeting = RequestToDtoMapper.MapToDto(request, userId);
+            var dtoMeeting = request.MapToDto(userId);
 
             var result = await _activityService.CreateMeetingAsync(dtoMeeting, ct);
 

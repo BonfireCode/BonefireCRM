@@ -4,7 +4,7 @@
 using BonefireCRM.API.Contrat.Meeting;
 using BonefireCRM.Domain.DTOs.Activity.Meeting;
 
-namespace BonefireCRM.API.Company.Mappers.Meeting
+namespace BonefireCRM.API.Activity.Mappers.Meeting
 {
     internal static class DtoToResponseMapper
     {
