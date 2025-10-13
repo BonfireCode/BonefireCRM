@@ -4,6 +4,7 @@
 
 using BonefireCRM.API.Activity.Mappers.Meeting;
 using BonefireCRM.API.Contrat.Meeting;
+using BonefireCRM.API.Extensions;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -30,11 +31,7 @@ namespace BonefireCRM.API.Activity.Endpoints.Meeting
 
                 s.Params["id"] = "The unique identifier (GUID) of the meeting to retrieve.";
 
-                s.Response<Ok<GetMeetingResponse>>(200, "Meeting details successfully retrieved.");
-                s.Response<NotFound>(404, "The specified meeting could not be found.");
-                s.Response<ProblemDetails>(400, "Invalid request. The provided meeting ID is not valid.");
-                s.Response<UnauthorizedHttpResult>(401, "User is not authorized to access this resource.");
-                s.Response<InternalServerError>(500, "An internal server error occurred while retrieving the meeting.");
+                s.AddGetResponses<GetMeetingResponse>("Meeting");
             });
         }
 

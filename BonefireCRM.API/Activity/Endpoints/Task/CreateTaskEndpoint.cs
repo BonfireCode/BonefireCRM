@@ -4,6 +4,7 @@
 using System.Security.Claims;
 using BonefireCRM.API.Activity.Mappers.Task;
 using BonefireCRM.API.Contrat.Task;
+using BonefireCRM.API.Extensions;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -30,18 +31,8 @@ namespace BonefireCRM.API.Activity.Endpoints.Task
                 s.Summary = "Creates a new task activity.";
                 s.Description = "Creates a new task linked to a contact and optionally to a company or deal.";
 
-                s.Params[nameof(CreateTaskRequest.ContactId)] = "The unique identifier of the contact associated with the task.";
-                s.Params[nameof(CreateTaskRequest.CompanyId)] = "Optional. The unique identifier of the company linked to the task.";
-                s.Params[nameof(CreateTaskRequest.DealId)] = "Optional. The unique identifier of the deal linked to the task.";
-                s.Params[nameof(CreateTaskRequest.Subject)] = "The subject or title of the task.";
-                s.Params[nameof(CreateTaskRequest.Description)] = "A detailed description of the task.";
-                s.Params[nameof(CreateTaskRequest.DueDate)] = "The due date and time for completing the task.";
-                s.Params[nameof(CreateTaskRequest.IsCompleted)] = "Indicates whether the task has been completed.";
-
-                s.Response<Created<CreateTaskResponse>>(201, "Task successfully created.");
-                s.Response<ProblemDetails>(400, "Invalid request data. Validation errors are returned in problem+json format.", "application/problem+json");
-                s.Response<UnauthorizedHttpResult>(401, "User is not authorized to perform this action.");
-                s.Response<InternalServerError>(500, "An internal server error occurred while creating the task.");
+                s.AddParamsFrom<CreateTaskRequest>();
+                s.AddCreateResponses<CreateTaskResponse>("Task");
             });
         }
 

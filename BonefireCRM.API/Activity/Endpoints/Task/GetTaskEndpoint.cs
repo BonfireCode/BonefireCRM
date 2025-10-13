@@ -4,6 +4,7 @@
 
 using BonefireCRM.API.Activity.Mappers.Task;
 using BonefireCRM.API.Contrat.Task;
+using BonefireCRM.API.Extensions;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -30,11 +31,7 @@ namespace BonefireCRM.API.Activity.Endpoints.Task
 
                 s.Params["id"] = "The unique identifier (GUID) of the task to retrieve.";
 
-                s.Response<Ok<GetTaskResponse>>(200, "Task successfully retrieved.");
-                s.Response<NotFound>(404, "The specified task could not be found.");
-                s.Response<ProblemDetails>(400, "Invalid request data. Validation errors are returned in problem+json format.", "application/problem+json");
-                s.Response<UnauthorizedHttpResult>(401, "User is not authorized to perform this action.");
-                s.Response<InternalServerError>(500, "An internal server error occurred while retrieving the task.");
+                s.AddGetResponses<GetTaskResponse>("Task");
             });
         }
 

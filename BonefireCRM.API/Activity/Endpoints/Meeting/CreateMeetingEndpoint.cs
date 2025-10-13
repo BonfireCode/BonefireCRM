@@ -2,12 +2,13 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
+using System.Security.Claims;
 using BonefireCRM.API.Activity.Mappers.Meeting;
 using BonefireCRM.API.Contrat.Meeting;
+using BonefireCRM.API.Extensions;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
-using System.Security.Claims;
 
 namespace BonefireCRM.API.Activity.Endpoints.Meeting
 {
@@ -30,19 +31,8 @@ namespace BonefireCRM.API.Activity.Endpoints.Meeting
                 s.Summary = "Creates a new meeting activity.";
                 s.Description = "Creates a new meeting linked to a contact and optionally to a company or deal.";
 
-                s.Params[nameof(CreateMeetingRequest.ContactId)] = "The unique identifier of the contact associated with the meeting.";
-                s.Params[nameof(CreateMeetingRequest.CompanyId)] = "Optional. The unique identifier of the company linked to the meeting.";
-                s.Params[nameof(CreateMeetingRequest.DealId)] = "Optional. The unique identifier of the deal linked to the meeting.";
-                s.Params[nameof(CreateMeetingRequest.StartTime)] = "The start date and time of the meeting.";
-                s.Params[nameof(CreateMeetingRequest.EndTime)] = "The end date and time of the meeting.";
-                s.Params[nameof(CreateMeetingRequest.Subject)] = "The subject or title of the meeting.";
-                s.Params[nameof(CreateMeetingRequest.Notes)] = "Additional notes or comments about the meeting.";
-
-
-                s.Response<Created<CreateMeetingResponse>>(201, "Meeting successfully created.");
-                s.Response<ProblemDetails>(400, "Invalid request data. Validation errors are returned in problem+json format.", "application/problem+json");
-                s.Response<UnauthorizedHttpResult>(401, "User is not authorized to perform this action.");
-                s.Response<InternalServerError>(500, "An internal server error occurred while creating the meeting.");
+                s.AddParamsFrom<CreateMeetingRequest>();
+                s.AddCreateResponses<CreateMeetingRequest>("Meeting");
             });
         }
 

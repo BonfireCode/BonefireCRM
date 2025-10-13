@@ -2,6 +2,7 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
+using BonefireCRM.API.Extensions;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -27,11 +28,7 @@ namespace BonefireCRM.API.Activity.Endpoints.Task
 
                 s.Params["id"] = "The unique identifier (GUID) of the task to delete.";
 
-                s.Response<NoContent>(204, "Task successfully deleted.");
-                s.Response<NotFound>(404, "The specified task could not be found.");
-                s.Response<UnauthorizedHttpResult>(401, "User is not authorized to perform this action.");
-                s.Response<ProblemDetails>(400, "Invalid request data. Validation errors are returned in problem+json format.", "application/problem+json");
-                s.Response<InternalServerError>(500, "An internal server error occurred while deleting the task.");
+                s.AddDeleteResponses("Task");
             });
         }
 
