@@ -202,8 +202,6 @@ namespace BonefireCRM.Infrastructure.Migrations
 
                     b.HasIndex("PrimaryContactId");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Deals");
                 });
 
@@ -251,7 +249,6 @@ namespace BonefireCRM.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(500)
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("LastModifiedDate")
@@ -259,15 +256,12 @@ namespace BonefireCRM.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("RegisteredByUserId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RegisteredByUserId");
 
                     b.ToTable("DealParticipantRoles");
                 });
@@ -594,12 +588,6 @@ namespace BonefireCRM.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("PrimaryContactId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("BonefireCRM.Domain.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("BonefireCRM.Domain.Entities.DealParticipant", b =>
@@ -619,15 +607,6 @@ namespace BonefireCRM.Infrastructure.Migrations
                     b.HasOne("BonefireCRM.Domain.Entities.DealParticipantRole", null)
                         .WithMany("DealParticipants")
                         .HasForeignKey("DealParticipantRoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("BonefireCRM.Domain.Entities.DealParticipantRole", b =>
-                {
-                    b.HasOne("BonefireCRM.Domain.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("RegisteredByUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

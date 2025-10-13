@@ -15,11 +15,6 @@ namespace BonefireCRM.Infrastructure.Persistance.Configurations
                 .HasValue<Meeting>(nameof(Meeting))
                 .HasValue<Assignment>(nameof(Assignment));
 
-            entity.HasOne<User>()
-                .WithMany(u => u.Activities)
-                .HasForeignKey(a => a.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-
             entity.HasOne<Contact>()
                 .WithMany()
                 .HasForeignKey(a => a.ContactId)

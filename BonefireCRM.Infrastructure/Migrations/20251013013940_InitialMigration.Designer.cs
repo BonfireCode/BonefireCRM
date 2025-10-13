@@ -11,14 +11,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BonefireCRM.Infrastructure.Migrations
 {
     [DbContext(typeof(CRMContext))]
-    [Migration("20250917212627_RecreateCRMSchema")]
-    partial class RecreateCRMSchema
+    [Migration("20251013013940_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "9.0.5");
+            modelBuilder.HasAnnotation("ProductVersion", "9.0.9");
 
             modelBuilder.Entity("BonefireCRM.Domain.Entities.Activity", b =>
                 {
@@ -34,7 +34,7 @@ namespace BonefireCRM.Infrastructure.Migrations
                     b.Property<Guid?>("CompanyId")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("ContactId")
+                    b.Property<Guid>("ContactId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("DateCreated")
@@ -73,16 +73,15 @@ namespace BonefireCRM.Infrastructure.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasMaxLength(300)
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Industry")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
@@ -94,7 +93,8 @@ namespace BonefireCRM.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Phone")
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
@@ -112,33 +112,38 @@ namespace BonefireCRM.Infrastructure.Migrations
                     b.Property<Guid?>("CompanyId")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("FullName")
+                    b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(200)
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("JobRole")
+                        .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("LastModifiedDate")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
                     b.Property<Guid>("LifecycleStageId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Phone")
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Role")
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("UserId")
@@ -178,10 +183,10 @@ namespace BonefireCRM.Infrastructure.Migrations
                     b.Property<DateTime?>("LastModifiedDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("PrimaryContactId")
+                    b.Property<Guid>("PipelineStageId")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("StageId")
+                    b.Property<Guid?>("PrimaryContactId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
@@ -196,16 +201,14 @@ namespace BonefireCRM.Infrastructure.Migrations
 
                     b.HasIndex("CompanyId");
 
+                    b.HasIndex("PipelineStageId");
+
                     b.HasIndex("PrimaryContactId");
-
-                    b.HasIndex("StageId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Deals");
                 });
 
-            modelBuilder.Entity("BonefireCRM.Domain.Entities.DealContact", b =>
+            modelBuilder.Entity("BonefireCRM.Domain.Entities.DealParticipant", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -217,10 +220,10 @@ namespace BonefireCRM.Infrastructure.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("DealContactRoleId")
+                    b.Property<Guid>("DealId")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("DealId")
+                    b.Property<Guid>("DealParticipantRoleId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("LastModifiedDate")
@@ -230,15 +233,15 @@ namespace BonefireCRM.Infrastructure.Migrations
 
                     b.HasIndex("ContactId");
 
-                    b.HasIndex("DealContactRoleId");
+                    b.HasIndex("DealParticipantRoleId");
 
                     b.HasIndex("DealId", "ContactId")
                         .IsUnique();
 
-                    b.ToTable("DealContacts");
+                    b.ToTable("DealParticipants");
                 });
 
-            modelBuilder.Entity("BonefireCRM.Domain.Entities.DealContactRole", b =>
+            modelBuilder.Entity("BonefireCRM.Domain.Entities.DealParticipantRole", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -248,7 +251,7 @@ namespace BonefireCRM.Infrastructure.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(500)
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("LastModifiedDate")
@@ -256,7 +259,6 @@ namespace BonefireCRM.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("RegisteredByUserId")
@@ -264,9 +266,7 @@ namespace BonefireCRM.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RegisteredByUserId");
-
-                    b.ToTable("DealContactRoles");
+                    b.ToTable("DealParticipantRoles");
                 });
 
             modelBuilder.Entity("BonefireCRM.Domain.Entities.FollowUpReminder", b =>
@@ -276,9 +276,6 @@ namespace BonefireCRM.Infrastructure.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("ActivityId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("DateCreated")
@@ -297,9 +294,6 @@ namespace BonefireCRM.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("ReminderId")
-                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -366,13 +360,11 @@ namespace BonefireCRM.Infrastructure.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("IsClosedLost")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("IsClosedWon")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LossReason")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -384,6 +376,9 @@ namespace BonefireCRM.Infrastructure.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<Guid>("PipelineId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Status")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -403,7 +398,26 @@ namespace BonefireCRM.Infrastructure.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("RegisterId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -416,6 +430,7 @@ namespace BonefireCRM.Infrastructure.Migrations
                     b.HasBaseType("BonefireCRM.Domain.Entities.Activity");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasMaxLength(2000)
                         .HasColumnType("TEXT");
 
@@ -442,7 +457,11 @@ namespace BonefireCRM.Infrastructure.Migrations
                     b.Property<DateTime>("CallTime")
                         .HasColumnType("TEXT");
 
+                    b.Property<TimeSpan>("Duration")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Notes")
+                        .IsRequired()
                         .HasMaxLength(2000)
                         .HasColumnType("TEXT");
 
@@ -487,6 +506,7 @@ namespace BonefireCRM.Infrastructure.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Notes")
+                        .IsRequired()
                         .HasMaxLength(2000)
                         .HasColumnType("TEXT");
 
@@ -512,152 +532,104 @@ namespace BonefireCRM.Infrastructure.Migrations
 
             modelBuilder.Entity("BonefireCRM.Domain.Entities.Activity", b =>
                 {
-                    b.HasOne("BonefireCRM.Domain.Entities.Company", "Company")
+                    b.HasOne("BonefireCRM.Domain.Entities.Company", null)
                         .WithMany()
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("BonefireCRM.Domain.Entities.Contact", "Contact")
+                    b.HasOne("BonefireCRM.Domain.Entities.Contact", null)
                         .WithMany()
                         .HasForeignKey("ContactId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("BonefireCRM.Domain.Entities.Deal", "Deal")
+                    b.HasOne("BonefireCRM.Domain.Entities.Deal", null)
                         .WithMany()
                         .HasForeignKey("DealId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("BonefireCRM.Domain.Entities.User", "User")
+                    b.HasOne("BonefireCRM.Domain.Entities.User", null)
                         .WithMany("Activities")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Company");
-
-                    b.Navigation("Contact");
-
-                    b.Navigation("Deal");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("BonefireCRM.Domain.Entities.Contact", b =>
                 {
-                    b.HasOne("BonefireCRM.Domain.Entities.Company", "Company")
+                    b.HasOne("BonefireCRM.Domain.Entities.Company", null)
                         .WithMany("Contacts")
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("BonefireCRM.Domain.Entities.LifecycleStage", "LifecycleStage")
+                    b.HasOne("BonefireCRM.Domain.Entities.LifecycleStage", null)
                         .WithMany("Contacts")
                         .HasForeignKey("LifecycleStageId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
-                    b.HasOne("BonefireCRM.Domain.Entities.User", "User")
+                    b.HasOne("BonefireCRM.Domain.Entities.User", null)
                         .WithMany("Contacts")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Company");
-
-                    b.Navigation("LifecycleStage");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("BonefireCRM.Domain.Entities.Deal", b =>
                 {
-                    b.HasOne("BonefireCRM.Domain.Entities.Company", "Company")
+                    b.HasOne("BonefireCRM.Domain.Entities.Company", null)
                         .WithMany("Deals")
                         .HasForeignKey("CompanyId");
 
-                    b.HasOne("BonefireCRM.Domain.Entities.Contact", "PrimaryContact")
+                    b.HasOne("BonefireCRM.Domain.Entities.PipelineStage", null)
+                        .WithMany("Deals")
+                        .HasForeignKey("PipelineStageId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BonefireCRM.Domain.Entities.Contact", null)
                         .WithMany()
                         .HasForeignKey("PrimaryContactId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("BonefireCRM.Domain.Entities.PipelineStage", "Stage")
-                        .WithMany("Deals")
-                        .HasForeignKey("StageId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("BonefireCRM.Domain.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Company");
-
-                    b.Navigation("PrimaryContact");
-
-                    b.Navigation("Stage");
-
-                    b.Navigation("User");
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("BonefireCRM.Domain.Entities.DealContact", b =>
+            modelBuilder.Entity("BonefireCRM.Domain.Entities.DealParticipant", b =>
                 {
-                    b.HasOne("BonefireCRM.Domain.Entities.Contact", "Contact")
-                        .WithMany("DealContacts")
+                    b.HasOne("BonefireCRM.Domain.Entities.Contact", null)
+                        .WithMany("DealParticipants")
                         .HasForeignKey("ContactId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BonefireCRM.Domain.Entities.DealContactRole", "Role")
-                        .WithMany("DealContacts")
-                        .HasForeignKey("DealContactRoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BonefireCRM.Domain.Entities.Deal", "Deal")
-                        .WithMany("DealContacts")
+                    b.HasOne("BonefireCRM.Domain.Entities.Deal", null)
+                        .WithMany("DealParticipants")
                         .HasForeignKey("DealId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Contact");
-
-                    b.Navigation("Deal");
-
-                    b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("BonefireCRM.Domain.Entities.DealContactRole", b =>
-                {
-                    b.HasOne("BonefireCRM.Domain.Entities.User", "RegisteredByUser")
-                        .WithMany()
-                        .HasForeignKey("RegisteredByUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("BonefireCRM.Domain.Entities.DealParticipantRole", null)
+                        .WithMany("DealParticipants")
+                        .HasForeignKey("DealParticipantRoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("RegisteredByUser");
                 });
 
             modelBuilder.Entity("BonefireCRM.Domain.Entities.FollowUpReminder", b =>
                 {
-                    b.HasOne("BonefireCRM.Domain.Entities.Activity", "Activity")
+                    b.HasOne("BonefireCRM.Domain.Entities.Activity", null)
                         .WithMany()
                         .HasForeignKey("ActivityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Activity");
                 });
 
             modelBuilder.Entity("BonefireCRM.Domain.Entities.PipelineStage", b =>
                 {
-                    b.HasOne("BonefireCRM.Domain.Entities.Pipeline", "Pipeline")
+                    b.HasOne("BonefireCRM.Domain.Entities.Pipeline", null)
                         .WithMany("Stages")
                         .HasForeignKey("PipelineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Pipeline");
                 });
 
             modelBuilder.Entity("BonefireCRM.Domain.Entities.Company", b =>
@@ -669,17 +641,17 @@ namespace BonefireCRM.Infrastructure.Migrations
 
             modelBuilder.Entity("BonefireCRM.Domain.Entities.Contact", b =>
                 {
-                    b.Navigation("DealContacts");
+                    b.Navigation("DealParticipants");
                 });
 
             modelBuilder.Entity("BonefireCRM.Domain.Entities.Deal", b =>
                 {
-                    b.Navigation("DealContacts");
+                    b.Navigation("DealParticipants");
                 });
 
-            modelBuilder.Entity("BonefireCRM.Domain.Entities.DealContactRole", b =>
+            modelBuilder.Entity("BonefireCRM.Domain.Entities.DealParticipantRole", b =>
                 {
-                    b.Navigation("DealContacts");
+                    b.Navigation("DealParticipants");
                 });
 
             modelBuilder.Entity("BonefireCRM.Domain.Entities.LifecycleStage", b =>

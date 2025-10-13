@@ -11,11 +11,6 @@ namespace BonefireCRM.Infrastructure.Persistance.Configurations
             entity.Property(d => d.Title).IsRequired().HasMaxLength(200);
             entity.Property(d => d.Amount).HasColumnType("decimal(18,2)");
 
-            entity.HasOne<User>()
-                .WithMany()
-                .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-
             entity.HasOne<Contact>()
                 .WithMany()
                 .HasForeignKey(d => d.PrimaryContactId)
