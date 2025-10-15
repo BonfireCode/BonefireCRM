@@ -30,7 +30,7 @@ namespace BonefireCRM.Infrastructure.Persistance.Configurations
             entity.HasOne<LifecycleStage>()
                 .WithMany(ls => ls.Contacts)
                 .HasForeignKey(c => c.LifecycleStageId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

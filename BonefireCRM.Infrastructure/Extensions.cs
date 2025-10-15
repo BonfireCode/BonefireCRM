@@ -4,12 +4,13 @@ using BonefireCRM.Domain.Infrastructure.Security;
 using BonefireCRM.Infrastructure.Emailing;
 using BonefireCRM.Infrastructure.Persistance;
 using BonefireCRM.Infrastructure.Security;
-using EntityFramework.Exceptions.Sqlite;
+using EntityFramework.Exceptions.SqlServer;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -32,14 +33,14 @@ namespace Microsoft.Extensions.DependencyInjection
 
             builder.Services.AddDbContext<CRMContext>(options =>
             {
-                options.UseSqlite(connectionString).UseExceptionProcessor();
+                options.UseSqlServer(connectionString).UseExceptionProcessor();
             });
             builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             builder.Services.AddScoped<IUserRepository, UserRepository>();
 
             builder.Services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseSqlite(connectionString).UseExceptionProcessor();
+                options.UseSqlServer(connectionString).UseExceptionProcessor();
             });
 
             builder.AddAuth();
@@ -73,7 +74,7 @@ namespace Microsoft.Extensions.DependencyInjection
                     var appContext = services.GetRequiredService<AppDbContext>();
                     appContext.Database.Migrate();
                 }
-                catch (Data.Sqlite.SqliteException ex)
+                catch (SqlException ex)
                 {
                     throw new Exception($"SQLite migration failed: {ex.Message}", ex);
                 }
