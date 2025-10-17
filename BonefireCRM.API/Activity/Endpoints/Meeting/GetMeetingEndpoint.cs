@@ -28,9 +28,7 @@ namespace BonefireCRM.API.Activity.Endpoints.Meeting
             {
                 s.Summary = "Retrieves a meeting activity by its ID.";
                 s.Description = "Fetches detailed information about a specific meeting identified by its unique GUID.";
-
                 s.Params["id"] = "The unique identifier (GUID) of the meeting to retrieve.";
-
                 s.AddGetResponses<GetMeetingResponse>("Meeting");
             });
         }

@@ -4,10 +4,9 @@
 
 using BonefireCRM.API.Company.Mappers;
 using BonefireCRM.API.Contrat.Company;
-using BonefireCRM.Domain.DTOs.Company;
+using BonefireCRM.API.Extensions;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
-using LanguageExt.Common;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BonefireCRM.API.Company.Endpoints
@@ -24,6 +23,12 @@ namespace BonefireCRM.API.Company.Endpoints
         public override void Configure()
         {
             Post("/companies");
+
+            Summary(s =>
+            {
+                s.Summary = "Creates a new call company.";
+                s.AddCreateResponses<CreateCompanyResponse>("Company");
+            });
         }
 
         public override async Task<Results<Created<CreateCompanyResponse>, InternalServerError>> ExecuteAsync(CreateCompanyRequest request, CancellationToken ct)

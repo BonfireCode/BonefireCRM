@@ -30,8 +30,6 @@ namespace BonefireCRM.API.Activity.Endpoints.Meeting
             {
                 s.Summary = "Creates a new meeting activity.";
                 s.Description = "Creates a new meeting linked to a contact and optionally to a company or deal.";
-
-                s.AddParamsFrom<CreateMeetingRequest>();
                 s.AddCreateResponses<CreateMeetingRequest>("Meeting");
             });
         }

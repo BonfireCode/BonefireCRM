@@ -1,15 +1,13 @@
-﻿namespace BonefireCRM.API.Contrat.Security
+﻿using System.ComponentModel;
+
+namespace BonefireCRM.API.Contrat.Security
 {
     public class CreateInfoResponse
     {
-        /// <summary>
-        /// The email address associated with the authenticated user.
-        /// </summary>
+        [Description("The email address associated with the authenticated user.")]
         public required string Email { get; init; }
 
-        /// <summary>
-        /// Indicates whether or not the <see cref="Email"/> has been confirmed yet.
-        /// </summary>
+        [Description("Indicates whether the email address has been confirmed.")]
         public required bool IsEmailConfirmed { get; init; }
     }
 }

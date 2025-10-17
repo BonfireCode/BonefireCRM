@@ -30,8 +30,6 @@ namespace BonefireCRM.API.Activity.Endpoints.Call
             {
                 s.Summary = "Creates a new call activity.";
                 s.Description = "Creates a new call linked to a contact and optionally to a company or deal.";
-
-                s.AddParamsFrom<CreateCallRequest>();
                 s.AddCreateResponses<CreateCallResponse>("Call");
             });
         }

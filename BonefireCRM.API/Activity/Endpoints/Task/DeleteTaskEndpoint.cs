@@ -25,9 +25,7 @@ namespace BonefireCRM.API.Activity.Endpoints.Task
             {
                 s.Summary = "Deletes an existing task activity.";
                 s.Description = "Deletes a specific task identified by its unique GUID.";
-
                 s.Params["id"] = "The unique identifier (GUID) of the task to delete.";
-
                 s.AddDeleteResponses("Task");
             });
         }

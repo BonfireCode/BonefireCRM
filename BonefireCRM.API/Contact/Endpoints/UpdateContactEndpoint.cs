@@ -4,6 +4,7 @@
 
 using BonefireCRM.API.Contact.Mappers;
 using BonefireCRM.API.Contrat.Contact;
+using BonefireCRM.API.Extensions;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -22,7 +23,14 @@ namespace BonefireCRM.API.Contact.Endpoints
         public override void Configure()
         {
             Put("/contacts/{id:guid}");
-            AllowAnonymous();
+
+            Summary(s =>
+            {
+                s.Summary = "Updates an existing contct.";
+                s.Description = "Updates the details of an existing contact identified by its unique ID.";
+                s.Params["id"] = "The unique identifier (GUID) of the contact to update.";
+                s.AddUpdateResponses<UpdateContactResponse>("Contat");
+            });
         }
 
         public override async Task<Results<Ok<UpdateContactResponse>, NotFound, InternalServerError>> ExecuteAsync(UpdateContactRequest request, CancellationToken ct)

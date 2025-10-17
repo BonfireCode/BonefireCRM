@@ -28,9 +28,7 @@ namespace BonefireCRM.API.Activity.Endpoints.Task
             {
                 s.Summary = "Retrieves a specific task activity by ID.";
                 s.Description = "Fetches detailed information about a task identified by its unique GUID, including contact, company, and deal associations.";
-
                 s.Params["id"] = "The unique identifier (GUID) of the task to retrieve.";
-
                 s.AddGetResponses<GetTaskResponse>("Task");
             });
         }

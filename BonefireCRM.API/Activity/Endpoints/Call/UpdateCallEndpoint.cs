@@ -27,9 +27,7 @@ namespace BonefireCRM.API.Activity.Endpoints.Call
             {
                 s.Summary = "Updates an existing call activity.";
                 s.Description = "Updates the details of an existing call identified by its unique ID.";
-
                 s.Params["id"] = "The unique identifier (GUID) of the call to update.";
-                s.AddParamsFrom<UpdateCallRequest>();
                 s.AddUpdateResponses<UpdateCallResponse>("Call");
             });
         }

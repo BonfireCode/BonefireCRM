@@ -25,9 +25,7 @@ namespace BonefireCRM.API.Activity.Endpoints.Call
             {
                 s.Summary = "Deletes an existing call activity.";
                 s.Description = "Removes a call record identified by its unique ID. Returns 204 if deleted successfully, or 404 if the call was not found.";
-
                 s.Params["id"] = "The unique identifier (GUID) of the call to delete.";
-
                 s.AddDeleteResponses("Call");
             });
         }

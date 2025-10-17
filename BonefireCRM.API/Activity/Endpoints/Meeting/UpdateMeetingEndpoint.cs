@@ -28,10 +28,7 @@ namespace BonefireCRM.API.Activity.Endpoints.Meeting
             {
                 s.Summary = "Updates an existing meeting activity.";
                 s.Description = "Updates the details of a meeting identified by its unique GUID. The request includes information such as contact, company, deal, meeting times, subject, and notes.";
-
                 s.Params["id"] = "Unique identifier (GUID) of the meeting to update.";
-
-                s.AddParamsFrom<UpdateMeetingRequest>();
                 s.AddUpdateResponses<UpdateMeetingResponse>("Call");
             });
         }

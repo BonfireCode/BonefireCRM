@@ -3,6 +3,7 @@
 // </copyright>
 
 using BonefireCRM.API.Contrat.Security;
+using BonefireCRM.API.Extensions;
 using BonefireCRM.API.Security.Mappers;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
@@ -21,7 +22,16 @@ namespace BonefireCRM.API.Security.Endpoints
 
         public override void Configure()
         {
-            Get("/info");
+            Get("/security/info");
+
+            Summary(s =>
+            {
+                s.Summary = "Retrieves the authenticated user's account information.";
+                s.Description = "Returns information about the currently authenticated user, including their email address, " +
+                                "email confirmation status, and unique user identifier.";
+
+                s.AddGetResponses<GetInfoResponse>("User Info");
+            });
         }
 
         public override async Task<Results<Ok<GetInfoResponse>, ProblemHttpResult>> ExecuteAsync(CancellationToken ct)

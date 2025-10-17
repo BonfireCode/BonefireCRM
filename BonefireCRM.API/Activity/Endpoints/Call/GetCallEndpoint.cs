@@ -28,9 +28,7 @@ namespace BonefireCRM.API.Activity.Endpoints.Call
             {
                 s.Summary = "Retrieves a specific call activity by ID.";
                 s.Description = "Fetches detailed information about a call identified by its unique ID.";
-
                 s.Params["id"] = "The unique identifier (GUID) of the call to retrieve.";
-
                 s.AddGetResponses<GetCallResponse>("Call");
             });
         }

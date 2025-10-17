@@ -28,9 +28,7 @@ namespace BonefireCRM.API.Activity.Endpoints.Task
             {
                 s.Summary = "Updates an existing task activity.";
                 s.Description = "Updates the details of an existing task identified by its unique GUID.";
-
                 s.Params["id"] = "The unique identifier (GUID) of the task to update.";
-
                 s.AddGetResponses<GetTaskResponse>("Task");
             });
         }

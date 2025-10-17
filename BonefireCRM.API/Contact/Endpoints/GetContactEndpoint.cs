@@ -4,6 +4,7 @@
 
 using BonefireCRM.API.Contact.Mappers;
 using BonefireCRM.API.Contrat.Contact;
+using BonefireCRM.API.Extensions;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -22,7 +23,16 @@ namespace BonefireCRM.API.Contact.Endpoints
         public override void Configure()
         {
             Get("/contacts/{id:guid}");
-            AllowAnonymous();
+
+            Summary(s =>
+            {
+                s.Summary = "Retrieves a specific contact by ID.";
+                s.Description = "Fetches detailed information about a contact identified by its unique ID.";
+
+                s.Params["id"] = "The unique identifier (GUID) of the contact to retrieve.";
+
+                s.AddGetResponses<GetContactResponse>("Contact");
+            });
         }
 
         public override async Task<Results<Ok<GetContactResponse>, NotFound>> ExecuteAsync(CancellationToken ct)

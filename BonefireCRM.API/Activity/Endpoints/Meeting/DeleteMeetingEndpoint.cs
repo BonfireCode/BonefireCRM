@@ -25,9 +25,7 @@ namespace BonefireCRM.API.Activity.Endpoints.Meeting
             {
                 s.Summary = "Deletes an existing meeting activity.";
                 s.Description = "Removes a meeting record identified by its unique ID.";
-
                 s.Params["id"] = "The unique identifier (GUID) of the meeting to delete.";
-
                 s.AddDeleteResponses("Meeting");
             });
         }

@@ -30,8 +30,6 @@ namespace BonefireCRM.API.Activity.Endpoints.Task
             {
                 s.Summary = "Creates a new task activity.";
                 s.Description = "Creates a new task linked to a contact and optionally to a company or deal.";
-
-                s.AddParamsFrom<CreateTaskRequest>();
                 s.AddCreateResponses<CreateTaskResponse>("Task");
             });
         }
