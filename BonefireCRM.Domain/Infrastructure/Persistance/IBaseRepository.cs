@@ -1,4 +1,6 @@
-﻿namespace BonefireCRM.Domain.Infrastructure.Persistance
+﻿using LanguageExt;
+
+namespace BonefireCRM.Domain.Infrastructure.Persistance
 {
     public interface IBaseRepository<T>
     {

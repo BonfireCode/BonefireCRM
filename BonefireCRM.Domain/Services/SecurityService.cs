@@ -17,7 +17,11 @@ namespace BonefireCRM.Domain.Services
         private readonly SeedUserDataService _seedUserDataService;
 
 
-        public SecurityService(IAppUserManager appUserManager, IAppSignInManager appSignInManager, IUserRepository userRepository, SeedUserDataService seedUserDataService)
+        public SecurityService(
+            IAppUserManager appUserManager,
+            IAppSignInManager appSignInManager,
+            IUserRepository userRepository,
+            SeedUserDataService seedUserDataService)
         {
             _appUserManager = appUserManager;
             _appSignInManager = appSignInManager;
@@ -44,7 +48,7 @@ namespace BonefireCRM.Domain.Services
             await _seedUserDataService.DealParticipantRolesAsync(createdUser, ct);
 
             registerResultDTO.UserId = createdUser.Id;
-            return registerResultDTO;
+            return Fin<RegisterResultDTO>.Succ(registerResultDTO);
         }
 
         public async Task<LoginResultDTO> LoginUser(LoginDTO loginDTO, CancellationToken ct)

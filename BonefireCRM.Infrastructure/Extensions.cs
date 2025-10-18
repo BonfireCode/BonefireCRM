@@ -50,6 +50,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             builder.Services.AddScoped<IAppHttpContextAccessor, AppHttpContextAccessor>();
             builder.Services.AddScoped<IEmailSender, EmailSender>();
+            builder.Services.AddScoped<ITransactionManager, TransactionManager>();
 
             return builder;
         }

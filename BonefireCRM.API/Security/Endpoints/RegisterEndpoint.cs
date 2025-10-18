@@ -4,6 +4,7 @@
 
 using BonefireCRM.API.Contrat.Security;
 using BonefireCRM.API.Security.Mappers;
+using BonefireCRM.Domain.Infrastructure.Persistance;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -13,10 +14,12 @@ namespace BonefireCRM.API.Security.Endpoints
     public class RegisterEndpoint : Endpoint<RegisterRequest, Results<Ok<Guid>, ProblemHttpResult>>
     {
         private readonly SecurityService _securityService;
+        private readonly ITransactionManager _transactionManager;
 
-        public RegisterEndpoint(SecurityService securityService)
+        public RegisterEndpoint(SecurityService securityService, ITransactionManager transactionManager)
         {
             _securityService = securityService;
+            _transactionManager = transactionManager;
         }
 
         public override void Configure()
@@ -29,7 +32,7 @@ namespace BonefireCRM.API.Security.Endpoints
         {
             var registerDTO = request.MapToDto();
 
-            var result = await _securityService.RegisterUser(registerDTO, ct);
+            var result = await _transactionManager.Execute(() => _securityService.RegisterUser(registerDTO, ct));
 
             var response = result.Match<Results<Ok<Guid>, ProblemHttpResult>>
             (
