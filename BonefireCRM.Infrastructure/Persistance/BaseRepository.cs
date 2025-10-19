@@ -1,4 +1,6 @@
 ﻿using BonefireCRM.Domain.Infrastructure.Persistance;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace BonefireCRM.Infrastructure.Persistance
 {
@@ -9,11 +11,6 @@ namespace BonefireCRM.Infrastructure.Persistance
         public BaseRepository(CRMContext context)
         {
             _context = context;
-        }
-
-        public IEnumerable<T> GetAllAsync()
-        {
-            return _context.Set<T>().AsEnumerable();
         }
 
         public async Task<T?> GetAsync(Guid id, CancellationToken ct)
@@ -52,6 +49,30 @@ namespace BonefireCRM.Infrastructure.Persistance
             await _context.SaveChangesAsync(ct);
 
             return entities;
+        }
+
+        public async Task<IEnumerable<T>> GetAllAsync(
+            Expression<Func<T, bool>>? predicate = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+            int? skip = null,
+            int? take = null,
+            CancellationToken ct = default)
+        {
+            IQueryable<T> query = _context.Set<T>();
+
+            if (predicate != null)
+                query = query.Where(predicate);
+
+            if (orderBy != null)
+                query = orderBy(query);
+
+            if (skip.HasValue && skip.Value > 0)
+                query = query.Skip(skip.Value);
+
+            if (take.HasValue && take.Value > 0)
+                query = query.Take(take.Value);
+
+            return (await query.ToListAsync(ct)).AsEnumerable();
         }
     }
 }

@@ -9,6 +9,20 @@ namespace BonefireCRM.API.Contact.Mappers
 {
     internal static class RequestToDtoMapper
     {
+        internal static GetContactsDTO MapToDto(this GetContactsRequest request)
+        {
+            return new()
+            {
+                PageNumber = request.PageNumber,
+                PageSize = request.PageSize,
+                SortBy = request.SortBy,
+                SortDirection = request.SortDirection,
+                Id = request.Id,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+            };
+        }
+
         internal static CreateContactDTO MapToDto(this CreateContactRequest request, Guid userId)
         {
             return new()

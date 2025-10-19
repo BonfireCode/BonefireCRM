@@ -3,7 +3,9 @@
 // </copyright>
 
 using BonefireCRM.API.Contrat.Contact;
+using BonefireCRM.API.Contrat.Shared;
 using BonefireCRM.Domain.DTOs.Contact;
+using BonefireCRM.Domain.DTOs.Shared;
 
 namespace BonefireCRM.API.Contact.Mappers
 {
@@ -22,6 +24,18 @@ namespace BonefireCRM.API.Contact.Mappers
                 LifecycleStageId = dto.LifecycleStageId,
                 CompanyId = dto.CompanyId,
                 UserId = dto.UserId,
+            };
+        }
+
+        internal static PagedResult<GetContactResponse> MapToResponse(this PagedResultDTO<GetContactDTO> dto)
+        {
+            return new()
+            {
+                Items = dto.Items.Select(item => item.MapToResponse()),
+                TotalCount = dto.TotalCount,
+                PageSize = dto.PageSize,
+                TotalPages = dto.TotalPages,
+                PageNumber = dto.PageNumber,
             };
         }
 

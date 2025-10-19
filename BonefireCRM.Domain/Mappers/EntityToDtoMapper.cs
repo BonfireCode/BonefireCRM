@@ -3,6 +3,7 @@ using BonefireCRM.Domain.DTOs.Activity.Meeting;
 using BonefireCRM.Domain.DTOs.Activity.Task;
 using BonefireCRM.Domain.DTOs.Company;
 using BonefireCRM.Domain.DTOs.Contact;
+using BonefireCRM.Domain.DTOs.Shared;
 using BonefireCRM.Domain.DTOs.User;
 using BonefireCRM.Domain.Entities;
 
@@ -164,6 +165,30 @@ namespace BonefireCRM.Domain.Mappers
                 LifecycleStageId = contact.LifecycleStageId,
                 CompanyId = contact.CompanyId ?? Guid.Empty,
                 UserId = contact.UserId,
+            };
+        }
+
+        internal static PagedResultDTO<GetContactDTO> MapToGetAllDto(this IEnumerable<Contact> contacts, int pageSize, int pageNumber)
+        {
+            var items = contacts.Select(contact => new GetContactDTO
+            {
+                Id = contact.Id,
+                Email = contact.Email,
+                FirstName = contact.FirstName,
+                LastName = contact.LastName,
+                PhoneNumber = contact.PhoneNumber,
+                JobRole = contact.JobRole,
+                LifecycleStageId = contact.LifecycleStageId,
+                CompanyId = contact.CompanyId ?? Guid.Empty,
+                UserId = contact.UserId,
+            });
+
+            return new PagedResultDTO<GetContactDTO>
+            {
+                Items = items,
+                TotalCount = items.Count(),
+                PageSize = pageSize,
+                PageNumber = pageNumber
             };
         }
 
