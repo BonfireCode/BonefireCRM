@@ -2,8 +2,10 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
-using BonefireCRM.API.User.Mappers;
+using BonefireCRM.API.Contrat.Call;
 using BonefireCRM.API.Contrat.User;
+using BonefireCRM.API.Extensions;
+using BonefireCRM.API.User.Mappers;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -23,6 +25,14 @@ namespace BonefireCRM.API.User.Endpoints
         {
             Get("/Users/{id:guid}");
             AllowAnonymous();
+
+            Summary(s =>
+            {
+                s.Summary = "Retrieves a specific user by ID.";
+                s.Description = "Fetches detailed information about a user identified by its unique ID.";
+                s.Params["id"] = "The unique identifier (GUID) of the user to retrieve.";
+                s.AddGetResponses<GetCallResponse>("User", true);
+            });
         }
 
         public override async Task<Results<Ok<GetUserResponse>, NotFound>> ExecuteAsync(CancellationToken ct)

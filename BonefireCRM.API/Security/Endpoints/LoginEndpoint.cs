@@ -21,8 +21,21 @@ namespace BonefireCRM.API.Security.Endpoints
 
         public override void Configure()
         {
-            Post("/login");
+            Post("/security/login");
             AllowAnonymous();
+
+            Summary(s =>
+            {
+                s.Summary = "Authenticates a user and starts a new session.";
+                s.Description = "Validates the provided username and password. " +
+                                "If successful, returns authentication cookies or a bearer token depending on the request parameters. " +
+                                "Supports optional two-factor authentication if enabled.";
+
+                s.Response<EmptyHttpResult>(200, "User successfully authenticated. Returns authentication cookies or bearer token.");
+                s.Response<ProblemHttpResult>(400, "Invalid request data or missing parameters.");
+                s.Response<ProblemHttpResult>(401, "Invalid username, password, or two-factor credentials.");
+                s.Response<InternalServerError>(500, "An internal server error occurred while processing the login request.");
+            });
         }
 
         public override async Task<Results<EmptyHttpResult, ProblemHttpResult>> ExecuteAsync(LoginRequest request, CancellationToken ct)

@@ -1,20 +1,16 @@
-﻿namespace BonefireCRM.API.Contrat.Security
+﻿using System.ComponentModel;
+
+namespace BonefireCRM.API.Contrat.Security
 {
     public sealed class RegisterRequest
     {
-        /// <summary>
-        /// The user's user name.
-        /// </summary>
+        [Description("The username of the user.")]
         public required string UserName { get; set; }
 
-        /// <summary>
-        /// The user's email address.
-        /// </summary>
+        [Description("The email address of the user.")]
         public required string Email { get; init; }
 
-        /// <summary>
-        /// The user's password.
-        /// </summary>
+        [Description("The password of the user.")]
         public required string Password { get; init; }
     }
 }

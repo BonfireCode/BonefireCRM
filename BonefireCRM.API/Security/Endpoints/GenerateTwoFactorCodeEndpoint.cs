@@ -2,8 +2,6 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
-using BonefireCRM.API.Contrat.Security;
-using BonefireCRM.API.Security.Mappers;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -22,7 +20,7 @@ namespace BonefireCRM.API.Security.Endpoints
 
         public override void Configure()
         {
-            Get("/generatecode2fa");
+            Get("/security/generatecode2fa");
         }
 
         public override async Task<Ok<string>> ExecuteAsync(CancellationToken ct)

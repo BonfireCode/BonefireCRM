@@ -1,31 +1,22 @@
-﻿namespace BonefireCRM.API.Contrat.Security
+﻿using System.ComponentModel;
+
+namespace BonefireCRM.API.Contrat.Security
 {
     public class TwoFactorResponse
     {
-        /// <summary>
-        /// The shared key generally for TOTP authenticator apps that is usually presented to the user as a QR code.
-        /// </summary>
+        [Description("The shared key used for TOTP authenticator apps, typically presented to the user as a QR code.")]
         public required string SharedKey { get; init; }
 
-        /// <summary>
-        /// The number of unused <see cref="RecoveryCodes"/> remaining.
-        /// </summary>
+        [Description("The number of unused recovery codes remaining.")]
         public required int RecoveryCodesLeft { get; init; }
 
-        /// <summary>
-        /// The recovery codes to use if the <see cref="SharedKey"/> is lost. This will be omitted from the response unless
-        /// <see cref="TwoFactorRequest.ResetRecoveryCodes"/> was set or two-factor was enabled for the first time.
-        /// </summary>
+        [Description("The recovery codes to use if the shared key is lost. This property is only included if ResetRecoveryCodes was set or two-factor authentication was enabled for the first time.")]
         public string[]? RecoveryCodes { get; init; }
 
-        /// <summary>
-        /// Whether or not two-factor login is required for the current authenticated user.
-        /// </summary>
+        [Description("Indicates whether two-factor login is required for the current authenticated user.")]
         public required bool IsTwoFactorEnabled { get; init; }
 
-        /// <summary>
-        /// Whether or not the current client has been remembered by two-factor authentication cookies. This is always <see langword="false"/> for non-cookie authentication schemes.
-        /// </summary>
+        [Description("Indicates whether the current client is remembered by two-factor authentication cookies. Always false for non-cookie authentication schemes.")]
         public required bool IsMachineRemembered { get; init; }
     }
 }

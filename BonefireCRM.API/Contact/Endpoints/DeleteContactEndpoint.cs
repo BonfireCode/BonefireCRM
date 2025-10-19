@@ -2,6 +2,7 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
+using BonefireCRM.API.Extensions;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -20,7 +21,16 @@ namespace BonefireCRM.API.Contact.Endpoints
         public override void Configure()
         {
             Delete("/contacts/{id:guid}");
-            AllowAnonymous();
+
+            Summary(s =>
+            {
+                s.Summary = "Deletes an existing contact.";
+                s.Description = "Removes a contact record identified by its unique ID. Returns 204 if deleted successfully, or 404 if the call was not found.";
+
+                s.Params["id"] = "The unique identifier (GUID) of the contact to delete.";
+
+                s.AddDeleteResponses("Contact");
+            });
         }
 
         public override async Task<Results<NoContent, NotFound>> ExecuteAsync(CancellationToken ct)

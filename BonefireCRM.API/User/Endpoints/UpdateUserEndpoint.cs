@@ -2,12 +2,14 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
+using System.Security.Claims;
+using BonefireCRM.API.Contrat.Call;
 using BonefireCRM.API.Contrat.User;
+using BonefireCRM.API.Extensions;
 using BonefireCRM.API.User.Mappers;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
-using System.Security.Claims;
 
 namespace BonefireCRM.API.User.Endpoints
 {
@@ -24,6 +26,14 @@ namespace BonefireCRM.API.User.Endpoints
         {
             Put("/Users/{id:guid}");
             AllowAnonymous();
+
+            Summary(s =>
+            {
+                s.Summary = "Updates an existing user.";
+                s.Description = "Updates the details of an existing user identified by its unique ID.";
+                s.Params["id"] = "The unique identifier (GUID) of the user to update.";
+                s.AddUpdateResponses<UpdateUserResponse>("User", true);
+            });
         }
 
         public override async Task<Results<Ok<UpdateUserResponse>, NotFound, InternalServerError>> ExecuteAsync(UpdateUserRequest request, CancellationToken ct)

@@ -21,8 +21,21 @@ namespace BonefireCRM.API.Security.Endpoints
 
         public override void Configure()
         {
-            Get("/confirmemail");
+            Get("/security/confirmemail");
             AllowAnonymous();
+
+            Summary(s =>
+            {
+                s.Summary = "Confirms a user's email address.";
+                s.Description = "Verifies a user's email address using the provided user ID and confirmation token. " +
+                                "If valid, the user's email address is confirmed. If the email is being changed, " +
+                                "the new email address will replace the previous one upon confirmation.";
+
+                s.Response<Ok>(200, "Email address successfully confirmed.");
+                s.Response<UnauthorizedHttpResult>(401, "Invalid or expired confirmation token.");
+                s.Response<ProblemHttpResult>(400, "Malformed request or missing parameters.");
+                s.Response<InternalServerError>(500, "An internal server error occurred while confirming the email address.");
+            });
         }
 
         public override async Task<Results<Ok, UnauthorizedHttpResult>> ExecuteAsync(ConfirmEmailRequest request, CancellationToken ct)
