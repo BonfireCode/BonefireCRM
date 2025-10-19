@@ -21,8 +21,19 @@ namespace BonefireCRM.API.Security.Endpoints
 
         public override void Configure()
         {
-            Post("/resetpassword");
+            Post("/security/resetpassword");
             AllowAnonymous();
+
+            Summary(s =>
+            {
+                s.Summary = "Resets the user's password using a valid reset code.";
+                s.Description = "Resets the password for a user who has requested a password reset via the '/forgotpassword' endpoint. " +
+                                "The reset code sent to the user's email must be valid and not expired.";
+
+                s.Response<Ok>(200, "Password successfully reset.");
+                s.Response<ProblemHttpResult>(400, "Invalid or expired reset code, or the provided data is invalid.");
+                s.Response<InternalServerError>(500, "An internal server error occurred while resetting the password.");
+            });
         }
 
         public override async Task<Results<Ok, ProblemHttpResult>> ExecuteAsync(ResetPasswordRequest request, CancellationToken ct)

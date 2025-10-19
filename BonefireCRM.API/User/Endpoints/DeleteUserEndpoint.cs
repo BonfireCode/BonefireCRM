@@ -3,6 +3,7 @@
 // </copyright>
 
 using System.Security.Claims;
+using BonefireCRM.API.Extensions;
 using BonefireCRM.Domain.Infrastructure.Persistance;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
@@ -25,6 +26,14 @@ namespace BonefireCRM.API.User.Endpoints
         {
             Delete("/Users/{id:guid}");
             AllowAnonymous();
+
+            Summary(s =>
+            {
+                s.Summary = "Deletes an existing user.";
+                s.Description = "Removes a user record identified by its unique ID. Returns 204 if deleted successfully, or 404 if the call was not found.";
+                s.Params["id"] = "The unique identifier (GUID) of the user to delete.";
+                s.AddDeleteResponses("User", true);
+            });
         }
 
         public override async Task<Results<NoContent, NotFound>> ExecuteAsync(CancellationToken ct)

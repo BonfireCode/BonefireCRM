@@ -3,7 +3,9 @@
 // </copyright>
 
 using BonefireCRM.API.Company.Mappers;
+using BonefireCRM.API.Contrat.Call;
 using BonefireCRM.API.Contrat.Company;
+using BonefireCRM.API.Extensions;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -22,6 +24,16 @@ namespace BonefireCRM.API.Company.Endpoints
         public override void Configure()
         {
             Get("/companies/{id:guid}");
+
+            Summary(s =>
+            {
+                s.Summary = "Retrieves a specific company by ID.";
+                s.Description = "Fetches detailed information about a company identified by its unique ID.";
+
+                s.Params["id"] = "The unique identifier (GUID) of the company to retrieve.";
+
+                s.AddGetResponses<GetCompanyResponse>("Company");
+            });
         }
 
         public override async Task<Results<Ok<GetCompanyResponse>, NotFound>> ExecuteAsync(CancellationToken ct)

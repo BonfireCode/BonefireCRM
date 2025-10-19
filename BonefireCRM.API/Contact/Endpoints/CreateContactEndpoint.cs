@@ -5,6 +5,7 @@
 using System.Security.Claims;
 using BonefireCRM.API.Contact.Mappers;
 using BonefireCRM.API.Contrat.Contact;
+using BonefireCRM.API.Extensions;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -25,6 +26,12 @@ namespace BonefireCRM.API.Contact.Endpoints
         public override void Configure()
         {
             Post("/contacts");
+
+            Summary(s =>
+            {
+                s.Summary = "Creates a new contact.";
+                s.AddCreateResponses<CreateContactResponse>("Contact");
+            });
         }
 
         public override async Task<Results<Created<CreateContactResponse>, InternalServerError>> ExecuteAsync(CreateContactRequest request, CancellationToken ct)

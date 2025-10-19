@@ -31,6 +31,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: build-output
+        retention-days: 1
         path: |
           **/*.Tests/bin/Release/net*/
           !**/ref/*           
@@ -43,6 +44,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: build-output
+        retention-days: 1
         path: ./build
 
     - name: Show files (debug)

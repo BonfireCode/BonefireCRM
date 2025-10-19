@@ -24,8 +24,19 @@ namespace BonefireCRM.API.Security.Endpoints
 
         public override void Configure()
         {
-            Post("/register");
+            Post("/security/register");
             AllowAnonymous();
+
+            Summary(s =>
+            {
+                s.Summary = "Registers a new user account.";
+                s.Description = "Creates a new user with the provided username, email, and password. " +
+                                "After successful registration, an email confirmation may be required before login.";
+
+                s.Response<Ok<Guid>>(200, "User registered successfully. Returns the unique user ID.");
+                s.Response<ProblemHttpResult>(400, "Invalid registration data or user already exists.");
+                s.Response<InternalServerError>(500, "An internal server error occurred while registering the user.");
+            });
         }
 
         public override async Task<Results<Ok<Guid>, ProblemHttpResult>> ExecuteAsync(RegisterRequest request, CancellationToken ct)

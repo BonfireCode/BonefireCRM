@@ -21,7 +21,18 @@ namespace BonefireCRM.API.Security.Endpoints
 
         public override void Configure()
         {
-            Post("/refresh");
+            Post("/security/refresh");
+
+            Summary(s =>
+            {
+                s.Summary = "Refreshes the user's authentication token.";
+                s.Description = "Uses a valid refresh token to generate a new access token and extend the user's authenticated session. " +
+                                "If the provided refresh token is invalid, expired, or revoked, the client is challenged to re-authenticate.";
+
+                s.Response<SignInHttpResult>(200, "A new access token was successfully issued.");
+                s.Response<ChallengeHttpResult>(401, "The provided refresh token is invalid, expired, or revoked. The client must log in again.");
+                s.Response<InternalServerError>(500, "An internal server error occurred while refreshing the token.");
+            });
         }
 
         public override async Task<Results<SignInHttpResult, ChallengeHttpResult>> ExecuteAsync(RefreshRequest request, CancellationToken ct)

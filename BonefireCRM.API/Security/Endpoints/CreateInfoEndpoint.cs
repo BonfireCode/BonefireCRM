@@ -21,7 +21,7 @@ namespace BonefireCRM.API.Security.Endpoints
 
         public override void Configure()
         {
-            Post("/info");
+            Post("/security/info");
         }
 
         public override async Task<Results<Ok<CreateInfoResponse>, ProblemHttpResult>> ExecuteAsync(CreateInfoRequest request, CancellationToken ct)

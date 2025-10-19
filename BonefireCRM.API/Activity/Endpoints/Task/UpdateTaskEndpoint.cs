@@ -4,6 +4,7 @@
 
 using BonefireCRM.API.Activity.Mappers.Task;
 using BonefireCRM.API.Contrat.Task;
+using BonefireCRM.API.Extensions;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -27,21 +28,8 @@ namespace BonefireCRM.API.Activity.Endpoints.Task
             {
                 s.Summary = "Updates an existing task activity.";
                 s.Description = "Updates the details of an existing task identified by its unique GUID.";
-
                 s.Params["id"] = "The unique identifier (GUID) of the task to update.";
-                s.Params[nameof(UpdateTaskRequest.ContactId)] = "The unique identifier of the contact associated with the task.";
-                s.Params[nameof(UpdateTaskRequest.CompanyId)] = "Optional. The unique identifier of the company linked to the task.";
-                s.Params[nameof(UpdateTaskRequest.DealId)] = "Optional. The unique identifier of the deal linked to the task.";
-                s.Params[nameof(UpdateTaskRequest.Subject)] = "The subject or title of the task.";
-                s.Params[nameof(UpdateTaskRequest.Description)] = "A detailed description of the task.";
-                s.Params[nameof(UpdateTaskRequest.DueDate)] = "The due date and time for completing the task.";
-                s.Params[nameof(UpdateTaskRequest.IsCompleted)] = "Indicates whether the task has been completed.";
-
-                s.Response<Ok<UpdateTaskResponse>>(200, "Task successfully updated.");
-                s.Response<NotFound>(404, "The specified task could not be found.");
-                s.Response<ProblemDetails>(400, "Invalid request data. Validation errors are returned in problem+json format.", "application/problem+json");
-                s.Response<UnauthorizedHttpResult>(401, "User is not authorized to perform this action.");
-                s.Response<InternalServerError>(500, "An internal server error occurred while updating the task.");
+                s.AddGetResponses<GetTaskResponse>("Task");
             });
         }
 
