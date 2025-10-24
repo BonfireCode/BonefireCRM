@@ -2,21 +2,24 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
+using System.Security.Claims;
 using BonefireCRM.API.Extensions;
+using BonefireCRM.Domain.Infrastructure.Persistance;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
-using System.Security.Claims;
 
 namespace BonefireCRM.API.User.Endpoints
 {
     public class DeleteUserEndpoint : EndpointWithoutRequest<Results<NoContent, NotFound>>
     {
         private readonly UserService _userService;
+        private readonly ITransactionManager _transactionManager;
 
-        public DeleteUserEndpoint(UserService UserService)
+        public DeleteUserEndpoint(UserService UserService, ITransactionManager transactionManager)
         {
             _userService = UserService;
+            _transactionManager = transactionManager;
         }
 
         public override void Configure()
@@ -39,10 +42,10 @@ namespace BonefireCRM.API.User.Endpoints
 
             var registerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-            var result = await _userService.DeleteUserAsync(id, registerId, ct);
+            var result = await _transactionManager.Execute(() => _userService.DeleteUserAsync(id, registerId, ct));
             var response = result.Match<Results<NoContent, NotFound>>
             (
-                Succ => TypedResults.NoContent(),
+                succ => TypedResults.NoContent(),
                 _ => TypedResults.NotFound()
             );
 

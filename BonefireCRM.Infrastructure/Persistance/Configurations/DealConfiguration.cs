@@ -13,13 +13,18 @@ namespace BonefireCRM.Infrastructure.Persistance.Configurations
 
             entity.HasOne<User>()
                 .WithMany()
-                .HasForeignKey(d => d.UserId)
+                .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasOne<Contact>()
                 .WithMany()
                 .HasForeignKey(d => d.PrimaryContactId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne<Company>()
+                .WithMany(c => c.Deals)
+                .HasForeignKey(d => d.CompanyId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             entity.HasOne<PipelineStage>()
                 .WithMany(ps => ps.Deals)

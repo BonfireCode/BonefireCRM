@@ -17,23 +17,23 @@ namespace BonefireCRM.Infrastructure.Persistance.Configurations
 
             entity.HasOne<User>()
                 .WithMany(u => u.Activities)
-                .HasForeignKey(a => a.UserId)
+                .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasOne<Contact>()
                 .WithMany()
                 .HasForeignKey(a => a.ContactId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             entity.HasOne<Company>()
                 .WithMany()
                 .HasForeignKey(a => a.CompanyId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             entity.HasOne<Deal>()
                 .WithMany()
                 .HasForeignKey(a => a.DealId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.ClientSetNull);
         }
     }
 }

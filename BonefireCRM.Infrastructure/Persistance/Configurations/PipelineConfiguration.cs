@@ -9,6 +9,11 @@ namespace BonefireCRM.Infrastructure.Persistance.Configurations
         public void Configure(EntityTypeBuilder<Pipeline> entity)
         {
             entity.Property(p => p.Name).IsRequired().HasMaxLength(150);
+
+            //entity.HasOne<User>()
+            //    .WithMany()
+            //    .HasForeignKey(p => p.UserId)
+            //    .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
