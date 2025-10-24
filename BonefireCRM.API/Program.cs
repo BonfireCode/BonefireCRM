@@ -55,14 +55,13 @@ app.UseFastEndpoints(c =>
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-
-    app.MigrateDatabases();
-
-    app.UseOpenApi(c => c.Path = "/openapi/{documentName}.json");
-
-    app.MapScalarApiReference(options =>
-        options.WithPersistentAuthentication());
 }
+
+app.MigrateDatabases();
+
+app.UseOpenApi(c => c.Path = "/openapi/{documentName}.json");
+app.MapScalarApiReference(options =>
+    options.EnablePersistentAuthentication());
 
 app.MapDefaultEndpoints();
 

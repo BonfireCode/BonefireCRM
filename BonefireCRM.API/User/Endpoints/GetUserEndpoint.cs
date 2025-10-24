@@ -16,9 +16,9 @@ namespace BonefireCRM.API.User.Endpoints
     {
         private readonly UserService _userService;
 
-        public GetUserEndpoint(UserService UserService)
+        public GetUserEndpoint(UserService userService)
         {
-            _userService = UserService;
+            _userService = userService;
         }
 
         public override void Configure()
