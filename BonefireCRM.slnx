@@ -15,6 +15,8 @@
   <Project Path="BonefireCRM.Domain.Tests/BonefireCRM.Domain.Tests.csproj" Id="97c46e46-2baf-43f2-b261-17a55168a866" />
   <Project Path="BonefireCRM.Domain/BonefireCRM.Domain.csproj" />
   <Project Path="BonefireCRM.Infrastructure/BonefireCRM.Infrastructure.csproj" />
+  <Project Path="BonefireCRM.SourceGenerator.Tests/BonefireCRM.SourceGenerator.Tests.csproj" Id="74f7f881-6be3-4097-84fc-64975ba16ffc" />
+  <Project Path="BonefireCRM.SourceGenerator/BonefireCRM.SourceGenerator.csproj" Id="5898b0fd-777b-4784-aee0-703b5e805e1f" />
   <Project Path="BonefireCRM.Web/bonefirecrm.web.client/bonefirecrm.web.client.esproj">
     <Build />
     <Deploy />

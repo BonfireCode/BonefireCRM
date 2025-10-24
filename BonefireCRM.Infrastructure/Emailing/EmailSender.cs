@@ -2,7 +2,9 @@
 using BonefireCRM.Domain.Infrastructure.Email;
 using BonefireCRM.Domain.Infrastructure.Security;
 using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Hosting;
 using MimeKit;
 using MimeKit.Text;
 using System.Text;
@@ -16,10 +18,12 @@ namespace BonefireCRM.Infrastructure.Emailing
         private const string RESET_PASSWORD_ENDPOINT_NAME = "/resetpassword";
 
         private readonly IAppHttpContextAccessor _appHttpContextAccessor;
+        private readonly IWebHostEnvironment _environment;
 
-        public EmailSender(IAppHttpContextAccessor appHttpContextAccessor)
+        public EmailSender(IAppHttpContextAccessor appHttpContextAccessor, IWebHostEnvironment environment)
         {
             _appHttpContextAccessor = appHttpContextAccessor;
+            _environment = environment;
         }
 
         public async Task SendConfirmationEmailAsync(Guid userId, string userEmail, string confirmationToken)
@@ -98,10 +102,13 @@ namespace BonefireCRM.Infrastructure.Emailing
 
             using (var smtpClient = new SmtpClient())
             {
-                //THIS CONFIG IS ONLY FOR TESTING PURPOSES WITH MAILPIT
-                await smtpClient.ConnectAsync("localhost", 1025);
-                await smtpClient.SendAsync(message);
-                await smtpClient.DisconnectAsync(true);
+                if (_environment.IsDevelopment())
+                {
+                    //THIS CONFIG IS ONLY FOR TESTING PURPOSES WITH MAILPIT
+                    await smtpClient.ConnectAsync("localhost", 1025);
+                    await smtpClient.SendAsync(message);
+                    await smtpClient.DisconnectAsync(true);
+                }
             }
         }
     }

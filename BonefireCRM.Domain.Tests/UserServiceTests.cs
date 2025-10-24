@@ -1,4 +1,5 @@
 ﻿using AutoFixture;
+using BonefireCRM.Domain.Constants;
 using BonefireCRM.Domain.DTOs.User;
 using BonefireCRM.Domain.Entities;
 using BonefireCRM.Domain.Infrastructure.Persistance;
@@ -7,6 +8,8 @@ using BonefireCRM.Domain.Services;
 using FluentAssertions;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
+using System.Linq.Expressions;
+using BonefireCRM.SourceGenerator;
 
 namespace BonefireCRM.Domain.Tests
 {
@@ -80,6 +83,98 @@ namespace BonefireCRM.Domain.Tests
                 userDto.FirstName.Should().Be(expectedUser.FirstName);
                 userDto.LastName.Should().Be(expectedUser.LastName);
             });
+        }
+
+        [Fact]
+        public async Task GetAllUsers_NoUsersFound_ReturnEmptyEnumerable()
+        {
+            // Arrange
+            var getAllUsersDTO = _fixture.Build<GetAllUsersDTO>()
+                .OmitAutoProperties()
+                .With(dto => dto.SortBy, DefaultValues.SORTBY)
+                .With(dto => dto.SortDirection, DefaultValues.SORTDIRECTION)
+                .With(dto => dto.PageNumber, DefaultValues.PAGENUMBER)
+                .With(dto => dto.PageSize, DefaultValues.PAGESIZE)
+                .Create();
+
+            var filterExpression = UserQueryExpressions.Filter(getAllUsersDTO);
+            var sortExpression = UserQueryExpressions.Sort(getAllUsersDTO.SortBy);
+            var skip = (getAllUsersDTO.PageNumber - 1) * getAllUsersDTO.PageSize;
+            var take = getAllUsersDTO.PageSize;
+            _userRepository.GetAll(
+                    Arg.Is<Expression<Func<User, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
+                    Arg.Is<Expression<Func<User, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
+                    getAllUsersDTO.SortDirection,
+                    skip,
+                    take,
+                    CancellationToken.None)
+                .Returns([]);
+
+            // Act
+            var result = _userService.GetAllUsers(getAllUsersDTO, CancellationToken.None);
+
+            // Assert
+            _userRepository.Received(1).GetAll(
+                    Arg.Is<Expression<Func<User, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
+                    Arg.Is<Expression<Func<User, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
+                    getAllUsersDTO.SortDirection,
+                    skip,
+                    take,
+                    CancellationToken.None);
+
+            result.Should().BeEmpty();
+        }
+
+        [Fact]
+        public async Task GetAllUsers_OneUserFound_ReturnEnumerableWithUser()
+        {
+            // Arrange
+            var getAllUsersDTO = _fixture.Build<GetAllUsersDTO>()
+                .OmitAutoProperties()
+                .With(dto => dto.SortBy, DefaultValues.SORTBY)
+                .With(dto => dto.SortDirection, DefaultValues.SORTDIRECTION)
+                .Create();
+
+            var user = _fixture.Build<User>()
+                .Without(u => u.Activities)
+                .Create();
+
+            var filterExpression = UserQueryExpressions.Filter(getAllUsersDTO);
+            var sortExpression = UserQueryExpressions.Sort(getAllUsersDTO.SortBy);
+            var skip = (getAllUsersDTO.PageNumber - 1) * getAllUsersDTO.PageSize;
+            var take = getAllUsersDTO.PageSize;
+            _userRepository.GetAll(
+                    Arg.Is<Expression<Func<User, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
+                    Arg.Is<Expression<Func<User, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
+                    getAllUsersDTO.SortDirection,
+                    skip,
+                    take,
+                    CancellationToken.None)
+                .Returns([user]);
+
+            var expectedUser = _fixture.Build<GetUserDTO>()
+                .With(dto => dto.Id, user.Id)
+                .With(dto => dto.FirstName, user.FirstName)
+                .With(dto => dto.LastName, user.LastName)
+                .Create();
+
+            // Act
+            var result = _userService.GetAllUsers(getAllUsersDTO, CancellationToken.None);
+
+            // Assert
+            _userRepository.Received(1).GetAll(
+                    Arg.Is<Expression<Func<User, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
+                    Arg.Is<Expression<Func<User, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
+                    getAllUsersDTO.SortDirection,
+                    skip,
+                    take,
+                    CancellationToken.None);
+
+            result.Should().HaveCount(1);
+            var element = result.Single();
+            element.Id.Should().Be(expectedUser.Id);
+            element.FirstName.Should().Be(expectedUser.FirstName);
+            element.LastName.Should().Be(expectedUser.LastName);
         }
 
         [Fact]

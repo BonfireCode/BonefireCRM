@@ -1,6 +1,6 @@
 ﻿using BonefireCRM.Domain.Infrastructure.Persistance;
 using LanguageExt;
-using System.Transactions;
+using System.Linq.Expressions;
 
 namespace BonefireCRM.Infrastructure.Persistance
 {
@@ -13,9 +13,28 @@ namespace BonefireCRM.Infrastructure.Persistance
             _context = context;
         }
 
-        public IEnumerable<T> GetAllAsync()
+        public IEnumerable<T> GetAll(
+            Expression<Func<T, bool>> filterExpression,
+            Expression<Func<T, object>> sortExpression,
+            string sortDirection,
+            int skip,
+            int take,
+            CancellationToken ct)
         {
-            return _context.Set<T>().AsEnumerable();
+            var query = _context.Set<T>()
+                .Where(filterExpression);
+
+            query = sortDirection.Equals("DESC", StringComparison.OrdinalIgnoreCase)
+                ? query.OrderByDescending(sortExpression)
+                : query.OrderBy(sortExpression);
+
+            if (skip > 0)
+                query = query.Skip(skip);
+
+            if (take > 0)
+                query = query.Take(take);
+
+            return query.AsEnumerable();
         }
 
         public async Task<T?> GetAsync(Guid id, CancellationToken ct)
