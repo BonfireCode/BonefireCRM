@@ -12,10 +12,6 @@ namespace BonefireCRM.SourceGenerator
     {
         public void Initialize(IncrementalGeneratorInitializationContext context)
         {
-            //context.RegisterPostInitializationOutput(ctx => ctx.AddSource(
-            //    "QueryExpressionsForAttribute.g.cs",
-            //    SourceText.From(Attributes.QueryExpressionsForAttribute, Encoding.UTF8)));
-
             var classesToGenerate = context.SyntaxProvider
                 .ForAttributeWithMetadataName(
                     fullyQualifiedMetadataName: "BonefireCRM.SourceGenerator.QueryExpressionsForAttribute",

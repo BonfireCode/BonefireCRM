@@ -13,11 +13,7 @@ namespace BonefireCRM.SourceGenerator.Tests.Common
 
             // Create references for assemblies we require
             // We could add multiple references if required
-            IEnumerable<PortableExecutableReference> references = 
-            [
-                .. Net80.References.All,
-                MetadataReference.CreateFromFile(generator.GetType().Assembly.Location)
-            ];
+            IEnumerable<PortableExecutableReference> references = Net80.References.All;
 
             var compilation = CSharpCompilation.Create(
                 "Tests",

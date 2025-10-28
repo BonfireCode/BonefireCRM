@@ -2,21 +2,21 @@
 
 namespace BonefireCRM.SourceGenerator.Tests
 {
-    public class FilterGeneratorTests
+    public class QueryExpressionsGeneratorTests
     {
         private readonly string _attributeMarker;
 
-        public FilterGeneratorTests()
+        public QueryExpressionsGeneratorTests()
         {
             _attributeMarker = """
             namespace BonefireCRM.SourceGenerator
             {
                 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-                public class ApplyFilteringAttribute : Attribute
+                public class QueryExpressionsForAttribute : Attribute
                 {
                     public Type EntityType { get; set; }
 
-                    public ApplyFilteringAttribute(Type entityType)
+                    public QueryExpressionsForAttribute(Type entityType)
                     {
                         EntityType = entityType;
                     }
@@ -28,7 +28,7 @@ namespace BonefireCRM.SourceGenerator.Tests
         [Fact]
         public Task GeneratesClassCorrectly()
         {
-            var generator = new FilterGenerator();
+            var generator = new QueryExpressionsGenerator();
             var source = $$"""
                 using System;
                 using System.Collections.Generic;
@@ -39,7 +39,7 @@ namespace BonefireCRM.SourceGenerator.Tests
 
                 namespace BonefireCRM.Definitions
                 {
-                    [ApplyFiltering(typeof(MyEntity))]
+                    [QueryExpressionsFor(typeof(MyEntity))]
                     public class TestClass
                     {
                         public Guid? Id { get; set; }
