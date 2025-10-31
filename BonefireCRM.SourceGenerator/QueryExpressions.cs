@@ -39,7 +39,9 @@ namespace BonefireCRM.SourceGenerator
             var classMembers = classSymbol.GetMembers();
             foreach (var member in classMembers)
             {
-                if (member is IPropertySymbol property && !property.Name.StartsWith("Sort"))
+                if (member is IPropertySymbol property 
+                    && !property.Name.StartsWith("Sort")
+                    && !property.Name.StartsWith("Page"))
                 {
                     var propertyType = property.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
 
@@ -84,7 +86,7 @@ namespace BonefireCRM.SourceGenerator
                     {{FilterMethodBody(classToGenerate)}}
                 }
 
-                public static LambdaExpression Sort(string sortCriteria)
+                public static Expression<Func<{{classToGenerate.TargetTypeName}}, object>> Sort(string sortCriteria)
                 {
                     {{SortMethodBody(classToGenerate)}}
                 }
@@ -111,7 +113,7 @@ namespace BonefireCRM.SourceGenerator
             {
                 var code = propertyData.BaseType switch
                 {
-                    "global::System.ValueType" => $"&& (filterCriteria.{propertyData.Name}.HasValue || x.{propertyData.Name} == filterCriteria.{propertyData.Name})",
+                    "global::System.ValueType" => $"&& (!filterCriteria.{propertyData.Name}.HasValue || x.{propertyData.Name} == filterCriteria.{propertyData.Name})",
                     "string" => $"&& (string.IsNullOrEmpty(filterCriteria.{propertyData.Name}) || x.{propertyData.Name} == filterCriteria.{propertyData.Name})",
                     _ => $"// the code for property: {propertyData.Name} could no be generated"
                 };
@@ -144,9 +146,10 @@ namespace BonefireCRM.SourceGenerator
 
             foreach (var propertyData in classToGenerate.PropertiesData)
             {
-                source.WriteLine($"nameof({classToGenerate.TargetTypeName}.{propertyData.Name}) => (Expression<Func<{classToGenerate.TargetTypeName}, {propertyData.Type}>>)(x => x.{propertyData.Name}),");
+                source.WriteLine($"nameof({classToGenerate.TargetTypeName}.{propertyData.Name}) => x => x.{propertyData.Name},");
             }
 
+            source.WriteLine($"_ => throw new ArgumentException(\"no default property for generation\")");
             source.Indent--;
             source.Write("};");
 

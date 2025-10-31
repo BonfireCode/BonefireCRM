@@ -13,23 +13,24 @@ public static partial class MyEntityQueryExpressions
     public static Expression<Func<MyEntity, bool>> Filter(TestClass filterCriteria)
     {
         return x =>
-            (filterCriteria.Id.HasValue || x.Id == filterCriteria.Id)
+            (!filterCriteria.Id.HasValue || x.Id == filterCriteria.Id)
             && (string.IsNullOrEmpty(filterCriteria.FirstName) || x.FirstName == filterCriteria.FirstName)
             && (string.IsNullOrEmpty(filterCriteria.LastName) || x.LastName == filterCriteria.LastName)
-            && (filterCriteria.Age.HasValue || x.Age == filterCriteria.Age)
-            && (filterCriteria.Count.HasValue || x.Count == filterCriteria.Count)
+            && (!filterCriteria.Age.HasValue || x.Age == filterCriteria.Age)
+            && (!filterCriteria.Count.HasValue || x.Count == filterCriteria.Count)
             ;
     }
 
-    public static LambdaExpression Sort(string sortCriteria)
+    public static Expression<Func<MyEntity, object>> Sort(string sortCriteria)
     {
         return sortCriteria switch
         {
-            nameof(MyEntity.Id) => (Expression<Func<MyEntity, global::System.Guid?>>)(x => x.Id),
-            nameof(MyEntity.FirstName) => (Expression<Func<MyEntity, string>>)(x => x.FirstName),
-            nameof(MyEntity.LastName) => (Expression<Func<MyEntity, string>>)(x => x.LastName),
-            nameof(MyEntity.Age) => (Expression<Func<MyEntity, global::System.DateTime?>>)(x => x.Age),
-            nameof(MyEntity.Count) => (Expression<Func<MyEntity, int?>>)(x => x.Count),
+            nameof(MyEntity.Id) => x => x.Id,
+            nameof(MyEntity.FirstName) => x => x.FirstName,
+            nameof(MyEntity.LastName) => x => x.LastName,
+            nameof(MyEntity.Age) => x => x.Age,
+            nameof(MyEntity.Count) => x => x.Count,
+            _ => throw new ArgumentException("no default property for generation")
         };
     }
 }

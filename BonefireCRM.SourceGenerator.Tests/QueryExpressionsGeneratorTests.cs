@@ -49,7 +49,10 @@ namespace BonefireCRM.SourceGenerator.Tests
                         public int? Count { get; set; }
 
                         public string SortBy { get; set; }
-                        public string SortDirection { get; set; } = "ASC";                   
+                        public string SortDirection { get; set; } = "ASC";
+                        
+                        public int PageNumber { get; set; } = 1;
+                        public int PageSize { get; set; } = 10;
                     }
                 }
 
