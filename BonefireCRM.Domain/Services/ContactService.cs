@@ -23,8 +23,8 @@ namespace BonefireCRM.Domain.Services
 
             var sortExpression = ContactQueryExpressions.Sort(getAllContactsDTO.SortBy);
 
-            int skip = (getAllContactsDTO.PageNumber - 1) * getAllContactsDTO.PageSize;
-            int take = getAllContactsDTO.PageSize;
+            var skip = (getAllContactsDTO.PageNumber - 1) * getAllContactsDTO.PageSize;
+            var take = getAllContactsDTO.PageSize;
 
             var contacts = _contactRepository.GetAll(filterExpression, sortExpression, getAllContactsDTO.SortDirection, skip, take, ct);
 
