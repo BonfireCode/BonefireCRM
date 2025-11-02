@@ -53,5 +53,8 @@ jobs:
         
     - name: Test solution
       run: |
-          $TEST_EXE = Get-ChildItem -Path . -Recurse -Filter '*.Tests.exe' | Select-Object -First 1
-          & $TEST_EXE.FullName
+        Get-ChildItem -Path . -Recurse -Filter '*.Tests.exe' | ForEach-Object {
+            Write-Host "Running tests in $($_.FullName)"
+            & $_.FullName
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+        }
