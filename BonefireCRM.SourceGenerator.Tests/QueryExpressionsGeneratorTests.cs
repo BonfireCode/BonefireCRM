@@ -71,9 +71,9 @@ namespace BonefireCRM.SourceGenerator.Tests
                 }
                 """;
 
-            var result = TestHelper.Verify(source, generator);
+            var result = TestHelper.GenerateCode(source, generator);
 
-            return Verify(result).UseDirectory("Snapshots");
+            return Verify(result);
         }
     }
 }

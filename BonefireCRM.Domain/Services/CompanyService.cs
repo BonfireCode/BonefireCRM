@@ -3,6 +3,7 @@ using BonefireCRM.Domain.Entities;
 using BonefireCRM.Domain.Exceptions;
 using BonefireCRM.Domain.Infrastructure.Persistance;
 using BonefireCRM.Domain.Mappers;
+using BonefireCRM.SourceGenerator;
 using LanguageExt;
 
 namespace BonefireCRM.Domain.Services
@@ -25,6 +26,22 @@ namespace BonefireCRM.Domain.Services
             }
 
             return Company.MapToGetDto();
+        }
+
+        public IEnumerable<GetCompanyDTO> GetAllCompanies(GetAllCompaniesDTO getAllCompaniesDTO, CancellationToken ct)
+        {
+            var filterExpression = CompanyQueryExpressions.Filter(getAllCompaniesDTO);
+
+            var sortExpression = CompanyQueryExpressions.Sort(getAllCompaniesDTO.SortBy);
+
+            var skip = (getAllCompaniesDTO.PageNumber - 1) * getAllCompaniesDTO.PageSize;
+            var take = getAllCompaniesDTO.PageSize;
+
+            var companies = _companyRepository.GetAll(filterExpression, sortExpression, getAllCompaniesDTO.SortDirection, skip, take, ct);
+
+            var getCompaniesResultDTO = companies.Select(c => c.MapToGetDto());
+
+            return getCompaniesResultDTO;
         }
 
         public async Task<bool> DeleteCompanyAsync(Guid id, CancellationToken ct)

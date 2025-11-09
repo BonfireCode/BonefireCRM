@@ -364,3 +364,6 @@ FodyWeavers.xsd
 
 # SQL Lite files
 *.sqlite*
+
+# Verify Snapshots generated files
+*.received.*

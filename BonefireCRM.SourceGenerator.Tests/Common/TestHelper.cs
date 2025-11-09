@@ -6,7 +6,7 @@ namespace BonefireCRM.SourceGenerator.Tests.Common
 {
     internal static class TestHelper
     {
-        public static GeneratorDriver Verify(string source, IIncrementalGenerator generator)
+        public static GeneratorDriver GenerateCode(string source, IIncrementalGenerator generator)
         {
             // Parse the provided string into a C# syntax tree
             SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(source);

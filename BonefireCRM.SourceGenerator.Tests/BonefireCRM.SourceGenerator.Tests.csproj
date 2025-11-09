@@ -56,9 +56,5 @@
 	  <ProjectReference Include="..\BonefireCRM.SourceGenerator\BonefireCRM.SourceGenerator.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Snapshots\" />
-	</ItemGroup>
-
 
 </Project>

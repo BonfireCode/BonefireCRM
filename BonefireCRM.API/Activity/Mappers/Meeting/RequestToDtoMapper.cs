@@ -3,12 +3,35 @@
 // </copyright>
 
 using BonefireCRM.API.Contrat.Meeting;
+using BonefireCRM.Domain.Constants;
 using BonefireCRM.Domain.DTOs.Activity.Meeting;
 
 namespace BonefireCRM.API.Activity.Mappers.Meeting
 {
     internal static class RequestToDtoMapper
     {
+        internal static GetAllMeetingsDTO MapToDto(this GetMeetingsRequest request)
+        {
+            return new()
+            {
+                Id = request.Id,
+                Subject = request.Subject,
+                Notes = request.Description,
+                StartTime = request.MeetingDateTime,
+                EndTime = request.MeetingDateTime.HasValue 
+                    ? request.MeetingDateTime.Value.AddMinutes(request.DurationMinutes ?? 0) 
+                    : DateTime.MinValue,
+                UserId = request.UserId,
+                ContactId = request.ContactId,
+                CompanyId = request.CompanyId,
+                DealId = request.DealId,
+                SortBy = request.SortBy ?? nameof(request.Id),
+                SortDirection = request.SortDirection ?? DefaultValues.SORTDIRECTION,
+                PageNumber = request.PageNumber ?? DefaultValues.PAGENUMBER,
+                PageSize = request.PageSize ?? DefaultValues.PAGESIZE,
+            };
+        }
+
         internal static CreateMeetingDTO MapToDto(this CreateMeetingRequest request, Guid userId)
         {
             return new()

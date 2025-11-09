@@ -7,7 +7,7 @@ namespace BonefireCRM.SourceGenerator.Tests.Common
         [ModuleInitializer]
         public static void Init()
         {
-            VerifySourceGenerators.Initialize();
+            VerifySourceGenerators.Initialize(); 
         }
     }
 }

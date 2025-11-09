@@ -1,13 +1,16 @@
 using AutoFixture;
+using BonefireCRM.Domain.Constants;
 using BonefireCRM.Domain.DTOs.Activity.Call;
 using BonefireCRM.Domain.DTOs.Activity.Meeting;
 using BonefireCRM.Domain.DTOs.Activity.Task;
 using BonefireCRM.Domain.Entities;
 using BonefireCRM.Domain.Infrastructure.Persistance;
 using BonefireCRM.Domain.Services;
+using BonefireCRM.SourceGenerator;
 using FluentAssertions;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
+using System.Linq.Expressions;
 
 namespace BonefireCRM.Domain.Tests
 {
@@ -77,6 +80,92 @@ namespace BonefireCRM.Domain.Tests
                 dto.CallTime.Should().Be(expected.CallTime);
                 dto.Duration.Should().Be(expected.Duration);
             });
+        }
+
+        [Fact]
+        public async Task GetAllCalls_NoCallsFound_ReturnEmptyEnumerable()
+        {
+            // Arrange
+            var getAllCallsDTO = _fixture.Build<GetAllCallsDTO>()
+                .OmitAutoProperties()
+                .With(dto => dto.SortBy, DefaultValues.SORTBY)
+                .With(dto => dto.SortDirection, DefaultValues.SORTDIRECTION)
+                .With(dto => dto.PageNumber, DefaultValues.PAGENUMBER)
+                .With(dto => dto.PageSize, DefaultValues.PAGESIZE)
+                .Create();
+
+            var filterExpression = CallQueryExpressions.Filter(getAllCallsDTO);
+            var sortExpression = CallQueryExpressions.Sort(getAllCallsDTO.SortBy);
+            var skip = (getAllCallsDTO.PageNumber - 1) * getAllCallsDTO.PageSize;
+            var take = getAllCallsDTO.PageSize;
+            _callRepository.GetAll(
+                    Arg.Is<Expression<Func<Call, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
+                    Arg.Is<Expression<Func<Call, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
+                    getAllCallsDTO.SortDirection,
+                    skip,
+                    take,
+                    CancellationToken.None)
+                .Returns([]);
+
+            // Act
+            var result = _activityService.GetAllCalls(getAllCallsDTO, CancellationToken.None);
+
+            // Assert
+            _callRepository.Received(1).GetAll(
+                    Arg.Is<Expression<Func<Call, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
+                    Arg.Is<Expression<Func<Call, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
+                    getAllCallsDTO.SortDirection,
+                    skip,
+                    take,
+                    CancellationToken.None);
+
+            result.Should().BeEmpty();
+        }
+
+        [Fact]
+        public async Task GetAllCalls_OneCallFound_ReturnEnumerableWithCall()
+        {
+            // Arrange
+            var getAllCallsDTO = _fixture.Build<GetAllCallsDTO>()
+                .OmitAutoProperties()
+                .With(dto => dto.SortBy, DefaultValues.SORTBY)
+                .With(dto => dto.SortDirection, DefaultValues.SORTDIRECTION)
+                .Create();
+
+            var call = _fixture.Create<Call>();
+
+            var filterExpression = CallQueryExpressions.Filter(getAllCallsDTO);
+            var sortExpression = CallQueryExpressions.Sort(getAllCallsDTO.SortBy);
+            var skip = (getAllCallsDTO.PageNumber - 1) * getAllCallsDTO.PageSize;
+            var take = getAllCallsDTO.PageSize;
+            _callRepository.GetAll(
+                    Arg.Is<Expression<Func<Call, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
+                    Arg.Is<Expression<Func<Call, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
+                    getAllCallsDTO.SortDirection,
+                    skip,
+                    take,
+                    CancellationToken.None)
+                .Returns([call]);
+
+            var expectedCall = _fixture.Build<GetCallDTO>()
+                .With(dto => dto.Id, call.Id)
+                .Create();
+
+            // Act
+            var result = _activityService.GetAllCalls(getAllCallsDTO, CancellationToken.None);
+
+            // Assert
+            _callRepository.Received(1).GetAll(
+                    Arg.Is<Expression<Func<Call, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
+                    Arg.Is<Expression<Func<Call, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
+                    getAllCallsDTO.SortDirection,
+                    skip,
+                    take,
+                    CancellationToken.None);
+
+            result.Should().HaveCount(1);
+            var element = result.Single();
+            element.Id.Should().Be(expectedCall.Id);
         }
 
         [Fact]
@@ -253,6 +342,92 @@ namespace BonefireCRM.Domain.Tests
         }
 
         [Fact]
+        public async Task GetAllMeetings_NoMeetingsFound_ReturnEmptyEnumerable()
+        {
+            // Arrange
+            var getAllMeetingsDTO = _fixture.Build<GetAllMeetingsDTO>()
+                .OmitAutoProperties()
+                .With(dto => dto.SortBy, DefaultValues.SORTBY)
+                .With(dto => dto.SortDirection, DefaultValues.SORTDIRECTION)
+                .With(dto => dto.PageNumber, DefaultValues.PAGENUMBER)
+                .With(dto => dto.PageSize, DefaultValues.PAGESIZE)
+                .Create();
+
+            var filterExpression = MeetingQueryExpressions.Filter(getAllMeetingsDTO);
+            var sortExpression = MeetingQueryExpressions.Sort(getAllMeetingsDTO.SortBy);
+            var skip = (getAllMeetingsDTO.PageNumber - 1) * getAllMeetingsDTO.PageSize;
+            var take = getAllMeetingsDTO.PageSize;
+            _meetingRepository.GetAll(
+                    Arg.Is<Expression<Func<Meeting, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
+                    Arg.Is<Expression<Func<Meeting, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
+                    getAllMeetingsDTO.SortDirection,
+                    skip,
+                    take,
+                    CancellationToken.None)
+                .Returns([]);
+
+            // Act
+            var result = _activityService.GetAllMeetings(getAllMeetingsDTO, CancellationToken.None);
+
+            // Assert
+            _meetingRepository.Received(1).GetAll(
+                    Arg.Is<Expression<Func<Meeting, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
+                    Arg.Is<Expression<Func<Meeting, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
+                    getAllMeetingsDTO.SortDirection,
+                    skip,
+                    take,
+                    CancellationToken.None);
+
+            result.Should().BeEmpty();
+        }
+
+        [Fact]
+        public async Task GetAllMeetings_OneMeetingFound_ReturnEnumerableWithMeeting()
+        {
+            // Arrange
+            var getAllMeetingsDTO = _fixture.Build<GetAllMeetingsDTO>()
+                .OmitAutoProperties()
+                .With(dto => dto.SortBy, DefaultValues.SORTBY)
+                .With(dto => dto.SortDirection, DefaultValues.SORTDIRECTION)
+                .Create();
+
+            var meeting = _fixture.Create<Meeting>();
+
+            var filterExpression = MeetingQueryExpressions.Filter(getAllMeetingsDTO);
+            var sortExpression = MeetingQueryExpressions.Sort(getAllMeetingsDTO.SortBy);
+            var skip = (getAllMeetingsDTO.PageNumber - 1) * getAllMeetingsDTO.PageSize;
+            var take = getAllMeetingsDTO.PageSize;
+            _meetingRepository.GetAll(
+                    Arg.Is<Expression<Func<Meeting, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
+                    Arg.Is<Expression<Func<Meeting, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
+                    getAllMeetingsDTO.SortDirection,
+                    skip,
+                    take,
+                    CancellationToken.None)
+                .Returns([meeting]);
+
+            var expectedMeeting = _fixture.Build<GetMeetingDTO>()
+                .With(dto => dto.Id, meeting.Id)
+                .Create();
+
+            // Act
+            var result = _activityService.GetAllMeetings(getAllMeetingsDTO, CancellationToken.None);
+
+            // Assert
+            _meetingRepository.Received(1).GetAll(
+                    Arg.Is<Expression<Func<Meeting, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
+                    Arg.Is<Expression<Func<Meeting, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
+                    getAllMeetingsDTO.SortDirection,
+                    skip,
+                    take,
+                    CancellationToken.None);
+
+            result.Should().HaveCount(1);
+            var element = result.Single();
+            element.Id.Should().Be(expectedMeeting.Id);
+        }
+
+        [Fact]
         public async Task DeleteMeetingAsync_RepositoryDeletesTrue_ReturnTrueAsync()
         {
             // Arange
@@ -420,6 +595,92 @@ namespace BonefireCRM.Domain.Tests
                 dto.Id.Should().Be(expected.Id);
                 dto.Subject.Should().Be(expected.Subject);
             });
+        }
+
+        [Fact]
+        public async Task GetAllTasks_NoTasksFound_ReturnEmptyEnumerable()
+        {
+            // Arrange
+            var getAllTasksDTO = _fixture.Build<GetAllTasksDTO>()
+                .OmitAutoProperties()
+                .With(dto => dto.SortBy, DefaultValues.SORTBY)
+                .With(dto => dto.SortDirection, DefaultValues.SORTDIRECTION)
+                .With(dto => dto.PageNumber, DefaultValues.PAGENUMBER)
+                .With(dto => dto.PageSize, DefaultValues.PAGESIZE)
+                .Create();
+
+            var filterExpression = AssignmentQueryExpressions.Filter(getAllTasksDTO);
+            var sortExpression = AssignmentQueryExpressions.Sort(getAllTasksDTO.SortBy);
+            var skip = (getAllTasksDTO.PageNumber - 1) * getAllTasksDTO.PageSize;
+            var take = getAllTasksDTO.PageSize;
+            _taskRepository.GetAll(
+                    Arg.Is<Expression<Func<Assignment, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
+                    Arg.Is<Expression<Func<Assignment, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
+                    getAllTasksDTO.SortDirection,
+                    skip,
+                    take,
+                    CancellationToken.None)
+                .Returns([]);
+
+            // Act
+            var result = _activityService.GetAllTasks(getAllTasksDTO, CancellationToken.None);
+
+            // Assert
+            _taskRepository.Received(1).GetAll(
+                    Arg.Is<Expression<Func<Assignment, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
+                    Arg.Is<Expression<Func<Assignment, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
+                    getAllTasksDTO.SortDirection,
+                    skip,
+                    take,
+                    CancellationToken.None);
+
+            result.Should().BeEmpty();
+        }
+
+        [Fact]
+        public async Task GetAllTasks_OneTaskFound_ReturnEnumerableWithTask()
+        {
+            // Arrange
+            var getAllTasksDTO = _fixture.Build<GetAllTasksDTO>()
+                .OmitAutoProperties()
+                .With(dto => dto.SortBy, DefaultValues.SORTBY)
+                .With(dto => dto.SortDirection, DefaultValues.SORTDIRECTION)
+                .Create();
+
+            var task = _fixture.Create<Assignment>();
+
+            var filterExpression = AssignmentQueryExpressions.Filter(getAllTasksDTO);
+            var sortExpression = AssignmentQueryExpressions.Sort(getAllTasksDTO.SortBy);
+            var skip = (getAllTasksDTO.PageNumber - 1) * getAllTasksDTO.PageSize;
+            var take = getAllTasksDTO.PageSize;
+            _taskRepository.GetAll(
+                    Arg.Is<Expression<Func<Assignment, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
+                    Arg.Is<Expression<Func<Assignment, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
+                    getAllTasksDTO.SortDirection,
+                    skip,
+                    take,
+                    CancellationToken.None)
+                .Returns([task]);
+
+            var expectedTask = _fixture.Build<GetTaskDTO>()
+                .With(dto => dto.Id, task.Id)
+                .Create();
+
+            // Act
+            var result = _activityService.GetAllTasks(getAllTasksDTO, CancellationToken.None);
+
+            // Assert
+            _taskRepository.Received(1).GetAll(
+                    Arg.Is<Expression<Func<Assignment, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
+                    Arg.Is<Expression<Func<Assignment, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
+                    getAllTasksDTO.SortDirection,
+                    skip,
+                    take,
+                    CancellationToken.None);
+
+            result.Should().HaveCount(1);
+            var element = result.Single();
+            element.Id.Should().Be(expectedTask.Id);
         }
 
         [Fact]

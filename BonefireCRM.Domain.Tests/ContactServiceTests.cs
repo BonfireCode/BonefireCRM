@@ -10,7 +10,6 @@ using FluentAssertions;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
 using System.Linq.Expressions;
-using System.Text.RegularExpressions;
 
 namespace BonefireCRM.Domain.Tests
 {
