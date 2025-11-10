@@ -21,4 +21,8 @@
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BonefireCRM.API.Contrat\BonefireCRM.API.Contrat.csproj" />
+  </ItemGroup>
+
 </Project>

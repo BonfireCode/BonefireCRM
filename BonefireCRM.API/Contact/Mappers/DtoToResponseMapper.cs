@@ -27,15 +27,15 @@ namespace BonefireCRM.API.Contact.Mappers
             };
         }
 
-        internal static PagedResult<GetContactResponse> MapToResponse(this PagedResultDTO<GetContactDTO> dto)
+        internal static PaginatedResult<GetContactResponse> MapToResponse(this PaginatedResultDTO<GetContactDTO> dto)
         {
             return new()
             {
-                Items = dto.Items.Select(item => item.MapToResponse()),
+                Data = dto.Data.Select(d => d.MapToResponse()),
                 TotalCount = dto.TotalCount,
+                Page = dto.Page,
                 PageSize = dto.PageSize,
-                TotalPages = dto.TotalPages,
-                PageNumber = dto.PageNumber,
+                FilterableFields = dto.FilterableFields,
             };
         }
 

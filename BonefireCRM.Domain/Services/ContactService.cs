@@ -5,7 +5,6 @@ using BonefireCRM.Domain.Exceptions;
 using BonefireCRM.Domain.Infrastructure.Persistance;
 using BonefireCRM.Domain.Mappers;
 using LanguageExt;
-using System.Linq.Expressions;
 
 namespace BonefireCRM.Domain.Services
 {
@@ -18,42 +17,22 @@ namespace BonefireCRM.Domain.Services
             _contactRepository = contactRepository;
         }
 
-        public async Task<Fin<PagedResultDTO<GetContactDTO>>> GetContactsAsync(GetContactsDTO getContactsDTO, CancellationToken ct)
+        public async Task<PaginatedResultDTO<GetContactDTO>> GetContactsAsync(FilterRequestDTO filterRequest, CancellationToken ct)
         {
-            if (getContactsDTO is null)
-                return Fin<PagedResultDTO<GetContactDTO>>.Fail("Invalid request.");
-
-            // Build filtering predicate
-            Expression<Func<Contact, bool>> predicate = contact =>
-                (getContactsDTO.Id == null || contact.Id == getContactsDTO.Id) &&
-                (string.IsNullOrEmpty(getContactsDTO.FirstName) || contact.FirstName.Contains(getContactsDTO.FirstName)) &&
-                (string.IsNullOrEmpty(getContactsDTO.LastName) || contact.LastName.Contains(getContactsDTO.LastName));
-
-            // Handle sorting
-            Func<IQueryable<Contact>, IOrderedQueryable<Contact>>? orderBy = null;
-
-            if (!string.IsNullOrWhiteSpace(getContactsDTO.SortBy))
-            {
-                bool ascending = string.Equals(getContactsDTO.SortDirection, "asc", StringComparison.OrdinalIgnoreCase);
-                orderBy = query => ascending
-                    ? query.OrderByDynamic(getContactsDTO.SortBy)
-                    : query.OrderByDescendingDynamic(getContactsDTO.SortBy);
-            }
-
-            // Calculate pagination
-            int skip = (getContactsDTO.PageNumber - 1) * getContactsDTO.PageSize;
-            int take = getContactsDTO.PageSize;
+            var query = QueryFilterExtensions.BuildQueryComponents(
+                filterRequest,
+                QueryableFields.ContactMap
+            );
 
             // Fetch from repository
             var contacts = await _contactRepository.GetAllAsync(
-                predicate: predicate,
-                orderBy: orderBy,
-                skip: skip,
-                take: take,
+                predicate: query.Predicate,
+                orderBy: query.OrderBy,
+                skip: query.Skip,
+                take: query.Take,
                 ct: ct
             );
-
-            return contacts.MapToGetAllDto(getContactsDTO.PageNumber, getContactsDTO.PageSize);
+            return contacts.MapToGetAllDto(filterRequest.Page, filterRequest.PageSize);
         }
 
         public async Task<Option<GetContactDTO>> GetContactAsync(Guid id, CancellationToken ct)

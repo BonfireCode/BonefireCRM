@@ -3,12 +3,54 @@
 // </copyright>
 
 using BonefireCRM.API.Contrat.Contact;
+using BonefireCRM.API.Contrat.Shared;
 using BonefireCRM.Domain.DTOs.Contact;
+using BonefireCRM.Domain.DTOs.Shared;
 
 namespace BonefireCRM.API.Contact.Mappers
 {
     internal static class RequestToDtoMapper
     {
+
+        internal static FilterRequestDTO MapToDto(this FilterRequest request)
+        {
+            return new FilterRequestDTO
+            {
+                Page = request.Page,
+                PageSize = request.PageSize,
+
+                Sort = request.Sort?
+                .Select(s => new Domain.DTOs.Shared.SortDefinition
+                {
+                    Field = s.Field,
+                    Direction = s.Direction,
+                })
+                .ToList(),
+                Filter = request.Filter != null ? MapFilterGroup(request.Filter) : null,
+            };
+        }
+
+        private static Domain.DTOs.Shared.FilterGroup MapFilterGroup(Contrat.Shared.FilterGroup group)
+        {
+            return new Domain.DTOs.Shared.FilterGroup
+            {
+                Logic = group.Logic ?? "AND",
+
+                Filters = group.Filters?
+                    .Select(f => new Domain.DTOs.Shared.Filter
+                    {
+                        Field = f.Field,
+                        Operator = f.Operator,
+                        Value = f.Value,
+                    })
+                    .ToList(),
+
+                Groups = group.Groups?
+                    .Select(MapFilterGroup)
+                    .ToList(),
+            };
+        }
+
         internal static GetContactsDTO MapToDto(this GetContactsRequest request)
         {
             return new()

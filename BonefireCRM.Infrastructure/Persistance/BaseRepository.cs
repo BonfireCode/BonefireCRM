@@ -72,7 +72,7 @@ namespace BonefireCRM.Infrastructure.Persistance
             if (take.HasValue && take.Value > 0)
                 query = query.Take(take.Value);
 
-            return (await query.ToListAsync(ct)).AsEnumerable();
+            return (IEnumerable<T>)query.AsAsyncEnumerable();
         }
     }
 }

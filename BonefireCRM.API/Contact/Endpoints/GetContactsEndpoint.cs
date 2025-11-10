@@ -4,17 +4,13 @@
 
 using BonefireCRM.API.Contact.Mappers;
 using BonefireCRM.API.Contrat.Contact;
-using BonefireCRM.API.Contrat.Meeting;
 using BonefireCRM.API.Contrat.Shared;
-using BonefireCRM.Domain.Entities;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
-using LanguageExt.Common;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BonefireCRM.API.Contact.Endpoints
 {
-    public class GetContactsEndpoint : Endpoint<GetContactsRequest, Results<Ok<PagedResult<GetContactResponse>>, InternalServerError>>
+    public class GetContactsEndpoint : Endpoint<FilterRequest, PaginatedResult<GetContactResponse>>
     {
         private readonly ContactService _contactService;
 
@@ -25,19 +21,15 @@ namespace BonefireCRM.API.Contact.Endpoints
 
         public override void Configure()
         {
-            Get("/contacts");
+            Post("/contacts/filter");
             AllowAnonymous();
         }
 
-        public override async Task<Results<Ok<PagedResult<GetContactResponse>>, InternalServerError>> ExecuteAsync(GetContactsRequest request, CancellationToken ct)
+        public override async Task<PaginatedResult<GetContactResponse>> ExecuteAsync(FilterRequest request, CancellationToken ct)
         {
             var dtoContacts = request.MapToDto();
-            var result = await _contactService.GetContactsAsync(dtoContacts, ct);
-
-            var response = result.Match<Results<Ok<PagedResult<GetContactResponse>>, InternalServerError>>(
-                contacts => TypedResults.Ok(contacts.MapToResponse()),
-                _ => TypedResults.InternalServerError());
-            return response;
+            var response = await _contactService.GetContactsAsync(dtoContacts, ct);
+            return response.MapToResponse();
         }
     }
 }
