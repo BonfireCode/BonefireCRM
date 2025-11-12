@@ -2,13 +2,13 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
-using BonefireCRM.API.Contrat.Task;
+using BonefireCRM.API.Contrat.Activity.Assignment;
 using FastEndpoints;
 using FluentValidation;
 
 namespace BonefireCRM.API.Activity.Validators.Task
 {
-    public class CreateTaskValidator : Validator<CreateTaskRequest>
+    public class CreateTaskValidator : Validator<CreateAssignmentRequest>
     {
         public CreateTaskValidator()
         {

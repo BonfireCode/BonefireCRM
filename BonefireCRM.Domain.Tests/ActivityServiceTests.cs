@@ -1,8 +1,8 @@
 using AutoFixture;
 using BonefireCRM.Domain.Constants;
+using BonefireCRM.Domain.DTOs.Activity.Assignment;
 using BonefireCRM.Domain.DTOs.Activity.Call;
 using BonefireCRM.Domain.DTOs.Activity.Meeting;
-using BonefireCRM.Domain.DTOs.Activity.Task;
 using BonefireCRM.Domain.Entities;
 using BonefireCRM.Domain.Infrastructure.Persistance;
 using BonefireCRM.Domain.Services;
@@ -18,7 +18,7 @@ namespace BonefireCRM.Domain.Tests
     {
         private readonly IBaseRepository<Call> _callRepository;
         private readonly IBaseRepository<Meeting> _meetingRepository;
-        private readonly IBaseRepository<Assignment> _taskRepository;
+        private readonly IBaseRepository<Assignment> _assignmentRepository;
         private readonly IFixture _fixture;
         private readonly ActivityService _activityService;
 
@@ -26,10 +26,10 @@ namespace BonefireCRM.Domain.Tests
         {
             _callRepository = Substitute.For<IBaseRepository<Call>>();
             _meetingRepository = Substitute.For<IBaseRepository<Meeting>>();
-            _taskRepository = Substitute.For<IBaseRepository<Assignment>>();
+            _assignmentRepository = Substitute.For<IBaseRepository<Assignment>>();
             _fixture = new Fixture();
 
-            _activityService = new ActivityService(_callRepository, _meetingRepository, _taskRepository);
+            _activityService = new ActivityService(_callRepository, _meetingRepository, _assignmentRepository);
         }
 
         [Fact]
@@ -549,45 +549,45 @@ namespace BonefireCRM.Domain.Tests
         }
 
         [Fact]
-        public async Task GetTaskAsync_NoTaskFound_ReturnNoneAsync()
+        public async Task GetAssignmentAsync_NoAssignmentFound_ReturnNoneAsync()
         {
             // Arange
             var id = _fixture.Create<Guid>();
 
-            _taskRepository.GetAsync(Arg.Any<Guid>(), CancellationToken.None)
+            _assignmentRepository.GetAsync(Arg.Any<Guid>(), CancellationToken.None)
                 .ReturnsNullForAnyArgs();
 
             //Act
-            var result = await _activityService.GetTaskAsync(id, CancellationToken.None);
+            var result = await _activityService.GetAssignmentAsync(id, CancellationToken.None);
 
             //Assert
-            await _taskRepository.Received(1).GetAsync(Arg.Any<Guid>(), CancellationToken.None);
+            await _assignmentRepository.Received(1).GetAsync(Arg.Any<Guid>(), CancellationToken.None);
 
             result.IsNone.Should().BeTrue();
         }
 
         [Fact]
-        public async Task GetTaskAsync_TaskFound_ReturnTaskAsync()
+        public async Task GetAssignmentAsync_AssignmentFound_ReturnAssignmentAsync()
         {
             // Arange
             var id = _fixture.Create<Guid>();
-            var task = _fixture.Build<Assignment>()
+            var assignment = _fixture.Build<Assignment>()
                 .With(t => t.Id, id)
                 .Create();
 
-            _taskRepository.GetAsync(id, CancellationToken.None)
-                .Returns(task);
+            _assignmentRepository.GetAsync(id, CancellationToken.None)
+                .Returns(assignment);
 
-            var expected = _fixture.Build<GetTaskDTO>()
+            var expected = _fixture.Build<GetAssignmentDTO>()
                 .With(dto => dto.Id, id)
-                .With(dto => dto.Subject, task.Subject)
+                .With(dto => dto.Subject, assignment.Subject)
                 .Create();
 
             //Act
-            var result = await _activityService.GetTaskAsync(id, CancellationToken.None);
+            var result = await _activityService.GetAssignmentAsync(id, CancellationToken.None);
 
             //Assert
-            await _taskRepository.Received(1).GetAsync(id, CancellationToken.None);
+            await _assignmentRepository.Received(1).GetAsync(id, CancellationToken.None);
 
             result.IsSome.Should().BeTrue();
             result.IfSome(dto =>
@@ -598,10 +598,10 @@ namespace BonefireCRM.Domain.Tests
         }
 
         [Fact]
-        public async Task GetAllTasks_NoTasksFound_ReturnEmptyEnumerable()
+        public async Task GetAllAssignments_NoAssignmentsFound_ReturnEmptyEnumerable()
         {
             // Arrange
-            var getAllTasksDTO = _fixture.Build<GetAllTasksDTO>()
+            var getAllTasksDTO = _fixture.Build<GetAllAssignmentsDTO>()
                 .OmitAutoProperties()
                 .With(dto => dto.SortBy, DefaultValues.SORTBY)
                 .With(dto => dto.SortDirection, DefaultValues.SORTDIRECTION)
@@ -613,7 +613,7 @@ namespace BonefireCRM.Domain.Tests
             var sortExpression = AssignmentQueryExpressions.Sort(getAllTasksDTO.SortBy);
             var skip = (getAllTasksDTO.PageNumber - 1) * getAllTasksDTO.PageSize;
             var take = getAllTasksDTO.PageSize;
-            _taskRepository.GetAll(
+            _assignmentRepository.GetAll(
                     Arg.Is<Expression<Func<Assignment, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
                     Arg.Is<Expression<Func<Assignment, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
                     getAllTasksDTO.SortDirection,
@@ -623,10 +623,10 @@ namespace BonefireCRM.Domain.Tests
                 .Returns([]);
 
             // Act
-            var result = _activityService.GetAllTasks(getAllTasksDTO, CancellationToken.None);
+            var result = _activityService.GetAllAssignments(getAllTasksDTO, CancellationToken.None);
 
             // Assert
-            _taskRepository.Received(1).GetAll(
+            _assignmentRepository.Received(1).GetAll(
                     Arg.Is<Expression<Func<Assignment, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
                     Arg.Is<Expression<Func<Assignment, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
                     getAllTasksDTO.SortDirection,
@@ -638,39 +638,39 @@ namespace BonefireCRM.Domain.Tests
         }
 
         [Fact]
-        public async Task GetAllTasks_OneTaskFound_ReturnEnumerableWithTask()
+        public async Task GetAllAssignments_OneAssignmentFound_ReturnEnumerableWithAssignment()
         {
             // Arrange
-            var getAllTasksDTO = _fixture.Build<GetAllTasksDTO>()
+            var getAllTasksDTO = _fixture.Build<GetAllAssignmentsDTO>()
                 .OmitAutoProperties()
                 .With(dto => dto.SortBy, DefaultValues.SORTBY)
                 .With(dto => dto.SortDirection, DefaultValues.SORTDIRECTION)
                 .Create();
 
-            var task = _fixture.Create<Assignment>();
+            var assignment = _fixture.Create<Assignment>();
 
             var filterExpression = AssignmentQueryExpressions.Filter(getAllTasksDTO);
             var sortExpression = AssignmentQueryExpressions.Sort(getAllTasksDTO.SortBy);
             var skip = (getAllTasksDTO.PageNumber - 1) * getAllTasksDTO.PageSize;
             var take = getAllTasksDTO.PageSize;
-            _taskRepository.GetAll(
+            _assignmentRepository.GetAll(
                     Arg.Is<Expression<Func<Assignment, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
                     Arg.Is<Expression<Func<Assignment, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
                     getAllTasksDTO.SortDirection,
                     skip,
                     take,
                     CancellationToken.None)
-                .Returns([task]);
+                .Returns([assignment]);
 
-            var expectedTask = _fixture.Build<GetTaskDTO>()
-                .With(dto => dto.Id, task.Id)
+            var expectedTask = _fixture.Build<GetAssignmentDTO>()
+                .With(dto => dto.Id, assignment.Id)
                 .Create();
 
             // Act
-            var result = _activityService.GetAllTasks(getAllTasksDTO, CancellationToken.None);
+            var result = _activityService.GetAllAssignments(getAllTasksDTO, CancellationToken.None);
 
             // Assert
-            _taskRepository.Received(1).GetAll(
+            _assignmentRepository.Received(1).GetAll(
                     Arg.Is<Expression<Func<Assignment, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
                     Arg.Is<Expression<Func<Assignment, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
                     getAllTasksDTO.SortDirection,
@@ -684,25 +684,25 @@ namespace BonefireCRM.Domain.Tests
         }
 
         [Fact]
-        public async Task DeleteTaskAsync_RepositoryDeletesTrue_ReturnTrueAsync()
+        public async Task DeleteAssignmentAsync_RepositoryDeletesTrue_ReturnTrueAsync()
         {
             // Arange
             var id = _fixture.Create<Guid>();
 
-            _taskRepository.DeleteAsync(Arg.Any<Assignment>(), CancellationToken.None)
+            _assignmentRepository.DeleteAsync(Arg.Any<Assignment>(), CancellationToken.None)
                 .Returns(true);
 
             //Act
-            var result = await _activityService.DeleteTaskAsync(id, CancellationToken.None);
+            var result = await _activityService.DeleteAssignmentAsync(id, CancellationToken.None);
 
             //Assert
-            await _taskRepository.Received(1).DeleteAsync(Arg.Any<Assignment>(), CancellationToken.None);
+            await _assignmentRepository.Received(1).DeleteAsync(Arg.Any<Assignment>(), CancellationToken.None);
 
             result.Should().BeTrue();
         }
 
         [Fact]
-        public async Task CreateTaskAsync_CreateSucceeds_ReturnCreatedDtoAsync()
+        public async Task CreateAssignmentAsync_CreateSucceeds_ReturnCreatedDtoAsync()
         {
             // Arange
             var id = _fixture.Create<Guid>();
@@ -711,20 +711,20 @@ namespace BonefireCRM.Domain.Tests
                 .With(t => t.Id, id)
                 .Create();
 
-            _taskRepository.AddAsync(Arg.Any<Assignment>(), CancellationToken.None)
+            _assignmentRepository.AddAsync(Arg.Any<Assignment>(), CancellationToken.None)
                 .Returns(createdTask);
 
-            var createDto = _fixture.Create<CreateTaskDTO>();
+            var createDto = _fixture.Create<CreateAssignmentDTO>();
 
-            var expected = _fixture.Build<CreatedTaskDTO>()
+            var expected = _fixture.Build<CreatedAssignmentDTO>()
                 .With(dto => dto.Id, id)
                 .With(dto => dto.Subject, createdTask.Subject)
                 .Create();
 
             //Act
-            var result = await _activityService.CreateTaskAsync(createDto, CancellationToken.None);
+            var result = await _activityService.CreateAssignmentAsync(createDto, CancellationToken.None);
 
-            await _taskRepository.Received(1).AddAsync(Arg.Any<Assignment>(), CancellationToken.None);
+            await _assignmentRepository.Received(1).AddAsync(Arg.Any<Assignment>(), CancellationToken.None);
 
             //Assert
             result.IsSucc.Should().BeTrue();
@@ -736,25 +736,25 @@ namespace BonefireCRM.Domain.Tests
         }
 
         [Fact]
-        public async Task CreateTaskAsync_CreateFails_ReturnFailAsync()
+        public async Task CreateAssignmentAsync_CreateFails_ReturnFailAsync()
         {
             // Arange
-            _taskRepository.AddAsync(Arg.Any<Assignment>(), CancellationToken.None)
+            _assignmentRepository.AddAsync(Arg.Any<Assignment>(), CancellationToken.None)
                 .ReturnsNullForAnyArgs();
 
-            var createDto = _fixture.Create<CreateTaskDTO>();
+            var createDto = _fixture.Create<CreateAssignmentDTO>();
 
             //Act
-            var result = await _activityService.CreateTaskAsync(createDto, CancellationToken.None);
+            var result = await _activityService.CreateAssignmentAsync(createDto, CancellationToken.None);
 
             //Assert
-            await _taskRepository.Received(1).AddAsync(Arg.Any<Assignment>(), CancellationToken.None);
+            await _assignmentRepository.Received(1).AddAsync(Arg.Any<Assignment>(), CancellationToken.None);
 
             result.IsFail.Should().BeTrue();
         }
 
         [Fact]
-        public async Task UpdateTaskAsync_UpdateSucceeds_ReturnUpdatedDtoAsync()
+        public async Task UpdateAssignmentAsync_UpdateSucceeds_ReturnUpdatedDtoAsync()
         {
             // Arange
             var id = _fixture.Create<Guid>();
@@ -762,21 +762,21 @@ namespace BonefireCRM.Domain.Tests
                 .With(t => t.Id, id)
                 .Create();
 
-            _taskRepository.UpdateAsync(Arg.Any<Assignment>(), CancellationToken.None)
+            _assignmentRepository.UpdateAsync(Arg.Any<Assignment>(), CancellationToken.None)
                 .Returns(updatedTask);
 
-            var updateDto = _fixture.Create<UpdateTaskDTO>();
+            var updateDto = _fixture.Create<UpdateAssignmentDTO>();
 
-            var expected = _fixture.Build<UpdatedTaskDTO>()
+            var expected = _fixture.Build<UpdatedAssignmentDTO>()
                 .With(dto => dto.Id, id)
                 .With(dto => dto.Subject, updatedTask.Subject)
                 .Create();
 
             //Act
-            var result = await _activityService.UpdateTaskAsync(updateDto, CancellationToken.None);
+            var result = await _activityService.UpdateAssignmentAsync(updateDto, CancellationToken.None);
 
             //Assert
-            await _taskRepository.Received(1).UpdateAsync(Arg.Any<Assignment>(), CancellationToken.None);
+            await _assignmentRepository.Received(1).UpdateAsync(Arg.Any<Assignment>(), CancellationToken.None);
 
             result.IsSucc.Should().BeTrue();
             result.IfSucc(dto =>
@@ -787,19 +787,19 @@ namespace BonefireCRM.Domain.Tests
         }
 
         [Fact]
-        public async Task UpdateTaskAsync_UpdateFails_ReturnFailAsync()
+        public async Task UpdateAssignmentAsync_UpdateFails_ReturnFailAsync()
         {
             // Arange
-            _taskRepository.UpdateAsync(Arg.Any<Assignment>(), CancellationToken.None)
+            _assignmentRepository.UpdateAsync(Arg.Any<Assignment>(), CancellationToken.None)
                 .ReturnsNullForAnyArgs();
 
-            var updateDto = _fixture.Create<UpdateTaskDTO>();
+            var updateDto = _fixture.Create<UpdateAssignmentDTO>();
 
             //Act
-            var result = await _activityService.UpdateTaskAsync(updateDto, CancellationToken.None);
+            var result = await _activityService.UpdateAssignmentAsync(updateDto, CancellationToken.None);
 
             //Assert
-            await _taskRepository.Received(1).UpdateAsync(Arg.Any<Assignment>(), CancellationToken.None);
+            await _assignmentRepository.Received(1).UpdateAsync(Arg.Any<Assignment>(), CancellationToken.None);
 
             result.IsFail.Should().BeTrue();
         }
