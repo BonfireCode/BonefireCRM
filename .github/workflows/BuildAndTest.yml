@@ -34,7 +34,6 @@ jobs:
         retention-days: 1
         path: |
           **/*.Tests/bin/Release/net*/
-          **/*.Tests/Snapshots/*.verified.*
           !**/ref/*           
           
   Test:
