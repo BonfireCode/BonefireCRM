@@ -5,6 +5,7 @@ using BonefireCRM.Domain.Entities;
 using BonefireCRM.Domain.Exceptions;
 using BonefireCRM.Domain.Infrastructure.Persistance;
 using BonefireCRM.Domain.Mappers;
+using BonefireCRM.SourceGenerator;
 using LanguageExt;
 
 namespace BonefireCRM.Domain.Services
@@ -34,6 +35,22 @@ namespace BonefireCRM.Domain.Services
             }
 
             return call.MapToGetDto();
+        }
+
+        public IEnumerable<GetCallDTO> GetAllCalls(GetAllCallsDTO getAllCallsDTO, CancellationToken ct)
+        {
+            var filterExpression = CallQueryExpressions.Filter(getAllCallsDTO);
+
+            var sortExpression = CallQueryExpressions.Sort(getAllCallsDTO.SortBy);
+
+            var skip = (getAllCallsDTO.PageNumber - 1) * getAllCallsDTO.PageSize;
+            var take = getAllCallsDTO.PageSize;
+
+            var calls = _callRepository.GetAll(filterExpression, sortExpression, getAllCallsDTO.SortDirection, skip, take, ct);
+
+            var getCallsResultDTO = calls.Select(c => c.MapToGetDto());
+
+            return getCallsResultDTO;
         }
 
         public async Task<bool> DeleteCallAsync(Guid id, CancellationToken ct)
@@ -88,6 +105,22 @@ namespace BonefireCRM.Domain.Services
             return meeting.MapToGetDto();
         }
 
+        public IEnumerable<GetMeetingDTO> GetAllMeetings(GetAllMeetingsDTO getAllMeetingsDTO, CancellationToken ct)
+        {
+            var filterExpression = MeetingQueryExpressions.Filter(getAllMeetingsDTO);
+
+            var sortExpression = MeetingQueryExpressions.Sort(getAllMeetingsDTO.SortBy);
+
+            var skip = (getAllMeetingsDTO.PageNumber - 1) * getAllMeetingsDTO.PageSize;
+            var take = getAllMeetingsDTO.PageSize;
+
+            var meetings = _meetingRepository.GetAll(filterExpression, sortExpression, getAllMeetingsDTO.SortDirection, skip, take, ct);
+
+            var getMeetingsResultDTO = meetings.Select(m => m.MapToGetDto());
+
+            return getMeetingsResultDTO;
+        }
+
         public async Task<bool> DeleteMeetingAsync(Guid id, CancellationToken ct)
         {
             //Domain validations if needed
@@ -138,6 +171,22 @@ namespace BonefireCRM.Domain.Services
             }
 
             return task.MapToGetDto();
+        }
+
+        public IEnumerable<GetTaskDTO> GetAllTasks(GetAllTasksDTO getAllTasksDTO, CancellationToken ct)
+        {
+            var filterExpression = AssignmentQueryExpressions.Filter(getAllTasksDTO);
+
+            var sortExpression = AssignmentQueryExpressions.Sort(getAllTasksDTO.SortBy);
+
+            var skip = (getAllTasksDTO.PageNumber - 1) * getAllTasksDTO.PageSize;
+            var take = getAllTasksDTO.PageSize;
+
+            var tasks = _taskRepository.GetAll(filterExpression, sortExpression, getAllTasksDTO.SortDirection, skip, take, ct);
+
+            var getTasksResultDTO = tasks.Select(t => t.MapToGetDto());
+
+            return getTasksResultDTO;
         }
 
         public async Task<bool> DeleteTaskAsync(Guid id, CancellationToken ct)

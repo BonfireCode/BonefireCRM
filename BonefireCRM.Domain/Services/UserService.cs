@@ -3,6 +3,7 @@ using BonefireCRM.Domain.Entities;
 using BonefireCRM.Domain.Exceptions;
 using BonefireCRM.Domain.Infrastructure.Persistance;
 using BonefireCRM.Domain.Mappers;
+using BonefireCRM.SourceGenerator;
 using LanguageExt;
 
 namespace BonefireCRM.Domain.Services
@@ -27,6 +28,22 @@ namespace BonefireCRM.Domain.Services
             }
 
             return user.MapToGetDto();
+        }
+
+        public IEnumerable<GetUserDTO> GetAllUsers(GetAllUsersDTO getAllUsersDTO, CancellationToken ct)
+        {
+            var filterExpression = UserQueryExpressions.Filter(getAllUsersDTO);
+
+            var sortExpression = UserQueryExpressions.Sort(getAllUsersDTO.SortBy);
+
+            var skip = (getAllUsersDTO.PageNumber - 1) * getAllUsersDTO.PageSize;
+            var take = getAllUsersDTO.PageSize;
+
+            var users = _userRepository.GetAll(filterExpression, sortExpression, getAllUsersDTO.SortDirection, skip, take, ct);
+
+            var getUsersResultDTO = users.Select(u => u.MapToGetDto());
+
+            return getUsersResultDTO;
         }
 
         public async Task<Fin<bool>> DeleteUserAsync(Guid id, Guid registerId, CancellationToken ct)

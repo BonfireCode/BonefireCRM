@@ -3,6 +3,7 @@ using BonefireCRM.Domain.Entities;
 using BonefireCRM.Domain.Exceptions;
 using BonefireCRM.Domain.Infrastructure.Persistance;
 using BonefireCRM.Domain.Mappers;
+using BonefireCRM.SourceGenerator;
 using LanguageExt;
 
 namespace BonefireCRM.Domain.Services
@@ -14,6 +15,22 @@ namespace BonefireCRM.Domain.Services
         public ContactService(IBaseRepository<Contact> contactRepository)
         {
             _contactRepository = contactRepository;
+        }
+
+        public IEnumerable<GetContactDTO> GetAllContacts(GetAllContactsDTO getAllContactsDTO, CancellationToken ct)
+        {
+            var filterExpression = ContactQueryExpressions.Filter(getAllContactsDTO);
+
+            var sortExpression = ContactQueryExpressions.Sort(getAllContactsDTO.SortBy);
+
+            var skip = (getAllContactsDTO.PageNumber - 1) * getAllContactsDTO.PageSize;
+            var take = getAllContactsDTO.PageSize;
+
+            var contacts = _contactRepository.GetAll(filterExpression, sortExpression, getAllContactsDTO.SortDirection, skip, take, ct);
+
+            var getContactsResultDTO = contacts.Select(c => c.MapToGetDto());
+
+            return getContactsResultDTO;
         }
 
         public async Task<Option<GetContactDTO>> GetContactAsync(Guid id, CancellationToken ct)

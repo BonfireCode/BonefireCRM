@@ -1,12 +1,15 @@
 ﻿using AutoFixture;
+using BonefireCRM.Domain.Constants;
 using BonefireCRM.Domain.DTOs.Contact;
 using BonefireCRM.Domain.Entities;
 using BonefireCRM.Domain.Exceptions;
 using BonefireCRM.Domain.Infrastructure.Persistance;
 using BonefireCRM.Domain.Services;
+using BonefireCRM.SourceGenerator;
 using FluentAssertions;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
+using System.Linq.Expressions;
 
 namespace BonefireCRM.Domain.Tests
 {
@@ -72,6 +75,98 @@ namespace BonefireCRM.Domain.Tests
                 contactDto.FirstName.Should().Be(expectedContact.FirstName);
                 contactDto.LastName.Should().Be(expectedContact.LastName);
             });
+        }
+
+        [Fact]
+        public async Task GetAllContacts_NoContactsFound_ReturnEmptyEnumerable()
+        {
+            // Arange
+            var getAllContactsDTO = _fixture.Build<GetAllContactsDTO>()
+                .OmitAutoProperties()
+                .With(dto => dto.SortBy, DefaultValues.SORTBY)
+                .With(dto => dto.SortDirection, DefaultValues.SORTDIRECTION)
+                .With(dto => dto.PageNumber, DefaultValues.PAGENUMBER)
+                .With(dto => dto.PageSize, DefaultValues.PAGESIZE)
+                .Create();
+
+            var filterExpression = ContactQueryExpressions.Filter(getAllContactsDTO);
+            var sortExpression = ContactQueryExpressions.Sort(getAllContactsDTO.SortBy);
+            var skip = (getAllContactsDTO.PageNumber - 1) * getAllContactsDTO.PageSize;
+            var take = getAllContactsDTO.PageSize;
+            _contactRepository.GetAll(
+                    Arg.Is<Expression<Func<Contact, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
+                    Arg.Is<Expression<Func<Contact, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
+                    getAllContactsDTO.SortDirection,
+                    skip,
+                    take,
+                    CancellationToken.None)
+                .Returns([]);
+
+            // Act
+            var result = _contactService.GetAllContacts(getAllContactsDTO, CancellationToken.None);
+
+            // Assert
+            _contactRepository.Received(1).GetAll(
+                    Arg.Is<Expression<Func<Contact, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
+                    Arg.Is<Expression<Func<Contact, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
+                    getAllContactsDTO.SortDirection,
+                    skip,
+                    take,
+                    CancellationToken.None);
+
+            result.Should().BeEmpty();
+        }
+
+        [Fact]
+        public async Task GetAllContacts_OneContactFound_ReturnEnumerableWithContact()
+        {
+            // Arange
+            var getAllContactsDTO = _fixture.Build<GetAllContactsDTO>()
+                .OmitAutoProperties()
+                .With(dto => dto.SortBy, DefaultValues.SORTBY)
+                .With(dto => dto.SortDirection, DefaultValues.SORTDIRECTION)
+                .Create();
+
+            var contact = _fixture.Create<Contact>();
+
+            var filterExpression = ContactQueryExpressions.Filter(getAllContactsDTO);
+            var sortExpression = ContactQueryExpressions.Sort(getAllContactsDTO.SortBy);
+            var skip = (getAllContactsDTO.PageNumber - 1) * getAllContactsDTO.PageSize;
+            var take = getAllContactsDTO.PageSize;
+            _contactRepository.GetAll(
+                    Arg.Is<Expression<Func<Contact, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
+                    Arg.Is<Expression<Func<Contact, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
+                    getAllContactsDTO.SortDirection,
+                    skip,
+                    take,
+                    CancellationToken.None)
+                .Returns([contact]);
+
+            var expectedContact = _fixture.Build<GetContactDTO>()
+                .With(dto => dto.Id, contact.Id)
+                .With(dto => dto.FirstName, contact.FirstName)
+                .With(dto => dto.LastName, contact.LastName)
+                .With(dto => dto.UserId, contact.UserId)
+                .Create();
+
+            // Act
+            var result = _contactService.GetAllContacts(getAllContactsDTO, CancellationToken.None);
+
+            // Assert
+            _contactRepository.Received(1).GetAll(
+                    Arg.Is<Expression<Func<Contact, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
+                    Arg.Is<Expression<Func<Contact, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
+                    getAllContactsDTO.SortDirection,
+                    skip,
+                    take,
+                    CancellationToken.None);
+
+            result.Should().HaveCount(1);
+            var element = result.Single();
+            element.Id.Should().Be(expectedContact.Id);
+            element.FirstName.Should().Be(expectedContact.FirstName);
+            element.LastName.Should().Be(expectedContact.LastName);
+            element.UserId.Should().Be(expectedContact.UserId);
         }
 
         [Fact]

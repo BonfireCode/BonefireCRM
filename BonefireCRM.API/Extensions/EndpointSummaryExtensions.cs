@@ -9,6 +9,12 @@ namespace BonefireCRM.API.Extensions
 {
     public static class EndpointSummaryExtensions
     {
+        public static void AddGetAllResponses<TResponse>(this EndpointSummary summary, string entityName, bool allowAnonymous = false)
+        {
+            summary.AddCommonResponses(entityName, "retrieving", allowAnonymous);
+            summary.Response<Ok<TResponse>>(200, $"{entityName} details successfully retrieved.");
+        }
+
         public static void AddCreateResponses<TResponse>(this EndpointSummary summary, string entityName, bool allowAnonymous = false)
         {
             summary.AddCommonResponses(entityName, "creating", allowAnonymous);

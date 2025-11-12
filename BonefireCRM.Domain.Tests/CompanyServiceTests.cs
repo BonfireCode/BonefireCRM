@@ -1,4 +1,5 @@
 using AutoFixture;
+using BonefireCRM.Domain.Constants;
 using BonefireCRM.Domain.DTOs.Company;
 using BonefireCRM.Domain.Entities;
 using BonefireCRM.Domain.Infrastructure.Persistance;
@@ -6,6 +7,8 @@ using BonefireCRM.Domain.Services;
 using FluentAssertions;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
+using System.Linq.Expressions;
+using BonefireCRM.SourceGenerator;
 
 namespace BonefireCRM.Domain.Tests
 {
@@ -69,6 +72,96 @@ namespace BonefireCRM.Domain.Tests
                 dto.Id.Should().Be(expected.Id);
                 dto.Name.Should().Be(expected.Name);
             });
+        }
+
+        [Fact]
+        public async Task GetAllCompanies_NoCompaniesFound_ReturnEmptyEnumerable()
+        {
+            // Arrange
+            var getAllCompaniesDTO = _fixture.Build<GetAllCompaniesDTO>()
+                .OmitAutoProperties()
+                .With(dto => dto.SortBy, DefaultValues.SORTBY)
+                .With(dto => dto.SortDirection, DefaultValues.SORTDIRECTION)
+                .With(dto => dto.PageNumber, DefaultValues.PAGENUMBER)
+                .With(dto => dto.PageSize, DefaultValues.PAGESIZE)
+                .Create();
+
+            var filterExpression = CompanyQueryExpressions.Filter(getAllCompaniesDTO);
+            var sortExpression = CompanyQueryExpressions.Sort(getAllCompaniesDTO.SortBy);
+            var skip = (getAllCompaniesDTO.PageNumber - 1) * getAllCompaniesDTO.PageSize;
+            var take = getAllCompaniesDTO.PageSize;
+            _companyRepository.GetAll(
+                    Arg.Is<Expression<Func<Company, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
+                    Arg.Is<Expression<Func<Company, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
+                    getAllCompaniesDTO.SortDirection,
+                    skip,
+                    take,
+                    CancellationToken.None)
+                .Returns([]);
+
+            // Act
+            var result = _companyService.GetAllCompanies(getAllCompaniesDTO, CancellationToken.None);
+
+            // Assert
+            _companyRepository.Received(1).GetAll(
+                    Arg.Is<Expression<Func<Company, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
+                    Arg.Is<Expression<Func<Company, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
+                    getAllCompaniesDTO.SortDirection,
+                    skip,
+                    take,
+                    CancellationToken.None);
+
+            result.Should().BeEmpty();
+        }
+
+        [Fact]
+        public async Task GetAllCompanies_OneCompanyFound_ReturnEnumerableWithCompany()
+        {
+            // Arrange
+            var getAllCompaniesDTO = _fixture.Build<GetAllCompaniesDTO>()
+                .OmitAutoProperties()
+                .With(dto => dto.SortBy, DefaultValues.SORTBY)
+                .With(dto => dto.SortDirection, DefaultValues.SORTDIRECTION)
+                .Create();
+
+            var company = _fixture.Create<Company>();
+
+            var filterExpression = CompanyQueryExpressions.Filter(getAllCompaniesDTO);
+            var sortExpression = CompanyQueryExpressions.Sort(getAllCompaniesDTO.SortBy);
+            var skip = (getAllCompaniesDTO.PageNumber - 1) * getAllCompaniesDTO.PageSize;
+            var take = getAllCompaniesDTO.PageSize;
+            _companyRepository.GetAll(
+                    Arg.Is<Expression<Func<Company, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
+                    Arg.Is<Expression<Func<Company, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
+                    getAllCompaniesDTO.SortDirection,
+                    skip,
+                    take,
+                    CancellationToken.None)
+                .Returns([company]);
+
+            var expectedCompany = _fixture.Build<GetCompanyDTO>()
+                .With(dto => dto.Id, company.Id)
+                .With(dto => dto.Name, company.Name)
+                .With(dto => dto.Industry, company.Industry)
+                .Create();
+
+            // Act
+            var result = _companyService.GetAllCompanies(getAllCompaniesDTO, CancellationToken.None);
+
+            // Assert
+            _companyRepository.Received(1).GetAll(
+                    Arg.Is<Expression<Func<Company, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
+                    Arg.Is<Expression<Func<Company, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
+                    getAllCompaniesDTO.SortDirection,
+                    skip,
+                    take,
+                    CancellationToken.None);
+
+            result.Should().HaveCount(1);
+            var element = result.Single();
+            element.Id.Should().Be(expectedCompany.Id);
+            element.Name.Should().Be(expectedCompany.Name);
+            element.Industry.Should().Be(expectedCompany.Industry);
         }
 
         [Fact]
