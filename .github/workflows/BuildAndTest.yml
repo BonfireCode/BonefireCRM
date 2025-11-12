@@ -34,6 +34,7 @@ jobs:
         retention-days: 1
         path: |
           **/*.Tests/bin/Release/net*/
+          **/*.verified.*
           !**/ref/*           
           
   Test:
@@ -46,10 +47,6 @@ jobs:
         name: build-output
         retention-days: 1
         path: ./build
-
-    - name: Show files (debug)
-      run: dir ./build -Recurse
-      shell: pwsh
         
     - name: Test solution
       run: |
