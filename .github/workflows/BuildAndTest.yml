@@ -27,9 +27,6 @@ jobs:
     - name: Build solution
       run: dotnet build --configuration Release --no-restore
 
-    - name: List all files
-      run: Get-ChildItem -Recurse | ForEach-Object { $_.FullName }
-
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
@@ -37,7 +34,7 @@ jobs:
         retention-days: 1
         path: |
           **/*.Tests/bin/Release/net*/
-          **/*.verified.*
+          **/*.Tests/Snapshots/*.verified.*
           !**/ref/*           
           
   Test:
