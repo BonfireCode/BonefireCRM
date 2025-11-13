@@ -32,8 +32,8 @@ jobs:
         $currentLocation = $(Get-Location)
         Get-ChildItem $currentLocation  -Recurse -Directory -Filter "Snapshots" | ForEach-Object {
             $snapshotsFolder = $_.FullName
-            $dllFolder = (Get-ChildItem $_.Parent.FullName -Recurse -Directory -Filter "net10")[0].FullName
-            Move-Item $snapshotsFolder (Join-Path $dllFolder "Snapshots")
+            $wantedLocation = Join-Path $_.Parent.FullName "bin/Release/net10/Snapshots"
+            Move-Item $snapshotsFolder $wantedLocation
         }
 
     - name: Upload artifact
