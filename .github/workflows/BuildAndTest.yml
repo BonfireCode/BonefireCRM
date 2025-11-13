@@ -32,7 +32,7 @@ jobs:
         $currentLocation = $(Get-Location)
         Get-ChildItem $currentLocation  -Recurse -Directory -Filter "Snapshots" | ForEach-Object {
             $snapshotsFolder = $_.FullName
-            $wantedLocation = Join-Path $_.Parent.FullName "bin/Release/net10/Snapshots"
+            $wantedLocation = Join-Path $_.Parent.FullName "bin/Release/net10.0/Snapshots"
             Move-Item $snapshotsFolder $wantedLocation
         }
 
