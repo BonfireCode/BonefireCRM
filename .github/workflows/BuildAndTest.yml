@@ -30,11 +30,9 @@ jobs:
     - name: Move snapshots folders inside test folders
       run: |
         $currentLocation = $(Get-Location)
-        Get-ChildItem $currentLocation  -Recurse -Directory -Filter "Snapshots" | ForEach-Object {
-            $snapshotsFolder = $_.FullName
-            $wantedLocation = Join-Path $_.Parent.FullName "bin/Release/net10.0/Snapshots"
-            echo $snapshotsFolder
-            echo $wantedLocation
+        $snapshotFolders = Get-ChildItem $currentLocation -Recurse -Directory -Filter "Snapshots"
+        foreach ($snapshotsFolder in $snapshotFolders) {
+            $wantedLocation = Join-Path $snapshotsFolder.Parent.FullName "bin/Release/net10.0/Snapshots"
             Move-Item $snapshotsFolder $wantedLocation
         }
 
