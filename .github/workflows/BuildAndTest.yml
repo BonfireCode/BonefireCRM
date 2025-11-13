@@ -49,11 +49,15 @@ jobs:
     needs: Build
     runs-on: windows-latest
     steps:
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 10.0.x
+        
     - name: Download artifact
       uses: actions/download-artifact@v4
       with:
         name: build-output
-        retention-days: 1
         path: ./build
         
     - name: Test solution
