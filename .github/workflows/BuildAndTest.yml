@@ -32,6 +32,7 @@ jobs:
         echo $(Get-Location)
         Get-ChildItem $(Get-Location) -Recurse -Directory -Filter "Snapshots" | ForEach-Object {
             echo $_.FullName
+            echo $(Get-ChildItem -Path $_.Parent.FullName -Recurse -Directory -Filter "net*")
         }
       
     - name: Move snapshots folders inside test folders
