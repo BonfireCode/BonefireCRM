@@ -30,7 +30,9 @@ jobs:
     - name: List all files
       run: |
         echo $(Get-Location)
-        Get-ChildItem $(Get-Location) -Recurse -Directory -Filter "Snapshots"
+        Get-ChildItem $(Get-Location) -Recurse -Directory -Filter "Snapshots" | ForEach-Object {
+            echo $_.FullName
+        }
       
     - name: Move snapshots folders inside test folders
       run: |
