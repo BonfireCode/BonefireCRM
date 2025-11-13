@@ -19,22 +19,17 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 9.0.x
+        dotnet-version: 10.0.x
         
     - name: Restore dependencies
       run: dotnet restore
       
     - name: Build solution
       run: dotnet build --configuration Release --no-restore
-
-    - name: List all files
-      run: |
-        echo $(pwd)
-        Get-ChildItem -Recurse | ForEach-Object { $_.FullName }
       
     - name: Move snapshots folders inside test folders
       run: |
-        Get-ChildItem -Path "$(pwd)" -Recurse -Directory -Filter "Snapshots" | ForEach-Object {
+        Get-ChildItem . -Recurse -Directory -Filter "Snapshots" | ForEach-Object {
             $snapshotsFolder = $_.FullName
             $dllFolder = (Get-ChildItem -Path $_.Parent.FullName -Recurse -Directory -Filter "net*")[0].FullName
             Move-Item $snapshotsFolder (Join-Path $dllFolder "Snapshots")
