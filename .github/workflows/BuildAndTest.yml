@@ -19,7 +19,9 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 9.0.x
+        dotnet-version: | 
+          9.0.x
+          10.0.x
         
     - name: Restore dependencies
       run: dotnet restore
@@ -32,7 +34,7 @@ jobs:
         Get-ChildItem -Path "$(pwd)" -Recurse -Directory -Filter "Snapshots" | ForEach-Object {
             $snapshotsFolder = $_.FullName
             $dllFolder = (Get-ChildItem -Path $_.Parent.FullName -Recurse -Directory -Filter "net*")[0].FullName
-            Move-Item $snapshotsFolder (Join-Path $dllFolder "Snapshot")
+            Move-Item $snapshotsFolder (Join-Path $dllFolder "Snapshots")
         }
 
     - name: Upload artifact
