@@ -3,7 +3,6 @@
 // </copyright>
 
 using BonefireCRM.API.Company.Mappers;
-using BonefireCRM.API.Contrat.Call;
 using BonefireCRM.API.Contrat.Company;
 using BonefireCRM.API.Extensions;
 using BonefireCRM.Domain.Services;

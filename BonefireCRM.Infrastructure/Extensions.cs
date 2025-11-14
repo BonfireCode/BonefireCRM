@@ -77,7 +77,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 }
                 catch (SqlException ex)
                 {
-                    throw new Exception($"SQLite migration failed: {ex.Message}", ex);
+                    throw new Exception($"SQL migration failed: {ex.Message}", ex);
                 }
                 catch (InvalidOperationException ex)
                 {
