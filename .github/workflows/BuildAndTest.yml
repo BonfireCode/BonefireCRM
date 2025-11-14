@@ -19,13 +19,22 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 9.0.x
+        dotnet-version: 10.0.x
         
     - name: Restore dependencies
       run: dotnet restore
       
     - name: Build solution
       run: dotnet build --configuration Release --no-restore
+      
+    - name: Move snapshots folders inside test folders
+      run: |
+        $currentLocation = $(Get-Location)
+        $snapshotFolders = Get-ChildItem $currentLocation -Recurse -Directory -Filter "Snapshots"
+        foreach ($snapshotsFolder in $snapshotFolders) {
+            $wantedLocation = Join-Path $snapshotsFolder.Parent.FullName "bin/Release/net10.0/Snapshots"
+            Move-Item $snapshotsFolder $wantedLocation
+        }
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
@@ -34,18 +43,21 @@ jobs:
         retention-days: 1
         path: |
           **/*.Tests/bin/Release/net*/
-          **/*.Tests/*.verified.*
           !**/ref/*           
           
   Test:
     needs: Build
     runs-on: windows-latest
     steps:
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 10.0.x
+        
     - name: Download artifact
       uses: actions/download-artifact@v4
       with:
         name: build-output
-        retention-days: 1
         path: ./build
         
     - name: Test solution
