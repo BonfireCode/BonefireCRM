@@ -3,6 +3,7 @@ using BonefireCRM.Domain.DTOs.Activity.Meeting;
 using BonefireCRM.Domain.DTOs.Activity.Assignment;
 using BonefireCRM.Domain.DTOs.Company;
 using BonefireCRM.Domain.DTOs.Contact;
+using BonefireCRM.Domain.DTOs.LifeCycleStage;
 using BonefireCRM.Domain.DTOs.User;
 using BonefireCRM.Domain.Entities;
 
@@ -148,6 +149,15 @@ namespace BonefireCRM.Domain.Mappers
                 Description = assignment.Description,
                 DueDate = assignment.DueDate,
                 IsCompleted = assignment.IsCompleted,
+            };
+        }
+
+        internal static GetLifecycleStageDTO MapToGetDto(this LifecycleStage lifecycleStage)
+        {
+            return new()
+            {
+                Id = lifecycleStage.Id,
+                Name = lifecycleStage.Name,
             };
         }
 

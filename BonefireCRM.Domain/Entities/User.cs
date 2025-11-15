@@ -1,8 +1,4 @@
-﻿using BonefireCRM.Domain.DTOs.User;
-using LanguageExt;
-using System.Diagnostics;
-
-namespace BonefireCRM.Domain.Entities
+﻿namespace BonefireCRM.Domain.Entities
 {
 
     /// <summary>
