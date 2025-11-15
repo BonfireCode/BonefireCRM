@@ -1,34 +1,41 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
-  </ItemGroup>
+	<ItemGroup>
+		<AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\BonefireCRM.API.Contrat\BonefireCRM.API.Contrat.csproj" />
-    <ProjectReference Include="..\BonefireCRM.Domain\BonefireCRM.Domain.csproj" />
-    <ProjectReference Include="..\BonefireCRM.Infrastructure\BonefireCRM.Infrastructure.csproj" />
-    <ProjectReference Include="..\BonefireCRM.ServiceDefaults\BonefireCRM.ServiceDefaults.csproj" />
-  </ItemGroup>
-	
-  <ItemGroup>
-    <PackageReference Include="FastEndpoints" />
-    <PackageReference Include="FastEndpoints.Swagger" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Scalar.AspNetCore" />
-    <PackageReference Include="StyleCop.Analyzers">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\BonefireCRM.API.Contrat\BonefireCRM.API.Contrat.csproj" />
+		<ProjectReference Include="..\BonefireCRM.Domain\BonefireCRM.Domain.csproj" />
+		<ProjectReference Include="..\BonefireCRM.Infrastructure\BonefireCRM.Infrastructure.csproj" />
+		<ProjectReference Include="..\BonefireCRM.ServiceDefaults\BonefireCRM.ServiceDefaults.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="FastEndpoints" />
+		<PackageReference Include="FastEndpoints.Swagger" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Scalar.AspNetCore" />
+		<PackageReference Include="StyleCop.Analyzers">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+	<!--temporary fix for : https://developercommunity.visualstudio.com/t/Visual-studio-project-BuildHost-folders/10806750 -->
+	<ItemGroup>
+		<Content Update="@(Content)">
+			<Visible Condition="'%(NuGetItemType)' == 'Content'">false</Visible>
+		</Content>
+	</ItemGroup>
 
 </Project>
