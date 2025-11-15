@@ -1,6 +1,6 @@
 ﻿using BonefireCRM.Domain.DTOs.Activity.Call;
 using BonefireCRM.Domain.DTOs.Activity.Meeting;
-using BonefireCRM.Domain.DTOs.Activity.Task;
+using BonefireCRM.Domain.DTOs.Activity.Assignment;
 using BonefireCRM.Domain.Entities;
 using BonefireCRM.Domain.Exceptions;
 using BonefireCRM.Domain.Infrastructure.Persistance;
@@ -14,16 +14,16 @@ namespace BonefireCRM.Domain.Services
     {
         private readonly IBaseRepository<Call> _callRepository;
         private readonly IBaseRepository<Meeting> _meetingRepository;
-        private readonly IBaseRepository<Assignment> _taskRepository;
+        private readonly IBaseRepository<Assignment> _assignmentRepository;
 
         public ActivityService(
             IBaseRepository<Call> callRepository
             , IBaseRepository<Meeting> meetingRepository
-            , IBaseRepository<Assignment> taskRepository)
+            , IBaseRepository<Assignment> assignmentRepository)
         {
             _callRepository = callRepository;
             _meetingRepository = meetingRepository;
-            _taskRepository = taskRepository;
+            _assignmentRepository = assignmentRepository;
         }
 
         public async Task<Option<GetCallDTO>> GetCallAsync(Guid id, CancellationToken ct)
@@ -162,69 +162,69 @@ namespace BonefireCRM.Domain.Services
             return updatedMeeting.MapToUpdatedDto();
         }
 
-        public async Task<Option<GetTaskDTO>> GetTaskAsync(Guid id, CancellationToken ct)
+        public async Task<Option<GetAssignmentDTO>> GetAssignmentAsync(Guid id, CancellationToken ct)
         {
-            var task = await _taskRepository.GetAsync(id, ct);
-            if (task is null)
+            var assignment = await _assignmentRepository.GetAsync(id, ct);
+            if (assignment is null)
             {
-                return Option<GetTaskDTO>.None;
+                return Option<GetAssignmentDTO>.None;
             }
 
-            return task.MapToGetDto();
+            return assignment.MapToGetDto();
         }
 
-        public IEnumerable<GetTaskDTO> GetAllTasks(GetAllTasksDTO getAllTasksDTO, CancellationToken ct)
+        public IEnumerable<GetAssignmentDTO> GetAllAssignments(GetAllAssignmentsDTO getAllAssignmentsDTO, CancellationToken ct)
         {
-            var filterExpression = AssignmentQueryExpressions.Filter(getAllTasksDTO);
+            var filterExpression = AssignmentQueryExpressions.Filter(getAllAssignmentsDTO);
 
-            var sortExpression = AssignmentQueryExpressions.Sort(getAllTasksDTO.SortBy);
+            var sortExpression = AssignmentQueryExpressions.Sort(getAllAssignmentsDTO.SortBy);
 
-            var skip = (getAllTasksDTO.PageNumber - 1) * getAllTasksDTO.PageSize;
-            var take = getAllTasksDTO.PageSize;
+            var skip = (getAllAssignmentsDTO.PageNumber - 1) * getAllAssignmentsDTO.PageSize;
+            var take = getAllAssignmentsDTO.PageSize;
 
-            var tasks = _taskRepository.GetAll(filterExpression, sortExpression, getAllTasksDTO.SortDirection, skip, take, ct);
+            var tasks = _assignmentRepository.GetAll(filterExpression, sortExpression, getAllAssignmentsDTO.SortDirection, skip, take, ct);
 
-            var getTasksResultDTO = tasks.Select(t => t.MapToGetDto());
+            var getAssignmentsResultDTO = tasks.Select(t => t.MapToGetDto());
 
-            return getTasksResultDTO;
+            return getAssignmentsResultDTO;
         }
 
-        public async Task<bool> DeleteTaskAsync(Guid id, CancellationToken ct)
+        public async Task<bool> DeleteAssignmentAsync(Guid id, CancellationToken ct)
         {
             //Domain validations if needed
 
-            var task = new Assignment { Id = id };
+            var assignment = new Assignment { Id = id };
 
-            var isDeleted = await _taskRepository.DeleteAsync(task, ct);
+            var isDeleted = await _assignmentRepository.DeleteAsync(assignment, ct);
 
             return isDeleted;
         }
 
-        public async Task<Fin<CreatedTaskDTO>> CreateTaskAsync(CreateTaskDTO createTaskDTO, CancellationToken ct)
+        public async Task<Fin<CreatedAssignmentDTO>> CreateAssignmentAsync(CreateAssignmentDTO createAssignmentDTO, CancellationToken ct)
         {
             //Domain validations if needed
 
-            var task = createTaskDTO.MapToAssignment();
+            var assignment = createAssignmentDTO.MapToAssignment();
 
-            var createdTask = await _taskRepository.AddAsync(task, ct);
-            if (createdTask is null)
+            var createdAssignment = await _assignmentRepository.AddAsync(assignment, ct);
+            if (createdAssignment is null)
             {
-                return Fin<CreatedTaskDTO>.Fail(new AddEntityException<Task>());
+                return Fin<CreatedAssignmentDTO>.Fail(new AddEntityException<Assignment>());
             }
 
-            return createdTask.MapToCreatedDto();
+            return createdAssignment.MapToCreatedDto();
         }
 
-        public async Task<Fin<UpdatedTaskDTO>> UpdateTaskAsync(UpdateTaskDTO updateTaskDTO, CancellationToken ct)
+        public async Task<Fin<UpdatedAssignmentDTO>> UpdateAssignmentAsync(UpdateAssignmentDTO updateAssignmentDTO, CancellationToken ct)
         {
             //Domain validations if needed
 
-            var task = updateTaskDTO.MapToAssignment();
+            var assignment = updateAssignmentDTO.MapToAssignment();
 
-            var updatedTask = await _taskRepository.UpdateAsync(task, ct);
+            var updatedTask = await _assignmentRepository.UpdateAsync(assignment, ct);
             if (updatedTask is null)
             {
-                return Fin<UpdatedTaskDTO>.Fail(new UpdateEntityException<Assignment>());
+                return Fin<UpdatedAssignmentDTO>.Fail(new UpdateEntityException<Assignment>());
             }
 
             return updatedTask.MapToUpdatedDto();

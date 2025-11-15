@@ -1,6 +1,6 @@
-﻿namespace BonefireCRM.Domain.DTOs.Activity.Task
+﻿namespace BonefireCRM.Domain.DTOs.Activity.Assignment
 {
-    public class CreateTaskDTO
+    public class CreateAssignmentDTO
     {
         public Guid UserId { get; set; }
         public Guid ContactId { get; set; }

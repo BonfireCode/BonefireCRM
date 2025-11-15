@@ -1,6 +1,6 @@
 ﻿using BonefireCRM.Domain.DTOs.Activity.Call;
 using BonefireCRM.Domain.DTOs.Activity.Meeting;
-using BonefireCRM.Domain.DTOs.Activity.Task;
+using BonefireCRM.Domain.DTOs.Activity.Assignment;
 using BonefireCRM.Domain.DTOs.Company;
 using BonefireCRM.Domain.DTOs.Contact;
 using BonefireCRM.Domain.DTOs.LifeCycleStage;
@@ -104,9 +104,9 @@ namespace BonefireCRM.Domain.Mappers
             };
         }
 
-        internal static GetTaskDTO? MapToGetDto(this Assignment assignment)
+        internal static GetAssignmentDTO? MapToGetDto(this Assignment assignment)
         {
-            return new GetTaskDTO
+            return new GetAssignmentDTO
             {
                 Id = assignment.Id,
                 CompanyId = assignment.CompanyId,
@@ -120,7 +120,7 @@ namespace BonefireCRM.Domain.Mappers
             };
         }
 
-        internal static CreatedTaskDTO MapToCreatedDto(this Assignment assignment)
+        internal static CreatedAssignmentDTO MapToCreatedDto(this Assignment assignment)
         {
             return new()
             {
@@ -136,7 +136,7 @@ namespace BonefireCRM.Domain.Mappers
             };
         }
 
-        internal static UpdatedTaskDTO MapToUpdatedDto(this Assignment assignment)
+        internal static UpdatedAssignmentDTO MapToUpdatedDto(this Assignment assignment)
         {
             return new()
             {
