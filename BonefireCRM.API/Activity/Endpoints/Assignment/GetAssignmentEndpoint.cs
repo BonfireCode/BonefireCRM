@@ -40,7 +40,7 @@ namespace BonefireCRM.API.Activity.Endpoints.Assignment
             var result = await _activityService.GetAssignmentAsync(id, ct);
 
             var response = result.Match<Results<Ok<GetAssignmentResponse>, NotFound>>(
-                dtoTask => TypedResults.Ok(dtoTask.MapToResponse()),
+                dtoAssignment => TypedResults.Ok(dtoAssignment.MapToResponse()),
                 TypedResults.NotFound());
 
             return response;

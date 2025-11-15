@@ -601,7 +601,7 @@ namespace BonefireCRM.Domain.Tests
         public async Task GetAllAssignments_NoAssignmentsFound_ReturnEmptyEnumerable()
         {
             // Arrange
-            var getAllTasksDTO = _fixture.Build<GetAllAssignmentsDTO>()
+            var getAllAssignmentsDTO = _fixture.Build<GetAllAssignmentsDTO>()
                 .OmitAutoProperties()
                 .With(dto => dto.SortBy, DefaultValues.SORTBY)
                 .With(dto => dto.SortDirection, DefaultValues.SORTDIRECTION)
@@ -609,27 +609,27 @@ namespace BonefireCRM.Domain.Tests
                 .With(dto => dto.PageSize, DefaultValues.PAGESIZE)
                 .Create();
 
-            var filterExpression = AssignmentQueryExpressions.Filter(getAllTasksDTO);
-            var sortExpression = AssignmentQueryExpressions.Sort(getAllTasksDTO.SortBy);
-            var skip = (getAllTasksDTO.PageNumber - 1) * getAllTasksDTO.PageSize;
-            var take = getAllTasksDTO.PageSize;
+            var filterExpression = AssignmentQueryExpressions.Filter(getAllAssignmentsDTO);
+            var sortExpression = AssignmentQueryExpressions.Sort(getAllAssignmentsDTO.SortBy);
+            var skip = (getAllAssignmentsDTO.PageNumber - 1) * getAllAssignmentsDTO.PageSize;
+            var take = getAllAssignmentsDTO.PageSize;
             _assignmentRepository.GetAll(
                     Arg.Is<Expression<Func<Assignment, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
                     Arg.Is<Expression<Func<Assignment, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
-                    getAllTasksDTO.SortDirection,
+                    getAllAssignmentsDTO.SortDirection,
                     skip,
                     take,
                     CancellationToken.None)
                 .Returns([]);
 
             // Act
-            var result = _activityService.GetAllAssignments(getAllTasksDTO, CancellationToken.None);
+            var result = _activityService.GetAllAssignments(getAllAssignmentsDTO, CancellationToken.None);
 
             // Assert
             _assignmentRepository.Received(1).GetAll(
                     Arg.Is<Expression<Func<Assignment, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
                     Arg.Is<Expression<Func<Assignment, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
-                    getAllTasksDTO.SortDirection,
+                    getAllAssignmentsDTO.SortDirection,
                     skip,
                     take,
                     CancellationToken.None);
@@ -641,7 +641,7 @@ namespace BonefireCRM.Domain.Tests
         public async Task GetAllAssignments_OneAssignmentFound_ReturnEnumerableWithAssignment()
         {
             // Arrange
-            var getAllTasksDTO = _fixture.Build<GetAllAssignmentsDTO>()
+            var getAllAssignmentsDTO = _fixture.Build<GetAllAssignmentsDTO>()
                 .OmitAutoProperties()
                 .With(dto => dto.SortBy, DefaultValues.SORTBY)
                 .With(dto => dto.SortDirection, DefaultValues.SORTDIRECTION)
@@ -649,14 +649,14 @@ namespace BonefireCRM.Domain.Tests
 
             var assignment = _fixture.Create<Assignment>();
 
-            var filterExpression = AssignmentQueryExpressions.Filter(getAllTasksDTO);
-            var sortExpression = AssignmentQueryExpressions.Sort(getAllTasksDTO.SortBy);
-            var skip = (getAllTasksDTO.PageNumber - 1) * getAllTasksDTO.PageSize;
-            var take = getAllTasksDTO.PageSize;
+            var filterExpression = AssignmentQueryExpressions.Filter(getAllAssignmentsDTO);
+            var sortExpression = AssignmentQueryExpressions.Sort(getAllAssignmentsDTO.SortBy);
+            var skip = (getAllAssignmentsDTO.PageNumber - 1) * getAllAssignmentsDTO.PageSize;
+            var take = getAllAssignmentsDTO.PageSize;
             _assignmentRepository.GetAll(
                     Arg.Is<Expression<Func<Assignment, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
                     Arg.Is<Expression<Func<Assignment, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
-                    getAllTasksDTO.SortDirection,
+                    getAllAssignmentsDTO.SortDirection,
                     skip,
                     take,
                     CancellationToken.None)
@@ -667,13 +667,13 @@ namespace BonefireCRM.Domain.Tests
                 .Create();
 
             // Act
-            var result = _activityService.GetAllAssignments(getAllTasksDTO, CancellationToken.None);
+            var result = _activityService.GetAllAssignments(getAllAssignmentsDTO, CancellationToken.None);
 
             // Assert
             _assignmentRepository.Received(1).GetAll(
                     Arg.Is<Expression<Func<Assignment, bool>>>(e => filterExpression.Body.ToString() == e.Body.ToString()),
                     Arg.Is<Expression<Func<Assignment, object>>>(e => sortExpression.Body.ToString() == e.Body.ToString()),
-                    getAllTasksDTO.SortDirection,
+                    getAllAssignmentsDTO.SortDirection,
                     skip,
                     take,
                     CancellationToken.None);

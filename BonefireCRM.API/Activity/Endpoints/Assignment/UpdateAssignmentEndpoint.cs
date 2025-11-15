@@ -38,9 +38,9 @@ namespace BonefireCRM.API.Activity.Endpoints.Assignment
         {
             var id = Route<Guid>("id");
 
-            var dtoTask = request.MapToDto(id);
+            var dtoAssignment = request.MapToDto(id);
 
-            var result = await _activityService.UpdateAssignmentAsync(dtoTask, ct);
+            var result = await _activityService.UpdateAssignmentAsync(dtoAssignment, ct);
 
             var response = result.Match<Results<Ok<UpdateAssignmentResponse>, NotFound, InternalServerError>>(
                 updatedAssignment => TypedResults.Ok(updatedAssignment.MapToResponse()),

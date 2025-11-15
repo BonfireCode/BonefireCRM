@@ -25,7 +25,7 @@ namespace BonefireCRM.API.Activity.Endpoints.Assignment
 
         public override void Configure()
         {
-            Post("/activity/qssignments");
+            Post("/activity/assignments");
 
             Summary(s =>
             {

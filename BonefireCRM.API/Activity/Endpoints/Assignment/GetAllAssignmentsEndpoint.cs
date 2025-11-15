@@ -29,7 +29,7 @@ namespace BonefireCRM.API.Activity.Endpoints.Assignment
                 s.Summary = "Retrieves all specific assignments";
                 s.Description = "Fetches detailed information about assignments";
 
-                s.AddGetAllResponses<IEnumerable<GetAssignmentResponse>>("Tasks");
+                s.AddGetAllResponses<IEnumerable<GetAssignmentResponse>>("Assignments");
             });
         }
 
@@ -41,7 +41,7 @@ namespace BonefireCRM.API.Activity.Endpoints.Assignment
 
             var response = result.Select(assignment => assignment.MapToResponse());
 
-            return await System.Threading.Tasks.Task.Run(() => response);
+            return await Task.Run(() => response);
         }
     }
 }
