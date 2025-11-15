@@ -1,7 +1,7 @@
 # 📌 BonefireCRM
 
-[![.NET](https://img.shields.io/badge/.NET-9.0-blueviolet)](https://dotnet.microsoft.com/)  
-A lightweight, modular CRM system built with **.NET 9** — focused on **Contacts, Companies, Deals, Activities, and Follow-ups**. 
+[![.NET](https://img.shields.io/badge/.NET-10.0-blueviolet)](https://dotnet.microsoft.com/)  
+A lightweight, modular CRM system built with **.NET 10** — focused on **Contacts, Companies, Deals, Activities, and Follow-ups**. 
 
 [Web application](https://bonefirecrm.runasp.net)
 
@@ -18,7 +18,7 @@ A lightweight, modular CRM system built with **.NET 9** — focused on **Contact
 ---
 
 ## 🏗️ Tech Stack
-- **Backend:** .NET 9, Entity Framework Core  
+- **Backend:** .NET 10, Entity Framework Core  
 - **Database:** SQL SERVER 
 - **Diagrams:** Mermaid.js for ERD & flows
 - **Versioning:** GitHub  

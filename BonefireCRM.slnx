@@ -8,6 +8,7 @@
     <File Path=".github/workflows/BuildAndDeploy.yml" />
     <File Path=".github/workflows/BuildAndTest.yml" />
     <File Path="Directory.Packages.props" />
+    <File Path="README.md" />
     <File Path="stylecop.json" />
   </Folder>
   <Project Path="BonefireCRM.API.Contrat/BonefireCRM.API.Contrat.csproj" />
