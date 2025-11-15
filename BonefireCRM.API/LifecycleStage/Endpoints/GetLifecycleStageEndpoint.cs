@@ -41,7 +41,7 @@ namespace BonefireCRM.API.LifecycleStage.Endpoints
             var result = await _lifecycleStageService.GetLifecycleStageAsync(id, ct);
 
             var response = result.Match<Results<Ok<GetLifecycleStageResponse>, NotFound>>(
-                dtoCLifecycleStage => TypedResults.Ok(dtoCLifecycleStage.MapToResponse()),
+                dtoLifecycleStage => TypedResults.Ok(dtoLifecycleStage.MapToResponse()),
                 TypedResults.NotFound());
 
             return response;
