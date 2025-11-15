@@ -33,9 +33,9 @@ namespace BonefireCRM.API.LifecycleStage.Endpoints
 
         public override async Task<IEnumerable<GetLifecycleStageResponse>> ExecuteAsync(GetLifecycleStagesRequest request, CancellationToken ct)
         {
-            var dtoCompanies = request.MapToDto();
+            var dtoLifecycleStages = request.MapToDto();
 
-            var result = _lifecycleStageService.GetAllLifecycleStages(dtoCompanies, ct);
+            var result = _lifecycleStageService.GetAllLifecycleStages(dtoLifecycleStages, ct);
 
             var response = result.Select(c => c.MapToResponse());
 
