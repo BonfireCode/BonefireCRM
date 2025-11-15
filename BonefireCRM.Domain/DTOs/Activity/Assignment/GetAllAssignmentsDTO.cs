@@ -1,9 +1,9 @@
 using BonefireCRM.SourceGenerator;
 
-namespace BonefireCRM.Domain.DTOs.Activity.Task
+namespace BonefireCRM.Domain.DTOs.Activity.Assignment
 {
     [QueryExpressionsFor(typeof(Entities.Assignment))]
-    public class GetAllTasksDTO
+    public class GetAllAssignmentsDTO
     {
         public Guid? Id { get; set; }
         public string? Subject { get; set; } = string.Empty;

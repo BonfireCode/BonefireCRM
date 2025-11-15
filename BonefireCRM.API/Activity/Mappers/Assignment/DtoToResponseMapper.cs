@@ -2,14 +2,14 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
-using BonefireCRM.API.Contrat.Task;
-using BonefireCRM.Domain.DTOs.Activity.Task;
+using BonefireCRM.API.Contrat.Activity.Assignment;
+using BonefireCRM.Domain.DTOs.Activity.Assignment;
 
 namespace BonefireCRM.API.Activity.Mappers.Task
 {
     internal static class DtoToResponseMapper
     {
-        internal static GetTaskResponse MapToResponse(this GetTaskDTO dto)
+        internal static GetAssignmentResponse MapToResponse(this GetAssignmentDTO dto)
         {
             return new()
             {
@@ -24,7 +24,7 @@ namespace BonefireCRM.API.Activity.Mappers.Task
             };
         }
 
-        internal static CreateTaskResponse MapToResponse(this CreatedTaskDTO dto)
+        internal static CreateAssignmentResponse MapToResponse(this CreatedAssignmentDTO dto)
         {
             return new()
             {
@@ -39,7 +39,7 @@ namespace BonefireCRM.API.Activity.Mappers.Task
             };
         }
 
-        internal static UpdateTaskResponse MapToResponse(this UpdatedTaskDTO dto)
+        internal static UpdateAssignmentResponse MapToResponse(this UpdatedAssignmentDTO dto)
         {
             return new()
             {

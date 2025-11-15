@@ -1,6 +1,6 @@
 ﻿using BonefireCRM.Domain.DTOs.Activity.Call;
 using BonefireCRM.Domain.DTOs.Activity.Meeting;
-using BonefireCRM.Domain.DTOs.Activity.Task;
+using BonefireCRM.Domain.DTOs.Activity.Assignment;
 using BonefireCRM.Domain.DTOs.Company;
 using BonefireCRM.Domain.DTOs.Contact;
 using BonefireCRM.Domain.DTOs.Security;
@@ -11,7 +11,7 @@ namespace BonefireCRM.Domain.Mappers
 {
     internal static class DtoToEntityMapper
     {
-        internal static Assignment MapToAssignment(this GetTaskDTO dto)
+        internal static Assignment MapToAssignment(this GetAssignmentDTO dto)
         {
             return new()
             {
@@ -27,7 +27,7 @@ namespace BonefireCRM.Domain.Mappers
             };
         }
 
-        internal static Assignment MapToAssignment(this CreateTaskDTO dto)
+        internal static Assignment MapToAssignment(this CreateAssignmentDTO dto)
         {
             return new()
             {
@@ -42,7 +42,7 @@ namespace BonefireCRM.Domain.Mappers
             };
         }
 
-        internal static Assignment MapToAssignment(this UpdateTaskDTO dto)
+        internal static Assignment MapToAssignment(this UpdateAssignmentDTO dto)
         {
             return new()
             {

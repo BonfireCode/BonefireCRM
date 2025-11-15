@@ -1,4 +1,4 @@
-﻿// <copyright file="DeleteTaskEndpoint.cs" company="Bonefire">
+﻿// <copyright file="DeleteAssignmentEndpoint.cs" company="Bonefire">
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
@@ -7,26 +7,26 @@ using BonefireCRM.Domain.Services;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace BonefireCRM.API.Activity.Endpoints.Task
+namespace BonefireCRM.API.Activity.Endpoints.Assignment
 {
-    public class DeleteTaskEndpoint : EndpointWithoutRequest<Results<NoContent, NotFound>>
+    public class DeleteAssignmentEndpoint : EndpointWithoutRequest<Results<NoContent, NotFound>>
     {
         private readonly ActivityService _activityService;
 
-        public DeleteTaskEndpoint(ActivityService activityService)
+        public DeleteAssignmentEndpoint(ActivityService activityService)
         {
             _activityService = activityService;
         }
 
         public override void Configure()
         {
-            Delete("/activity/tasks/{id:guid}");
+            Delete("/activity/assignments/{id:guid}");
             Summary(s =>
             {
-                s.Summary = "Deletes an existing task activity.";
-                s.Description = "Deletes a specific task identified by its unique GUID.";
-                s.Params["id"] = "The unique identifier (GUID) of the task to delete.";
-                s.AddDeleteResponses("Task");
+                s.Summary = "Deletes an existing assignment activity.";
+                s.Description = "Deletes a specific assignment identified by its unique GUID.";
+                s.Params["id"] = "The unique identifier (GUID) of the assignment to delete.";
+                s.AddDeleteResponses("Assignment");
             });
         }
 
@@ -34,7 +34,7 @@ namespace BonefireCRM.API.Activity.Endpoints.Task
         {
             var id = Route<Guid>("id");
 
-            var isDeleted = await _activityService.DeleteTaskAsync(id, ct);
+            var isDeleted = await _activityService.DeleteAssignmentAsync(id, ct);
             if (isDeleted)
             {
                 return TypedResults.NoContent();

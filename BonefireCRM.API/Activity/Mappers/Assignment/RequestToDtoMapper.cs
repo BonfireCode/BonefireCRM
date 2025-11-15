@@ -2,15 +2,15 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
-using BonefireCRM.API.Contrat.Task;
+using BonefireCRM.API.Contrat.Activity.Assignment;
 using BonefireCRM.Domain.Constants;
-using BonefireCRM.Domain.DTOs.Activity.Task;
+using BonefireCRM.Domain.DTOs.Activity.Assignment;
 
-namespace BonefireCRM.API.Activity.Mappers.Task
+namespace BonefireCRM.API.Activity.Mappers.Assignment
 {
     internal static class RequestToDtoMapper
     {
-        internal static GetAllTasksDTO MapToDto(this GetTasksRequest request)
+        internal static GetAllAssignmentsDTO MapToDto(this GetAssignmentsRequest request)
         {
             return new()
             {
@@ -30,7 +30,7 @@ namespace BonefireCRM.API.Activity.Mappers.Task
             };
         }
 
-        internal static CreateTaskDTO MapToDto(this CreateTaskRequest request, Guid userId)
+        internal static CreateAssignmentDTO MapToDto(this CreateAssignmentRequest request, Guid userId)
         {
             return new()
             {
@@ -45,7 +45,7 @@ namespace BonefireCRM.API.Activity.Mappers.Task
             };
         }
 
-        internal static UpdateTaskDTO MapToDto(this UpdateTaskRequest request, Guid id)
+        internal static UpdateAssignmentDTO MapToDto(this UpdateAssignmentRequest request, Guid id)
         {
             return new()
             {
