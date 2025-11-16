@@ -19,7 +19,7 @@ namespace BonefireCRM.Domain.Services
 
         public async Task<Option<GetCompanyDTO>> GetCompanyAsync(Guid id, CancellationToken ct)
         {
-            var Company = await _companyRepository.GetAsync(id, ct);
+            var Company = await _companyRepository.GetByIdAsync(id, ct);
             if (Company is null)
             {
                 return Option<GetCompanyDTO>.None;

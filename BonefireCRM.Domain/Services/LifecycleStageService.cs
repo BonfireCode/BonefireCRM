@@ -34,7 +34,7 @@ namespace BonefireCRM.Domain.Services
 
         public async Task<Option<GetLifecycleStageDTO>> GetLifecycleStageAsync(Guid id, CancellationToken ct)
         {
-            var pipelineLifeCycleStage = await _lifecycleStageRepository.GetAsync(id, ct);
+            var pipelineLifeCycleStage = await _lifecycleStageRepository.GetByIdAsync(id, ct);
             if (pipelineLifeCycleStage is null)
             {
                 return Option<GetLifecycleStageDTO>.None;

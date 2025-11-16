@@ -21,7 +21,7 @@ namespace BonefireCRM.Domain.Services
 
         public async Task<Option<GetUserDTO>> GetUserAsync(Guid id, CancellationToken ct)
         {
-            var user = await _userRepository.GetAsync(id, ct);
+            var user = await _userRepository.GetByIdAsync(id, ct);
             if (user is null)
             {
                 return Option<GetUserDTO>.None;

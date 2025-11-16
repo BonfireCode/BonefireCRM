@@ -1,8 +1,9 @@
-﻿using BonefireCRM.Domain.DTOs.Activity.Call;
+﻿using BonefireCRM.Domain.DTOs.Activity.Assignment;
+using BonefireCRM.Domain.DTOs.Activity.Call;
 using BonefireCRM.Domain.DTOs.Activity.Meeting;
-using BonefireCRM.Domain.DTOs.Activity.Assignment;
 using BonefireCRM.Domain.DTOs.Company;
 using BonefireCRM.Domain.DTOs.Contact;
+using BonefireCRM.Domain.DTOs.DealParticipantRole;
 using BonefireCRM.Domain.DTOs.LifeCycleStage;
 using BonefireCRM.Domain.DTOs.User;
 using BonefireCRM.Domain.Entities;
@@ -158,6 +159,16 @@ namespace BonefireCRM.Domain.Mappers
             {
                 Id = lifecycleStage.Id,
                 Name = lifecycleStage.Name,
+            };
+        }
+
+        internal static GetDealParticipantRoleDTO MapToGetDto(this DealParticipantRole dealParticipantRole)
+        {
+            return new()
+            {
+                Id = dealParticipantRole.Id,
+                Name = dealParticipantRole.Name,
+                Description = dealParticipantRole.Description,
             };
         }
 

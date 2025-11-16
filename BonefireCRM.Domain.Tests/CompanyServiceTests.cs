@@ -32,14 +32,14 @@ namespace BonefireCRM.Domain.Tests
             //Arrange
             var id = _fixture.Create<Guid>();
 
-            _companyRepository.GetAsync(Arg.Any<Guid>(), CancellationToken.None)
+            _companyRepository.GetByIdAsync(Arg.Any<Guid>(), CancellationToken.None)
                 .ReturnsNullForAnyArgs();
 
             //Act
             var result = await _companyService.GetCompanyAsync(id, CancellationToken.None);
 
             //Assert
-            await _companyRepository.Received(1).GetAsync(Arg.Any<Guid>(), CancellationToken.None);
+            await _companyRepository.Received(1).GetByIdAsync(Arg.Any<Guid>(), CancellationToken.None);
 
             result.IsNone.Should().BeTrue();
         }
@@ -53,7 +53,7 @@ namespace BonefireCRM.Domain.Tests
                 .With(c => c.Id, id)
                 .Create();
 
-            _companyRepository.GetAsync(id, CancellationToken.None).Returns(company);
+            _companyRepository.GetByIdAsync(id, CancellationToken.None).Returns(company);
 
             var expected = _fixture.Build<GetCompanyDTO>()
                 .With(dto => dto.Id, id)
@@ -64,7 +64,7 @@ namespace BonefireCRM.Domain.Tests
             var result = await _companyService.GetCompanyAsync(id, CancellationToken.None);
 
             //Assert
-            await _companyRepository.Received(1).GetAsync(id, CancellationToken.None);
+            await _companyRepository.Received(1).GetByIdAsync(id, CancellationToken.None);
 
             result.IsSome.Should().BeTrue();
             result.IfSome(dto =>
