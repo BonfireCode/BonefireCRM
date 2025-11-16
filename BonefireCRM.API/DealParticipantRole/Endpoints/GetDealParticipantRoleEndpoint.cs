@@ -34,7 +34,7 @@ namespace BonefireCRM.API.DealParticipantRole.Endpoints
 
                 s.Params["id"] = "The unique identifier (GUID) of the deal participant roles to retrieve.";
 
-                s.AddGetResponses<GetLifecycleStageResponse>("Deal Participant Rolee");
+                s.AddGetResponses<GetLifecycleStageResponse>("Deal Participant Role");
             });
         }
 
