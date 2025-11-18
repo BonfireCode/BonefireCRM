@@ -10,9 +10,6 @@
 
         public string Description { get; set; } = string.Empty;
 
-        /// <summary>
-        /// Nullable in B2B
-        /// </summary>
         public Guid RegisteredByUserId { get; set; }
 
         public IEnumerable<DealParticipant> DealParticipants { get; set; } = [];

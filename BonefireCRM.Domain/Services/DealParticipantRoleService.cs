@@ -1,5 +1,6 @@
 ﻿using BonefireCRM.Domain.DTOs.DealParticipantRole;
 using BonefireCRM.Domain.Entities;
+using BonefireCRM.Domain.Exceptions;
 using BonefireCRM.Domain.Infrastructure.Persistance;
 using BonefireCRM.Domain.Mappers;
 using BonefireCRM.SourceGenerator;
@@ -32,7 +33,7 @@ namespace BonefireCRM.Domain.Services
             return getDealParticipantRolesResultDTO;
         }
 
-        public async Task<Option<GetDealParticipantRoleDTO>> GetDealParticipantRoleAsync(Guid id, Guid registeredByUserId,  CancellationToken ct)
+        public async Task<Option<GetDealParticipantRoleDTO>> GetDealParticipantRoleAsync(Guid id, Guid registeredByUserId, CancellationToken ct)
         {
             var dealParticipantRole = await _dealParticipantRoleRepository.GetAsync(a => a.Id == id && a.RegisteredByUserId == registeredByUserId, ct);
 
@@ -42,6 +43,47 @@ namespace BonefireCRM.Domain.Services
             }
 
             return dealParticipantRole.MapToGetDto();
+        }
+
+        public async Task<Fin<CreatedDealParticipantRoleDTO>> CreateDealParticipantRoleAsync(CreateDealParticipantRoleDTO createDealParticipantRoleDTO, CancellationToken ct)
+        {
+            //Domain validations if needed
+
+            var dealParticipantRole = createDealParticipantRoleDTO.MapToDealParticipantRole();
+
+            var createdDealParticipantRole = await _dealParticipantRoleRepository.AddAsync(dealParticipantRole, ct);
+            if (createdDealParticipantRole is null)
+            {
+                return Fin<CreatedDealParticipantRoleDTO>.Fail(new AddEntityException<DealParticipantRole>());
+            }
+
+            return createdDealParticipantRole.MapToCreatedDto();
+        }
+
+        public async Task<Fin<UpdatedDealParticipantRoleDTO>> UpdateDealParticipantRoleAsync(UpdateDealParticipantRoleDTO updateDealParticipantRoleDTO, CancellationToken ct)
+        {
+            //Domain validations if needed
+
+            var dealParticipantRole = updateDealParticipantRoleDTO.MapToDealParticipantRole();
+
+            var updatedDealParticipantRole = await _dealParticipantRoleRepository.UpdateAsync(dealParticipantRole, ct);
+            if (updatedDealParticipantRole is null)
+            {
+                return Fin<UpdatedDealParticipantRoleDTO>.Fail(new UpdateEntityException<DealParticipantRole>());
+            }
+
+            return updatedDealParticipantRole.MapToUpdatedDto();
+        }
+
+        public async Task<bool> DeleteDealParticipantRoleAsync(Guid id, CancellationToken ct)
+        {
+            //Domain validations if needed
+
+            var dealParticipantRoleDTO = new DealParticipantRole { Id = id };
+
+            var isDeleted = await _dealParticipantRoleRepository.DeleteAsync(dealParticipantRoleDTO, ct);
+
+            return isDeleted;
         }
     }
 }

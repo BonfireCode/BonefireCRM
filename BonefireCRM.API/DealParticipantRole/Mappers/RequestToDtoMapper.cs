@@ -24,5 +24,26 @@ namespace BonefireCRM.API.DealParticipantRole.Mappers
                 PageSize = request.PageSize ?? DefaultValues.PAGESIZE,
             };
         }
+
+        internal static CreateDealParticipantRoleDTO MapToDto(this CreateDealParticipantRoleRequest request, Guid userId)
+        {
+            return new()
+            {
+                Name = request.Name,
+                Description = request.Description,
+                RegisteredByUserId = userId,
+            };
+        }
+
+        internal static UpdateDealParticipantRoleDTO MapToDto(this UpdateDealParticipantRoleRequest request, Guid id, Guid userId)
+        {
+            return new()
+            {
+                Id = id,
+                Name = request.Name,
+                Description = request.Description,
+                RegisteredByUserId = userId,
+            };
+        }
     }
 }
