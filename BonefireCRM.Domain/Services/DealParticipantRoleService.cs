@@ -10,9 +10,9 @@ namespace BonefireCRM.Domain.Services
 {
     public class DealParticipantRoleService
     {
-        private readonly IDealParticipantRoleRepository _dealParticipantRoleRepository;
+        private readonly IBaseRepository<DealParticipantRole> _dealParticipantRoleRepository;
 
-        public DealParticipantRoleService(IDealParticipantRoleRepository dealParticipantRoleRepository)
+        public DealParticipantRoleService(IBaseRepository<DealParticipantRole> dealParticipantRoleRepository)
         {
             _dealParticipantRoleRepository = dealParticipantRoleRepository;
         }
@@ -33,9 +33,9 @@ namespace BonefireCRM.Domain.Services
             return getDealParticipantRolesResultDTO;
         }
 
-        public async Task<Option<GetDealParticipantRoleDTO>> GetDealParticipantRoleAsync(Guid id, Guid registeredByUserId, CancellationToken ct)
+        public async Task<Option<GetDealParticipantRoleDTO>> GetDealParticipantRoleAsync(Guid id, CancellationToken ct)
         {
-            var dealParticipantRole = await _dealParticipantRoleRepository.GetDealParticipantRoleAsync(id, registeredByUserId, ct);
+            var dealParticipantRole = await _dealParticipantRoleRepository.GetByIdAsync(id, ct);
 
             if (dealParticipantRole is null)
             {
@@ -75,11 +75,11 @@ namespace BonefireCRM.Domain.Services
             return updatedDealParticipantRole.MapToUpdatedDto();
         }
 
-        public async Task<bool> DeleteDealParticipantRoleAsync(Guid id,Guid userId, CancellationToken ct)
+        public async Task<bool> DeleteDealParticipantRoleAsync(Guid id, CancellationToken ct)
         {
             //Domain validations if needed
 
-            var dealParticipantRoleDTO = new DealParticipantRole { Id = id, RegisteredByUserId = userId };
+            var dealParticipantRoleDTO = new DealParticipantRole { Id = id };
 
             var isDeleted = await _dealParticipantRoleRepository.DeleteAsync(dealParticipantRoleDTO, ct);
 

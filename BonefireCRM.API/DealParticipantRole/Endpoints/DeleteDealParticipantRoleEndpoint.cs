@@ -39,10 +39,8 @@ namespace BonefireCRM.API.DealParticipantRole.Endpoints
         public override async Task<Results<NoContent, NotFound>> ExecuteAsync(CancellationToken ct)
         {
             var id = Route<Guid>("id");
-            var registerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-            var userId = await _userService.GetUserIdAsync(registerId, ct);
 
-            var isDeleted = await _dealParticipantRoleService.DeleteDealParticipantRoleAsync(id, userId, ct);
+            var isDeleted = await _dealParticipantRoleService.DeleteDealParticipantRoleAsync(id, ct);
             if (isDeleted)
             {
                 return TypedResults.NoContent();

@@ -42,10 +42,7 @@ namespace BonefireCRM.API.DealParticipantRole.Endpoints
         {
             var id = Route<Guid>("id");
 
-            var registerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-            var userId = await _userService.GetUserIdAsync(registerId, ct);
-
-            var result = await _dealParticipantRoleService.GetDealParticipantRoleAsync(id, userId, ct);
+            var result = await _dealParticipantRoleService.GetDealParticipantRoleAsync(id, ct);
 
             var response = result.Match<Results<Ok<GetDealParticipantRoleResponse>, NotFound>>(
                 dtoDealParticipantRole => TypedResults.Ok(dtoDealParticipantRole.MapToResponse()),
