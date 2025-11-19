@@ -2,6 +2,7 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
+using System.Security.Claims;
 using BonefireCRM.API.Extensions;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
@@ -12,10 +13,12 @@ namespace BonefireCRM.API.DealParticipantRole.Endpoints
     public class DeleteDealParticipantRoleEndpoint : EndpointWithoutRequest<Results<NoContent, NotFound>>
     {
         private readonly DealParticipantRoleService _dealParticipantRoleService;
+        private readonly UserService _userService;
 
-        public DeleteDealParticipantRoleEndpoint(DealParticipantRoleService dealParticipantRoleService)
+        public DeleteDealParticipantRoleEndpoint(DealParticipantRoleService dealParticipantRoleService, UserService userService)
         {
             _dealParticipantRoleService = dealParticipantRoleService;
+            _userService = userService;
         }
 
         public override void Configure()
@@ -36,8 +39,10 @@ namespace BonefireCRM.API.DealParticipantRole.Endpoints
         public override async Task<Results<NoContent, NotFound>> ExecuteAsync(CancellationToken ct)
         {
             var id = Route<Guid>("id");
+            var registerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var userId = await _userService.GetUserIdAsync(registerId, ct);
 
-            var isDeleted = await _dealParticipantRoleService.DeleteDealParticipantRoleAsync(id, ct);
+            var isDeleted = await _dealParticipantRoleService.DeleteDealParticipantRoleAsync(id, userId, ct);
             if (isDeleted)
             {
                 return TypedResults.NoContent();

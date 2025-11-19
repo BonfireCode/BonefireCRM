@@ -43,13 +43,6 @@ namespace BonefireCRM.Infrastructure.Persistance
             return await _context.FindAsync<T>(id, ct);
         }
 
-        public async Task<T?> GetAsync(Expression<Func<T, bool>> predicate, CancellationToken ct)
-        {
-            return await _context.Set<T>()
-                .Where(predicate)
-                .FirstOrDefaultAsync(ct);
-        }
-
         public async Task<T> AddAsync(T entity, CancellationToken ct)
         {
             await _context.AddAsync(entity, ct);
