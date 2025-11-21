@@ -40,14 +40,14 @@ namespace BonefireCRM.Domain.Tests
             // Arange
             var id = _fixture.Create<Guid>();
 
-            _userRepository.GetAsync(Arg.Any<Guid>(), CancellationToken.None)
+            _userRepository.GetByIdAsync(Arg.Any<Guid>(), CancellationToken.None)
                 .ReturnsNullForAnyArgs();
 
             // Act
             var result = await _userService.GetUserAsync(id, CancellationToken.None);
 
             // Assert
-            await _userRepository.Received(1).GetAsync(Arg.Any<Guid>(), CancellationToken.None);
+            await _userRepository.Received(1).GetByIdAsync(Arg.Any<Guid>(), CancellationToken.None);
 
             result.IsNone.Should().BeTrue();
         }
@@ -61,7 +61,7 @@ namespace BonefireCRM.Domain.Tests
                 .Without(u => u.Activities)
                 .With(u => u.Id, id)
                 .Create();
-            _userRepository.GetAsync(id, CancellationToken.None)
+            _userRepository.GetByIdAsync(id, CancellationToken.None)
                 .Returns(user);
 
             var expectedUser = _fixture.Build<GetUserDTO>()
@@ -74,7 +74,7 @@ namespace BonefireCRM.Domain.Tests
             var result = await _userService.GetUserAsync(id, CancellationToken.None);
 
             // Assert
-            await _userRepository.Received(1).GetAsync(id, CancellationToken.None);
+            await _userRepository.Received(1).GetByIdAsync(id, CancellationToken.None);
 
             result.IsSome.Should().BeTrue();
             result.IfSome(userDto =>

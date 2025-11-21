@@ -28,7 +28,7 @@ namespace BonefireCRM.Domain.Services
 
         public async Task<Option<GetCallDTO>> GetCallAsync(Guid id, CancellationToken ct)
         {
-            var call = await _callRepository.GetAsync(id, ct);
+            var call = await _callRepository.GetByIdAsync(id, ct);
             if (call is null)
             {
                 return Option<GetCallDTO>.None;
@@ -96,7 +96,7 @@ namespace BonefireCRM.Domain.Services
 
         public async Task<Option<GetMeetingDTO>> GetMeetingAsync(Guid id, CancellationToken ct)
         {
-            var meeting = await _meetingRepository.GetAsync(id, ct);
+            var meeting = await _meetingRepository.GetByIdAsync(id, ct);
             if (meeting is null)
             {
                 return Option<GetMeetingDTO>.None;
@@ -164,7 +164,7 @@ namespace BonefireCRM.Domain.Services
 
         public async Task<Option<GetAssignmentDTO>> GetAssignmentAsync(Guid id, CancellationToken ct)
         {
-            var assignment = await _assignmentRepository.GetAsync(id, ct);
+            var assignment = await _assignmentRepository.GetByIdAsync(id, ct);
             if (assignment is null)
             {
                 return Option<GetAssignmentDTO>.None;

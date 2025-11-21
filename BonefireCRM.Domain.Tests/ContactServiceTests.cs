@@ -33,14 +33,14 @@ namespace BonefireCRM.Domain.Tests
             // Arange
             var id = _fixture.Create<Guid>();
 
-            _contactRepository.GetAsync(Arg.Any<Guid>(), CancellationToken.None)
+            _contactRepository.GetByIdAsync(Arg.Any<Guid>(), CancellationToken.None)
                 .ReturnsNullForAnyArgs();
 
             // Act
             var result = await _contactService.GetContactAsync(id, CancellationToken.None);
 
             // Assert
-            await _contactRepository.Received(1).GetAsync(Arg.Any<Guid>(), CancellationToken.None);
+            await _contactRepository.Received(1).GetByIdAsync(Arg.Any<Guid>(), CancellationToken.None);
 
             result.IsNone.Should().BeTrue();
         }
@@ -53,7 +53,7 @@ namespace BonefireCRM.Domain.Tests
             var contact = _fixture.Build<Contact>()
                 .With(c => c.Id, id)
                 .Create();
-            _contactRepository.GetAsync(id, CancellationToken.None)
+            _contactRepository.GetByIdAsync(id, CancellationToken.None)
                 .Returns(contact);
 
             var expectedContact = _fixture.Build<GetContactDTO>()
@@ -66,7 +66,7 @@ namespace BonefireCRM.Domain.Tests
             var result = await _contactService.GetContactAsync(id, CancellationToken.None);
 
             // Assert
-            await _contactRepository.Received(1).GetAsync(id, CancellationToken.None);
+            await _contactRepository.Received(1).GetByIdAsync(id, CancellationToken.None);
 
             result.IsSome.Should().BeTrue();
             result.IfSome(contactDto =>

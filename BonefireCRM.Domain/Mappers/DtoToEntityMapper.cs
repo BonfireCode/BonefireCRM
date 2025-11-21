@@ -1,8 +1,9 @@
-﻿using BonefireCRM.Domain.DTOs.Activity.Call;
+﻿using BonefireCRM.Domain.DTOs.Activity.Assignment;
+using BonefireCRM.Domain.DTOs.Activity.Call;
 using BonefireCRM.Domain.DTOs.Activity.Meeting;
-using BonefireCRM.Domain.DTOs.Activity.Assignment;
 using BonefireCRM.Domain.DTOs.Company;
 using BonefireCRM.Domain.DTOs.Contact;
+using BonefireCRM.Domain.DTOs.DealParticipantRole;
 using BonefireCRM.Domain.DTOs.Security;
 using BonefireCRM.Domain.DTOs.User;
 using BonefireCRM.Domain.Entities;
@@ -149,6 +150,28 @@ namespace BonefireCRM.Domain.Mappers
                 Notes = dto.Notes,
             };
         }
+
+        internal static DealParticipantRole MapToDealParticipantRole(this CreateDealParticipantRoleDTO dto)
+        {
+            return new()
+            {
+                Name = dto.Name,
+                Description = dto.Description,
+                RegisteredByUserId = dto.RegisteredByUserId,
+            };
+        }
+
+        internal static DealParticipantRole MapToDealParticipantRole(this UpdateDealParticipantRoleDTO dto)
+        {
+            return new()
+            {
+                Id = dto.Id,
+                Name = dto.Name,
+                Description = dto.Description,
+                RegisteredByUserId = dto.RegisteredByUserId,
+            };
+        }
+
 
         internal static Contact MapToContact(this GetContactDTO dto)
         {

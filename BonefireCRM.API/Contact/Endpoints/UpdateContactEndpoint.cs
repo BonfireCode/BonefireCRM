@@ -26,7 +26,7 @@ namespace BonefireCRM.API.Contact.Endpoints
 
             Summary(s =>
             {
-                s.Summary = "Updates an existing contct.";
+                s.Summary = "Updates an existing contact.";
                 s.Description = "Updates the details of an existing contact identified by its unique ID.";
                 s.Params["id"] = "The unique identifier (GUID) of the contact to update.";
                 s.AddUpdateResponses<UpdateContactResponse>("Contat");

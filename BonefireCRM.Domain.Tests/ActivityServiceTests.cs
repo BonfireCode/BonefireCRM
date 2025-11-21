@@ -38,13 +38,13 @@ namespace BonefireCRM.Domain.Tests
             // Arange
             var id = _fixture.Create<Guid>();
 
-            _callRepository.GetAsync(Arg.Any<Guid>(), CancellationToken.None)
+            _callRepository.GetByIdAsync(Arg.Any<Guid>(), CancellationToken.None)
                 .ReturnsNullForAnyArgs();
 
             //Act
             var result = await _activityService.GetCallAsync(id, CancellationToken.None);
 
-            await _callRepository.Received(1).GetAsync(Arg.Any<Guid>(), CancellationToken.None);
+            await _callRepository.Received(1).GetByIdAsync(Arg.Any<Guid>(), CancellationToken.None);
 
             result.IsNone.Should().BeTrue();
         }
@@ -58,7 +58,7 @@ namespace BonefireCRM.Domain.Tests
                 .With(c => c.Id, id)
                 .Create();
 
-            _callRepository.GetAsync(id, CancellationToken.None)
+            _callRepository.GetByIdAsync(id, CancellationToken.None)
                 .Returns(call);
 
             var expected = _fixture.Build<GetCallDTO>()
@@ -71,7 +71,7 @@ namespace BonefireCRM.Domain.Tests
             var result = await _activityService.GetCallAsync(id, CancellationToken.None);
 
             //Assert
-            await _callRepository.Received(1).GetAsync(id, CancellationToken.None);
+            await _callRepository.Received(1).GetByIdAsync(id, CancellationToken.None);
 
             result.IsSome.Should().BeTrue();
             result.IfSome(dto =>
@@ -298,14 +298,14 @@ namespace BonefireCRM.Domain.Tests
             // Arange
             var id = _fixture.Create<Guid>();
 
-            _meetingRepository.GetAsync(Arg.Any<Guid>(), CancellationToken.None)
+            _meetingRepository.GetByIdAsync(Arg.Any<Guid>(), CancellationToken.None)
                 .ReturnsNullForAnyArgs();
 
             //Act
             var result = await _activityService.GetMeetingAsync(id, CancellationToken.None);
 
             //Assert
-            await _meetingRepository.Received(1).GetAsync(Arg.Any<Guid>(), CancellationToken.None);
+            await _meetingRepository.Received(1).GetByIdAsync(Arg.Any<Guid>(), CancellationToken.None);
 
             result.IsNone.Should().BeTrue();
         }
@@ -319,7 +319,7 @@ namespace BonefireCRM.Domain.Tests
                 .With(m => m.Id, id)
                 .Create();
 
-            _meetingRepository.GetAsync(id, CancellationToken.None)
+            _meetingRepository.GetByIdAsync(id, CancellationToken.None)
                 .Returns(meeting);
 
             var expected = _fixture.Build<GetMeetingDTO>()
@@ -331,7 +331,7 @@ namespace BonefireCRM.Domain.Tests
             var result = await _activityService.GetMeetingAsync(id, CancellationToken.None);
 
             //Assert
-            await _meetingRepository.Received(1).GetAsync(id, CancellationToken.None);
+            await _meetingRepository.Received(1).GetByIdAsync(id, CancellationToken.None);
 
             result.IsSome.Should().BeTrue();
             result.IfSome(dto =>
@@ -554,14 +554,14 @@ namespace BonefireCRM.Domain.Tests
             // Arange
             var id = _fixture.Create<Guid>();
 
-            _assignmentRepository.GetAsync(Arg.Any<Guid>(), CancellationToken.None)
+            _assignmentRepository.GetByIdAsync(Arg.Any<Guid>(), CancellationToken.None)
                 .ReturnsNullForAnyArgs();
 
             //Act
             var result = await _activityService.GetAssignmentAsync(id, CancellationToken.None);
 
             //Assert
-            await _assignmentRepository.Received(1).GetAsync(Arg.Any<Guid>(), CancellationToken.None);
+            await _assignmentRepository.Received(1).GetByIdAsync(Arg.Any<Guid>(), CancellationToken.None);
 
             result.IsNone.Should().BeTrue();
         }
@@ -575,7 +575,7 @@ namespace BonefireCRM.Domain.Tests
                 .With(t => t.Id, id)
                 .Create();
 
-            _assignmentRepository.GetAsync(id, CancellationToken.None)
+            _assignmentRepository.GetByIdAsync(id, CancellationToken.None)
                 .Returns(assignment);
 
             var expected = _fixture.Build<GetAssignmentDTO>()
@@ -587,7 +587,7 @@ namespace BonefireCRM.Domain.Tests
             var result = await _activityService.GetAssignmentAsync(id, CancellationToken.None);
 
             //Assert
-            await _assignmentRepository.Received(1).GetAsync(id, CancellationToken.None);
+            await _assignmentRepository.Received(1).GetByIdAsync(id, CancellationToken.None);
 
             result.IsSome.Should().BeTrue();
             result.IfSome(dto =>

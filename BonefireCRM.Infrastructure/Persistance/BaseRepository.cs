@@ -1,5 +1,6 @@
 ﻿using BonefireCRM.Domain.Infrastructure.Persistance;
 using LanguageExt;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace BonefireCRM.Infrastructure.Persistance
@@ -37,7 +38,7 @@ namespace BonefireCRM.Infrastructure.Persistance
             return query.AsEnumerable();
         }
 
-        public async Task<T?> GetAsync(Guid id, CancellationToken ct)
+        public async Task<T?> GetByIdAsync(Guid id, CancellationToken ct)
         {
             return await _context.FindAsync<T>(id, ct);
         }

@@ -35,7 +35,7 @@ namespace BonefireCRM.Domain.Services
 
         public async Task<Option<GetContactDTO>> GetContactAsync(Guid id, CancellationToken ct)
         {
-            var contact = await _contactRepository.GetAsync(id, ct);
+            var contact = await _contactRepository.GetByIdAsync(id, ct);
             if (contact is null)
             {
                 return Option<GetContactDTO>.None;
