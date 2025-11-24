@@ -5,6 +5,8 @@ using BonefireCRM.Domain.DTOs.Company;
 using BonefireCRM.Domain.DTOs.Contact;
 using BonefireCRM.Domain.DTOs.DealParticipantRole;
 using BonefireCRM.Domain.DTOs.LifeCycleStage;
+using BonefireCRM.Domain.DTOs.Pipeline;
+using BonefireCRM.Domain.DTOs.PipelineStage;
 using BonefireCRM.Domain.DTOs.User;
 using BonefireCRM.Domain.Entities;
 
@@ -238,6 +240,16 @@ namespace BonefireCRM.Domain.Mappers
                 LifecycleStageId = contact.LifecycleStageId,
                 CompanyId = contact.CompanyId ?? Guid.Empty,
                 UserId = contact.UserId,
+            };
+        }
+
+        internal static GetPipelineDTO MapToGetDto(this Pipeline pipeline)
+        {
+            return new GetPipelineDTO
+            {
+                Id = pipeline.Id,
+                Name = pipeline.Name,
+                IsDefault = pipeline.IsDefault,
             };
         }
 
