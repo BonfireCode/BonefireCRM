@@ -21,12 +21,12 @@ namespace BonefireCRM.API.Pipeline.Endpoints
 
         public override void Configure()
         {
-            Get("/pipelines/{pipelineId:guid}/pipelinestages");
+            Get("/pipelines/{id:guid}/pipelinestages");
             Summary(s =>
             {
                 s.Summary = "Retrieves all specific pipeline stages";
                 s.Description = "Fetches detailed information about pipeline stages";
-                s.Params["pipelineId"] = "The unique identifier (GUID) of the pipeline whose stages are being retrieved.";
+                s.Params["id"] = "The unique identifier (GUID) of the pipeline whose stages are being retrieved.";
 
                 s.AddGetAllResponses<IEnumerable<GetPipelineStageResponse>>("Pipeline Stages");
             });
@@ -34,8 +34,8 @@ namespace BonefireCRM.API.Pipeline.Endpoints
 
         public override async Task<IEnumerable<GetPipelineStageResponse>> ExecuteAsync(GetPipelineStagesRequest request, CancellationToken ct)
         {
-            var pipelineId = Route<Guid>("pipelineId");
-            var dtoPipelineStages = request.MapToDto(pipelineId);
+            var id = Route<Guid>("id");
+            var dtoPipelineStages = request.MapToDto(id);
 
             var result = _pipelineStageService.GetAllPipelineStages(dtoPipelineStages, ct);
 

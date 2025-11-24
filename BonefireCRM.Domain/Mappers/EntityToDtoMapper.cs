@@ -253,6 +253,18 @@ namespace BonefireCRM.Domain.Mappers
             };
         }
 
+        internal static GetPipelineStageDTO MapToGetDto(this PipelineStage pipelineStage)
+        {
+            return new GetPipelineStageDTO
+            {
+                Id = pipelineStage.Id,
+                PipelineId = pipelineStage.PipelineId,
+                Name = pipelineStage.Name,
+                OrderIndex = pipelineStage.OrderIndex,
+                Status = pipelineStage.Status,
+            };
+        }
+
         internal static GetCompanyDTO MapToGetDto(this Company Company)
         {
             return new GetCompanyDTO
