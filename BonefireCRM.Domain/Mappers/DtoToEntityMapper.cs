@@ -5,6 +5,7 @@ using BonefireCRM.Domain.DTOs.Company;
 using BonefireCRM.Domain.DTOs.Contact;
 using BonefireCRM.Domain.DTOs.DealParticipantRole;
 using BonefireCRM.Domain.DTOs.Pipeline;
+using BonefireCRM.Domain.DTOs.PipelineStage;
 using BonefireCRM.Domain.DTOs.Security;
 using BonefireCRM.Domain.DTOs.User;
 using BonefireCRM.Domain.Entities;
