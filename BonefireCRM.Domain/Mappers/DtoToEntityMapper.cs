@@ -3,9 +3,8 @@ using BonefireCRM.Domain.DTOs.Activity.Call;
 using BonefireCRM.Domain.DTOs.Activity.Meeting;
 using BonefireCRM.Domain.DTOs.Company;
 using BonefireCRM.Domain.DTOs.Contact;
+using BonefireCRM.Domain.DTOs.Deal;
 using BonefireCRM.Domain.DTOs.DealParticipantRole;
-using BonefireCRM.Domain.DTOs.Pipeline;
-using BonefireCRM.Domain.DTOs.PipelineStage;
 using BonefireCRM.Domain.DTOs.Security;
 using BonefireCRM.Domain.DTOs.User;
 using BonefireCRM.Domain.Entities;
@@ -14,22 +13,6 @@ namespace BonefireCRM.Domain.Mappers
 {
     internal static class DtoToEntityMapper
     {
-        internal static Assignment MapToAssignment(this GetAssignmentDTO dto)
-        {
-            return new()
-            {
-                Id = dto.Id,
-                CompanyId = dto.CompanyId,
-                DealId = dto.DealId,
-                UserId = dto.UserId,
-                ContactId = dto.ContactId,
-                Subject = dto.Subject,
-                Description = dto.Description,
-                DueDate = dto.DueDate,
-                IsCompleted = dto.IsCompleted,
-            };
-        }
-
         internal static Assignment MapToAssignment(this CreateAssignmentDTO dto)
         {
             return new()
@@ -61,22 +44,6 @@ namespace BonefireCRM.Domain.Mappers
             };
         }
 
-        internal static Meeting MapToMeeting(this GetMeetingDTO dto)
-        {
-            return new()
-            {
-                Id = dto.Id,
-                CompanyId = dto.CompanyId,
-                DealId = dto.DealId,
-                UserId = dto.UserId,
-                ContactId = dto.ContactId,
-                EndTime = dto.EndTime,
-                StartTime = dto.StartTime,
-                Subject = dto.Subject,
-                Notes = dto.Notes,
-            };
-        }
-
         internal static Meeting MapToMeeting(this CreateMeetingDTO dto)
         {
             return new()
@@ -105,22 +72,6 @@ namespace BonefireCRM.Domain.Mappers
                 StartTime = dto.StartTime,
                 Subject = dto.Subject,
                 Notes = dto.Notes,
-            };
-        }
-
-        internal static Call MapToCall(this GetCallDTO dto)
-        {
-            return new()
-            {
-                Id = dto.Id,
-                CompanyId = dto.CompanyId,
-                DealId = dto.DealId,
-                UserId = dto.UserId,
-                ContactId = dto.ContactId,
-                CallTime = dto.CallTime,
-                Duration = dto.Duration,
-                Notes = dto.Notes,
-
             };
         }
 
@@ -174,20 +125,6 @@ namespace BonefireCRM.Domain.Mappers
             };
         }
 
-
-        internal static Contact MapToContact(this GetContactDTO dto)
-        {
-            return new()
-            {
-                Id = dto.Id,
-                Email = dto.Email,
-                FirstName = dto.FirstName,
-                LastName = dto.LastName,
-                PhoneNumber = dto.PhoneNumber,
-                JobRole = dto.JobRole
-            };
-        }
-
         internal static Contact MapToContact(this CreateContactDTO dto)
         {
             return new()
@@ -218,13 +155,32 @@ namespace BonefireCRM.Domain.Mappers
             };
         }
 
-        internal static Pipeline MapToPipeline(this GetPipelineDTO dto)
+        internal static Deal MapToDeal(this CreateDealDTO dto)
+        {
+            return new()
+            {
+                Amount = dto.Amount,
+                Title = dto.Title,
+                ExpectedCloseDate = dto.ExpectedCloseDate,
+                PipelineStageId = dto.PipelineStageId,
+                CompanyId = dto.CompanyId,
+                PrimaryContactId = dto.PrimaryContactId,
+                UserId = dto.UserId,
+            };
+        }
+
+        internal static Deal MapToDeal(this UpdateDealDTO dto)
         {
             return new()
             {
                 Id = dto.Id,
-                Name = dto.Name,
-                IsDefault = dto.IsDefault,
+                Amount = dto.Amount,
+                Title = dto.Title,
+                ExpectedCloseDate = dto.ExpectedCloseDate,
+                PipelineStageId = dto.PipelineStageId,
+                CompanyId = dto.CompanyId,
+                PrimaryContactId = dto.PrimaryContactId,
+                UserId = dto.UserId,
             };
         }
 
