@@ -16,8 +16,8 @@
 
         public string LastName { get; set; } = string.Empty;
 
-        public IEnumerable<Contact> Contacts { get; set; } = [];
+        public List<Contact> Contacts { get; set; } = [];
 
-        public IEnumerable<Activity> Activities { get; set; } = [];
+        public List<Activity> Activities { get; set; } = [];
     }
 }
