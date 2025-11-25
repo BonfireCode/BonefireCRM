@@ -8,16 +8,19 @@ using BonefireCRM.API.Extensions;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
+using System.Security.Claims;
 
 namespace BonefireCRM.API.Contact.Endpoints
 {
     public class UpdateContactEndpoint : Endpoint<UpdateContactRequest, Results<Ok<UpdateContactResponse>, NotFound, InternalServerError>>
     {
         private readonly ContactService _contactService;
+        private readonly UserService _userService;
 
-        public UpdateContactEndpoint(ContactService contactService)
+        public UpdateContactEndpoint(ContactService contactService, UserService userService)
         {
             _contactService = contactService;
+            _userService = userService;
         }
 
         public override void Configure()
@@ -36,8 +39,10 @@ namespace BonefireCRM.API.Contact.Endpoints
         public override async Task<Results<Ok<UpdateContactResponse>, NotFound, InternalServerError>> ExecuteAsync(UpdateContactRequest request, CancellationToken ct)
         {
             var id = Route<Guid>("id");
+            var registerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var userId = await _userService.GetUserIdAsync(registerId, ct);
 
-            var dtoContact = request.MapToDto(id);
+            var dtoContact = request.MapToDto(id, userId);
 
             var result = await _contactService.UpdateContactAsync(dtoContact, ct);
 
