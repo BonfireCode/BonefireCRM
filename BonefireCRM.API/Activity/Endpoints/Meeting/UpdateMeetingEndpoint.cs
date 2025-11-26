@@ -2,6 +2,7 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
+using System.Security.Claims;
 using BonefireCRM.API.Activity.Mappers.Meeting;
 using BonefireCRM.API.Contrat.Meeting;
 using BonefireCRM.API.Extensions;
@@ -14,10 +15,12 @@ namespace BonefireCRM.API.Activity.Endpoints.Meeting
     public class UpdateMeetingEndpoint : Endpoint<UpdateMeetingRequest, Results<Ok<UpdateMeetingResponse>, NotFound, InternalServerError>>
     {
         private readonly ActivityService _activityService;
+        private readonly UserService _userService;
 
-        public UpdateMeetingEndpoint(ActivityService activityService)
+        public UpdateMeetingEndpoint(ActivityService activityService, UserService userService)
         {
             _activityService = activityService;
+            _userService = userService;
         }
 
         public override void Configure()
@@ -36,8 +39,10 @@ namespace BonefireCRM.API.Activity.Endpoints.Meeting
         public override async Task<Results<Ok<UpdateMeetingResponse>, NotFound, InternalServerError>> ExecuteAsync(UpdateMeetingRequest request, CancellationToken ct)
         {
             var id = Route<Guid>("id");
+            var registerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var userId = await _userService.GetUserIdAsync(registerId, ct);
 
-            var dtoMeeting = request.MapToDto(id);
+            var dtoMeeting = request.MapToDto(id, userId);
 
             var result = await _activityService.UpdateMeetingAsync(dtoMeeting, ct);
 

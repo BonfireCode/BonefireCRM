@@ -5,7 +5,6 @@ using BonefireCRM.Domain.DTOs.Company;
 using BonefireCRM.Domain.DTOs.Contact;
 using BonefireCRM.Domain.DTOs.DealParticipantRole;
 using BonefireCRM.Domain.DTOs.Pipeline;
-using BonefireCRM.Domain.DTOs.PipelineStage;
 using BonefireCRM.Domain.DTOs.Security;
 using BonefireCRM.Domain.DTOs.User;
 using BonefireCRM.Domain.Entities;
@@ -214,6 +213,7 @@ namespace BonefireCRM.Domain.Mappers
                 PhoneNumber = dto.PhoneNumber,
                 JobRole = dto.JobRole,
                 LifecycleStageId = dto.LifecycleStageId,
+                UserId = dto.UserId,
                 CompanyId = dto.CompanyId == Guid.Empty ? null : dto.CompanyId,
             };
         }

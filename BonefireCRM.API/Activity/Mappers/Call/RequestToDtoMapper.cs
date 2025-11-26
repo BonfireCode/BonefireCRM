@@ -5,6 +5,7 @@
 using BonefireCRM.API.Contrat.Call;
 using BonefireCRM.Domain.Constants;
 using BonefireCRM.Domain.DTOs.Activity.Call;
+using BonefireCRM.Domain.Entities;
 
 namespace BonefireCRM.API.Activity.Mappers.Call
 {
@@ -45,11 +46,12 @@ namespace BonefireCRM.API.Activity.Mappers.Call
             };
         }
 
-        internal static UpdateCallDTO MapToDto(this UpdateCallRequest request, Guid id)
+        internal static UpdateCallDTO MapToDto(this UpdateCallRequest request, Guid id, Guid userId)
         {
             return new()
             {
                 Id = id,
+                UserId = userId,
                 DealId = request.DealId,
                 ContactId = request.ContactId,
                 CompanyId = request.CompanyId,
