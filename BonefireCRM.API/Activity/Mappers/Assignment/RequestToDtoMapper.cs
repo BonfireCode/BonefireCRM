@@ -45,11 +45,12 @@ namespace BonefireCRM.API.Activity.Mappers.Assignment
             };
         }
 
-        internal static UpdateAssignmentDTO MapToDto(this UpdateAssignmentRequest request, Guid id)
+        internal static UpdateAssignmentDTO MapToDto(this UpdateAssignmentRequest request, Guid id, Guid userId)
         {
             return new()
             {
                 Id = id,
+                UserId = userId,
                 CompanyId = request.CompanyId,
                 ContactId = request.ContactId,
                 DealId = request.DealId,
