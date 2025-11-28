@@ -48,9 +48,7 @@ namespace BonefireCRM.Domain.Services
         {
             //Domain validations if needed
 
-            var contact = new Contact { Id = id };
-
-            var isDeleted = await _contactRepository.DeleteAsync(contact, ct);
+            var isDeleted = await _contactRepository.DeleteAsync(id, ct);
 
             return isDeleted;
         }

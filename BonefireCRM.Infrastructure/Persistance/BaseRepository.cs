@@ -1,11 +1,12 @@
-﻿using BonefireCRM.Domain.Infrastructure.Persistance;
+﻿using BonefireCRM.Domain.Entities;
+using BonefireCRM.Domain.Infrastructure.Persistance;
 using LanguageExt;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace BonefireCRM.Infrastructure.Persistance
 {
-    internal class BaseRepository<T> : IBaseRepository<T> where T : class
+    internal class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
         private readonly CRMContext _context;
 
@@ -59,10 +60,15 @@ namespace BonefireCRM.Infrastructure.Persistance
             return entity;
         }
 
-        public async Task<bool> DeleteAsync(T entity, CancellationToken ct)
+        public async Task<bool> DeleteAsync(Guid id, CancellationToken ct)
         {
-            _context.Attach(entity);
-            _context.Remove(entity);
+            var entityFound = _context.Set<T>().SingleOrDefault(x => x.Id == id);
+            if (entityFound is null)
+            {
+                return false;
+            }
+
+            _context.Remove(entityFound);
             await _context.SaveChangesAsync(ct);
 
             return true;

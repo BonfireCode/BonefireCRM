@@ -79,9 +79,7 @@ namespace BonefireCRM.Domain.Services
         {
             //Domain validations if needed
 
-            var dealParticipantRoleDTO = new DealParticipantRole { Id = id };
-
-            var isDeleted = await _dealParticipantRoleRepository.DeleteAsync(dealParticipantRoleDTO, ct);
+            var isDeleted = await _dealParticipantRoleRepository.DeleteAsync(id, ct);
 
             return isDeleted;
         }
