@@ -45,7 +45,7 @@ namespace BonefireCRM.API.Contact.Mappers
             };
         }
 
-        internal static UpdateContactDTO MapToDto(this UpdateContactRequest request, Guid id)
+        internal static UpdateContactDTO MapToDto(this UpdateContactRequest request, Guid id, Guid userId)
         {
             return new()
             {
@@ -57,6 +57,7 @@ namespace BonefireCRM.API.Contact.Mappers
                 PhoneNumber = request.PhoneNumber,
                 LifecycleStageId = request.LifecycleStageId,
                 CompanyId = request.CompanyId,
+                UserId = userId,
             };
         }
     }

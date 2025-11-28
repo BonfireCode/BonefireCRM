@@ -45,7 +45,7 @@ namespace BonefireCRM.API.Activity.Mappers.Assignment
             };
         }
 
-        internal static UpdateAssignmentDTO MapToDto(this UpdateAssignmentRequest request, Guid id)
+        internal static UpdateAssignmentDTO MapToDto(this UpdateAssignmentRequest request, Guid id, Guid userId)
         {
             return new()
             {
@@ -57,6 +57,7 @@ namespace BonefireCRM.API.Activity.Mappers.Assignment
                 Description = request.Description,
                 DueDate = request.DueDate,
                 IsCompleted = request.IsCompleted,
+                UserId = userId,
             };
         }
     }

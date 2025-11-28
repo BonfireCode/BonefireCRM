@@ -45,7 +45,7 @@ namespace BonefireCRM.API.Activity.Mappers.Call
             };
         }
 
-        internal static UpdateCallDTO MapToDto(this UpdateCallRequest request, Guid id)
+        internal static UpdateCallDTO MapToDto(this UpdateCallRequest request, Guid id, Guid userId)
         {
             return new()
             {
@@ -56,6 +56,7 @@ namespace BonefireCRM.API.Activity.Mappers.Call
                 CallTime = request.CallTime,
                 Duration = request.Duration,
                 Notes = request.Notes,
+                UserId = userId,
             };
         }
     }

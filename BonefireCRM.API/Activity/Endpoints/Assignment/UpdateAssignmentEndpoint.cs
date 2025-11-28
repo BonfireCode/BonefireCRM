@@ -2,6 +2,7 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
+using System.Security.Claims;
 using BonefireCRM.API.Activity.Mappers.Assignment;
 using BonefireCRM.API.Activity.Mappers.Task;
 using BonefireCRM.API.Contrat.Activity.Assignment;
@@ -12,13 +13,15 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BonefireCRM.API.Activity.Endpoints.Assignment
 {
-    public class UpdateAssignmentEndpoint : Endpoint<UpdateAssignmentRequest, Results<Ok<UpdateAssignmentResponse>, NotFound, InternalServerError>>
+    public class UpdateAssignmentEndpoint : Endpoint<UpdateAssignmentRequest, Results<Ok<UpdateAssignmentResponse>, NotFound>>
     {
         private readonly ActivityService _activityService;
+        private readonly UserService _userService;
 
-        public UpdateAssignmentEndpoint(ActivityService activityService)
+        public UpdateAssignmentEndpoint(ActivityService activityService, UserService userService)
         {
             _activityService = activityService;
+            _userService = userService;
         }
 
         public override void Configure()
@@ -34,17 +37,20 @@ namespace BonefireCRM.API.Activity.Endpoints.Assignment
             });
         }
 
-        public override async Task<Results<Ok<UpdateAssignmentResponse>, NotFound, InternalServerError>> ExecuteAsync(UpdateAssignmentRequest request, CancellationToken ct)
+        public override async Task<Results<Ok<UpdateAssignmentResponse>, NotFound>> ExecuteAsync(UpdateAssignmentRequest request, CancellationToken ct)
         {
             var id = Route<Guid>("id");
 
-            var dtoAssignment = request.MapToDto(id);
+            var registerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var userId = await _userService.GetUserIdAsync(registerId, ct);
+
+            var dtoAssignment = request.MapToDto(id, userId);
 
             var result = await _activityService.UpdateAssignmentAsync(dtoAssignment, ct);
 
-            var response = result.Match<Results<Ok<UpdateAssignmentResponse>, NotFound, InternalServerError>>(
+            var response = result.Match<Results<Ok<UpdateAssignmentResponse>, NotFound>>(
                 updatedAssignment => TypedResults.Ok(updatedAssignment.MapToResponse()),
-                _ => TypedResults.InternalServerError());
+                _ => TypedResults.NotFound());
 
             return response;
         }

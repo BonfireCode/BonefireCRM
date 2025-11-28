@@ -47,7 +47,7 @@ namespace BonefireCRM.API.Activity.Mappers.Meeting
             };
         }
 
-        internal static UpdateMeetingDTO MapToDto(this UpdateMeetingRequest request, Guid id)
+        internal static UpdateMeetingDTO MapToDto(this UpdateMeetingRequest request, Guid id, Guid userId)
         {
             return new()
             {
@@ -59,6 +59,7 @@ namespace BonefireCRM.API.Activity.Mappers.Meeting
                 CompanyId = request.CompanyId,
                 ContactId = request.ContactId,
                 DealId = request.DealId,
+                UserId = userId,
             };
         }
     }

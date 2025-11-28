@@ -215,6 +215,7 @@ namespace BonefireCRM.Domain.Mappers
                 JobRole = dto.JobRole,
                 LifecycleStageId = dto.LifecycleStageId,
                 CompanyId = dto.CompanyId == Guid.Empty ? null : dto.CompanyId,
+                UserId = dto.UserId,
             };
         }
 

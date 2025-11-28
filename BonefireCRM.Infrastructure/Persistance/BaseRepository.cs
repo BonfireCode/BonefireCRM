@@ -2,6 +2,7 @@
 using BonefireCRM.Domain.Infrastructure.Persistance;
 using LanguageExt;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using System.Linq.Expressions;
 
 namespace BonefireCRM.Infrastructure.Persistance
@@ -54,7 +55,13 @@ namespace BonefireCRM.Infrastructure.Persistance
 
         public async Task<T> UpdateAsync(T entity, CancellationToken ct)
         {
-            _context.Update(entity);
+            var entityFound = _context.Set<T>().SingleOrDefault(x => x.Id == entity.Id);
+            if (entityFound is null)
+            {
+                return null;
+            }
+
+            _context.Entry(entityFound).CurrentValues.SetValues(entity);
             await _context.SaveChangesAsync(ct);
 
             return entity;
