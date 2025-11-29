@@ -57,5 +57,26 @@ namespace BonefireCRM.API.Deal.Mappers
                 PrimaryContactId = request.PrimaryContactId,
             };
         }
+
+        internal static GetAllDealParticipantsDTO MapToDto(this GetDealParticipantsRequest request, Guid dealId)
+        {
+            return new()
+            {
+                DealId = dealId,
+                SortDirection = DefaultValues.SORTDIRECTION,
+                PageNumber = request.PageNumber ?? DefaultValues.PAGENUMBER,
+                PageSize = request.PageSize ?? DefaultValues.PAGESIZE,
+            };
+        }
+
+        internal static AssignDealParticipantDTO MapToDto(this AssignDealParticipantRequest request, Guid dealId)
+        {
+            return new()
+            {
+                DealId = dealId,
+                ContactId = request.ContactId,
+                DealParticipantRoleId = request.DealParticipantRoleId,
+            };
+        }
     }
 }

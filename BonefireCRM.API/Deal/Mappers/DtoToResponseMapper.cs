@@ -24,6 +24,26 @@ namespace BonefireCRM.API.Deal.Mappers
             };
         }
 
+        internal static GetDealParticipantResponse MapToResponse(this GetDealParticipantDTO dto)
+        {
+            return new()
+            {
+                DealId = dto.DealId,
+                DealParticipantRoleId = dto.DealParticipantRoleId,
+                ContactId = dto.ContactId,
+            };
+        }
+
+        internal static AssignDealParticipantResponse MapToResponse(this AssignedDealParticipantDTO dto)
+        {
+            return new()
+            {
+                DealId = dto.DealId,
+                ContactId = dto.ContactId,
+                DealParticipantRoleId = dto.DealParticipantRoleId,
+            };
+        }
+
         internal static CreateDealResponse MapToResponse(this CreatedDealDTO dto)
         {
             return new()

@@ -104,6 +104,16 @@ namespace BonefireCRM.Domain.Mappers
             };
         }
 
+        internal static DealParticipant MapToDealParticipant(this AssignDealParticipantDTO dto)
+        {
+            return new()
+            {
+                ContactId = dto.ContactId,
+                DealId = dto.DealId,
+                DealParticipantRoleId = dto.DealParticipantRoleId,
+            };
+        }
+
         internal static DealParticipantRole MapToDealParticipantRole(this CreateDealParticipantRoleDTO dto)
         {
             return new()

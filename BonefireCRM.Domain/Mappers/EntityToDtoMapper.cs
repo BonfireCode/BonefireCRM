@@ -299,6 +299,26 @@ namespace BonefireCRM.Domain.Mappers
             };
         }
 
+        internal static AssignedDealParticipantDTO MapToAssignedDto(this DealParticipant deal)
+        {
+            return new()
+            {
+                DealId = deal.DealId,
+                ContactId = deal.ContactId,
+                DealParticipantRoleId = deal.DealParticipantRoleId,
+            };
+        }
+
+        internal static GetDealParticipantDTO MapToGetDto(this DealParticipant deal)
+        {
+            return new()
+            {
+                DealId = deal.DealId,
+                ContactId = deal.ContactId,
+                DealParticipantRoleId = deal.DealParticipantRoleId,
+            };
+        }
+
         internal static GetPipelineStageDTO MapToGetDto(this PipelineStage pipelineStage)
         {
             return new GetPipelineStageDTO

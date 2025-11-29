@@ -37,6 +37,7 @@ namespace Microsoft.Extensions.DependencyInjection
             });
             builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IDealParticipantRepository, DealParticipantRepository>();
 
             builder.Services.AddDbContext<AppDbContext>(options =>
             {
