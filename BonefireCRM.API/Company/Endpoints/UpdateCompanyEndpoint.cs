@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BonefireCRM.API.Company.Endpoints
 {
-    public class UpdateCompanyEndpoint : Endpoint<UpdateCompanyRequest, Results<Created<UpdateCompanyResponse>, NotFound>>
+    public class UpdateCompanyEndpoint : Endpoint<UpdateCompanyRequest, Results<Ok<UpdateCompanyResponse>, NotFound>>
     {
         private readonly CompanyService _companyService;
         private readonly UserService _userService;
@@ -37,7 +37,7 @@ namespace BonefireCRM.API.Company.Endpoints
             });
         }
 
-        public override async Task<Results<Created<UpdateCompanyResponse>, NotFound>> ExecuteAsync(UpdateCompanyRequest request, CancellationToken ct)
+        public override async Task<Results<Ok<UpdateCompanyResponse>, NotFound>> ExecuteAsync(UpdateCompanyRequest request, CancellationToken ct)
         {
             var id = Route<Guid>("id");
 
@@ -48,8 +48,8 @@ namespace BonefireCRM.API.Company.Endpoints
 
             var result = await _companyService.UpdateCompanyAsync(dtoCompany, ct);
 
-            var response = result.Match<Results<Created<UpdateCompanyResponse>, NotFound>>(
-                updatedCompany => TypedResults.Created($"/companies/{updatedCompany.Id}", updatedCompany.MapToResponse()),
+            var response = result.Match<Results<Ok<UpdateCompanyResponse>, NotFound>>(
+                updatedCompany => TypedResults.Ok(updatedCompany.MapToResponse()),
                 _ => TypedResults.NotFound());
 
             return response;

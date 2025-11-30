@@ -12,10 +12,6 @@ namespace BonefireCRM.API.Activity.Validators.Call
     {
         public UpdateCallValidator()
         {
-            RuleFor(x => x.Id)
-                .NotEmpty()
-                .WithMessage("this field is required!");
-
             RuleFor(x => x.ContactId)
                 .NotEmpty()
                 .WithMessage("this field is required!");

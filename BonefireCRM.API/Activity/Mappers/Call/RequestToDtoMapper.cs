@@ -15,11 +15,9 @@ namespace BonefireCRM.API.Activity.Mappers.Call
             return new()
             {
                 Id = request.Id,
-                CallTime = request.CallDateTime,
-                Duration = request.DurationMinutes.HasValue 
-                    ? TimeSpan.FromMinutes(request.DurationMinutes.Value) 
-                    : TimeSpan.Zero,
-                Notes = request.Description,
+                CallTime = request.CallTime,
+                Duration = request.Duration,
+                Notes = request.Notes,
                 UserId = request.UserId,
                 ContactId = request.ContactId,
                 CompanyId = request.CompanyId,

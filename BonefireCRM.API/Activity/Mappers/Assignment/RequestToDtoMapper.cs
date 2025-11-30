@@ -15,10 +15,10 @@ namespace BonefireCRM.API.Activity.Mappers.Assignment
             return new()
             {
                 Id = request.Id,
-                Subject = request.Title,
+                Subject = request.Subject,
                 Description = request.Description,
                 DueDate = request.DueDate,
-                IsCompleted = request.Status?.ToLower() == "completed",
+                IsCompleted = request.IsCompleted,
                 UserId = request.UserId,
                 ContactId = request.ContactId,
                 CompanyId = request.CompanyId,

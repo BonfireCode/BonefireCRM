@@ -1,8 +1,4 @@
-﻿// <copyright file="TestDataSeeder.cs" company="linkprada">
-// Copyright (c) linkprada. All rights reserved.
-// </copyright>
-
-using Bogus;
+﻿using Bogus;
 using BonefireCRM.Domain.Entities;
 using BonefireCRM.Infrastructure.Persistance;
 using BonefireCRM.Infrastructure.Security;
@@ -12,16 +8,13 @@ namespace BonefireCRM.Integration.Tests.DataSeeders
 {
     internal class ContactTestsDataSeeder
     {
-        internal List<User> Users { get; private set; } = [];
         internal List<Contact> Contacts { get; private set; } = [];
         internal List<Company> Companies { get; private set; } = [];
         internal List<LifecycleStage> LifecycleStages { get; private set; } = [];
 
-        internal async Task PopulateWithTestDataAsync(CRMContext crmContext)
+        internal async Task PopulateWithTestDataAsync(CRMContext crmContext, ApplicationUser appUser)
         {
             Randomizer.Seed = new Random(TestConstants.DATASEED);
-
-            var appUser = AppUserTestsDataSeeder.AppUser;
 
             var user = PrepareFakeUser(appUser);
             await crmContext.AddAsync(user);
@@ -37,7 +30,9 @@ namespace BonefireCRM.Integration.Tests.DataSeeders
             await crmContext.AddRangeAsync(contacts);
             await crmContext.SaveChangesAsync();
 
-            CollectAllIds(user, company, lifecycleStage, contacts);
+            Companies.Add(company);
+            LifecycleStages.Add(lifecycleStage);
+            Contacts = contacts;
         }
 
         private static User PrepareFakeUser(ApplicationUser appUser)
@@ -82,14 +77,6 @@ namespace BonefireCRM.Integration.Tests.DataSeeders
             });
 
             return contactsFaker.Generate(3);
-        }
-
-        private void CollectAllIds(User user, Company company, LifecycleStage lifecycleStage, List<Contact> contacts)
-        {
-            Users.Add(user);
-            Companies.Add(company);
-            LifecycleStages.Add(lifecycleStage);
-            Contacts = contacts;
         }
     }
 }

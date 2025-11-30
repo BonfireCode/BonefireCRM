@@ -1,8 +1,6 @@
 ﻿using BonefireCRM.API;
-using BonefireCRM.Domain.Infrastructure.Persistance;
 using BonefireCRM.Infrastructure.Persistance;
 using BonefireCRM.Infrastructure.Security;
-using BonefireCRM.Integration.Tests.Common;
 using BonefireCRM.Integration.Tests.DataSeeders;
 using FastEndpoints.Testing;
 using Microsoft.AspNetCore.Authentication;
@@ -12,10 +10,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Respawn;
 using Testcontainers.MsSql;
 
-[assembly: AssemblyFixture(typeof(ApiTestFixture))]
+//[assembly: AssemblyFixture(typeof(ApiTestFixture))]
 
 namespace BonefireCRM.Integration.Tests.Common
 {
+    [DisableWafCache]
     public class ApiTestFixture : AppFixture<IApiAssemblyMarker>
     {
         private MsSqlContainer _msSqlContainer = default!;
@@ -39,6 +38,13 @@ namespace BonefireCRM.Integration.Tests.Common
                 TablesToIgnore = ["__EFMigrationsHistory"],
                 WithReseed = true
             });
+
+            //var routeEndpoints = Services
+            //    .GetRequiredService<Microsoft.AspNetCore.Routing.EndpointDataSource>()
+            //    .Endpoints;
+
+            //foreach (var ep in routeEndpoints)
+            //    Console.WriteLine(ep.DisplayName);
         }
 
         protected override void ConfigureApp(IWebHostBuilder builder)
@@ -81,7 +87,7 @@ namespace BonefireCRM.Integration.Tests.Common
             await _respawner.ResetAsync(_msSqlContainer.GetConnectionString());
         }
 
-        public async Task SeedTestDatabaseAsync(Func<CRMContext, Task> dataSeeder)
+        public async Task SeedTestDatabaseAsync(Func<CRMContext, ApplicationUser, Task> dataSeeder)
         {
             var scopeFactory = Services.GetRequiredService<IServiceScopeFactory>();
             using (var scope = scopeFactory.CreateScope())
@@ -91,9 +97,10 @@ namespace BonefireCRM.Integration.Tests.Common
 
                 crmContext.SeedDefaultData();
 
-                await AppUserTestsDataSeeder.PopulateWithTestDataAsync(appDbContext);
+                var appUserTestsDataSeeder = new AppUserTestsDataSeeder();
+                var appUser = await appUserTestsDataSeeder.PopulateWithTestDataAsync(appDbContext);
 
-                await dataSeeder(crmContext);
+                await dataSeeder(crmContext, appUser);
             }
         }
 

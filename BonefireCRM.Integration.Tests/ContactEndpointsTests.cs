@@ -4,6 +4,7 @@ using BonefireCRM.API.Contrat.Contact;
 using BonefireCRM.Integration.Tests.Common;
 using BonefireCRM.Integration.Tests.DataSeeders;
 using FastEndpoints;
+using FastEndpoints.Testing;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,7 @@ using System.Net;
 
 namespace BonefireCRM.Integration.Tests
 {
-    public class ContactEndpointsTests : IAsyncLifetime
+    public class ContactEndpointsTests : TestBase<ApiTestFixture>, IAsyncLifetime
     {
         private readonly ApiTestFixture _apiTestFixture;
         private readonly ContactTestsDataSeeder _contactTestsDataSeeder;
@@ -202,15 +203,15 @@ namespace BonefireCRM.Integration.Tests
         public async Task CreateContact_WithInvalidRequest_ReturnsError()
         {
             // Arrange
-            var lifcycleStage = _contactTestsDataSeeder.LifecycleStages.First();
-            var company = _contactTestsDataSeeder.Companies.First();
-
             var request = new Faker<CreateContactRequest>().Rules((f, c) =>
             {
                 c.FirstName = f.Name.FirstName();
                 c.LastName = f.Name.LastName();
-                c.LifecycleStageId = Guid.Empty;
-                c.CompanyId = Guid.Empty;
+                c.Email = f.Internet.Email(c.FirstName, c.LastName);
+                c.PhoneNumber = f.Phone.PhoneNumber();
+                c.JobRole = f.Name.JobTitle();
+                c.LifecycleStageId = Guid.NewGuid();
+                c.CompanyId = Guid.NewGuid();
             })
                 .Generate();
 
@@ -300,7 +301,7 @@ namespace BonefireCRM.Integration.Tests
             var existingContacts = await _apiTestFixture.ExecuteScopedDbContextAsync(c => c.Contacts.ToListAsync());
             existingContacts
                 .Should().HaveCount(_contactTestsDataSeeder.Contacts.Count)
-                .And.NotContain(c => c.FirstName == request.FirstName && c.LastName == request.LastName);
+                .And.NotContain(c => c.Id == nonExistingContactId && c.LastName == request.FirstName);
         }
 
         [Fact]

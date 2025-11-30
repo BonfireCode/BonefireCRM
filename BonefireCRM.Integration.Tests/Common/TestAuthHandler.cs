@@ -1,4 +1,5 @@
-﻿using BonefireCRM.Integration.Tests.DataSeeders;
+﻿using BonefireCRM.Infrastructure.Security;
+using BonefireCRM.Integration.Tests.DataSeeders;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -9,15 +10,18 @@ namespace BonefireCRM.Integration.Tests.Common
 {
     internal class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
+        private readonly AppDbContext _appDbContext;
+
         public TestAuthHandler(IOptionsMonitor<AuthenticationSchemeOptions> options,
-            ILoggerFactory logger, UrlEncoder encoder)
+            ILoggerFactory logger, UrlEncoder encoder, AppDbContext appDbContext)
             : base(options, logger, encoder)
         {
+            _appDbContext = appDbContext;
         }
 
         protected override Task<AuthenticateResult> HandleAuthenticateAsync()
         {
-            var appUser = AppUserTestsDataSeeder.AppUser;
+            var appUser = _appDbContext.Users.Single();
 
             var claims = new[] 
             { 

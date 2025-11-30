@@ -7,8 +7,8 @@ namespace BonefireCRM.API.Contrat.Activity.Assignment
         [Description("The unique identifier of the assignment.")]
         public Guid? Id { get; set; }
 
-        [Description("The title of the assignment.")]
-        public string? Title { get; set; }
+        [Description("The subject of the assignment.")]
+        public string? Subject { get; set; }
 
         [Description("The description of the assignment.")]
         public string? Description { get; set; }
@@ -17,7 +17,7 @@ namespace BonefireCRM.API.Contrat.Activity.Assignment
         public DateTime? DueDate { get; set; }
 
         [Description("The status of the assignment.")]
-        public string? Status { get; set; }
+        public bool? IsCompleted { get; set; }
 
         [Description("The unique identifier of the contact associated with the assignment.")]
         public Guid? ContactId { get; set; }

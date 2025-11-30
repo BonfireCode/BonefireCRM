@@ -6,9 +6,7 @@ namespace BonefireCRM.Integration.Tests.DataSeeders
 {
     internal class AppUserTestsDataSeeder
     {
-        internal static ApplicationUser AppUser { get; private set; } = default!;
-
-        internal static async Task PopulateWithTestDataAsync(AppDbContext appDbContext)
+        internal async Task<ApplicationUser> PopulateWithTestDataAsync(AppDbContext appDbContext)
         {
             Randomizer.Seed = new Random(TestConstants.DATASEED);
 
@@ -16,10 +14,10 @@ namespace BonefireCRM.Integration.Tests.DataSeeders
             await appDbContext.AddAsync(appUser);
             await appDbContext.SaveChangesAsync();
 
-            AppUser = appUser;
+            return appUser;
         }
 
-        private static ApplicationUser PrepareFakeAppUser()
+        private ApplicationUser PrepareFakeAppUser()
         {
             var appUserFaker = new Faker<ApplicationUser>().Rules((f, au) =>
             {
