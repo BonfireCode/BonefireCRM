@@ -55,7 +55,7 @@ namespace BonefireCRM.Infrastructure.Persistance
 
         public async Task<T> UpdateAsync(T entity, CancellationToken ct)
         {
-            var entityFound = _context.Set<T>().SingleOrDefault(x => x.Id == entity.Id);
+            var entityFound = await _context.Set<T>().FindAsync(entity.Id);
             if (entityFound is null)
             {
                 return null;
@@ -69,7 +69,7 @@ namespace BonefireCRM.Infrastructure.Persistance
 
         public async Task<bool> DeleteAsync(Guid id, CancellationToken ct)
         {
-            var entityFound = _context.Set<T>().SingleOrDefault(x => x.Id == id);
+            var entityFound = await _context.Set<T>().FindAsync(id);
             if (entityFound is null)
             {
                 return false;
