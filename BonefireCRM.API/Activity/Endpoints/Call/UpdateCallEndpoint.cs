@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BonefireCRM.API.Activity.Endpoints.Call
 {
-    public class UpdateCallEndpoint : Endpoint<UpdateCallRequest, Results<Ok<UpdateCallResponse>, NotFound, InternalServerError>>
+    public class UpdateCallEndpoint : Endpoint<UpdateCallRequest, Results<Ok<UpdateCallResponse>, NotFound>>
     {
         private readonly ActivityService _activityService;
         private readonly UserService _userService;
@@ -35,9 +35,10 @@ namespace BonefireCRM.API.Activity.Endpoints.Call
             });
         }
 
-        public override async Task<Results<Ok<UpdateCallResponse>, NotFound, InternalServerError>> ExecuteAsync(UpdateCallRequest request, CancellationToken ct)
+        public override async Task<Results<Ok<UpdateCallResponse>, NotFound>> ExecuteAsync(UpdateCallRequest request, CancellationToken ct)
         {
             var id = Route<Guid>("id");
+
             var registerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             var userId = await _userService.GetUserIdAsync(registerId, ct);
 
@@ -45,9 +46,9 @@ namespace BonefireCRM.API.Activity.Endpoints.Call
 
             var result = await _activityService.UpdateCallAsync(dtoCall, ct);
 
-            var response = result.Match<Results<Ok<UpdateCallResponse>, NotFound, InternalServerError>>(
+            var response = result.Match<Results<Ok<UpdateCallResponse>, NotFound>>(
                 updatedCall => TypedResults.Ok(updatedCall.MapToResponse()),
-                _ => TypedResults.InternalServerError());
+                _ => TypedResults.NotFound());
 
             return response;
         }

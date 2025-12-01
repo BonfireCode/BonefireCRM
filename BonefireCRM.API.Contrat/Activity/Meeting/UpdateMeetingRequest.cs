@@ -4,9 +4,6 @@ namespace BonefireCRM.API.Contrat.Meeting
 {
     public sealed class UpdateMeetingRequest
     {
-        [Description("The unique identifier of the meeting to be updated.")]
-        public Guid Id { get; set; }
-
         [Description("The unique identifier of the contact associated with the meeting.")]
         public Guid ContactId { get; set; }
 

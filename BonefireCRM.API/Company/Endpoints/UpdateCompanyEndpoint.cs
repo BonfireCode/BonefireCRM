@@ -2,6 +2,7 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
+using System.Security.Claims;
 using BonefireCRM.API.Company.Mappers;
 using BonefireCRM.API.Contrat.Call;
 using BonefireCRM.API.Contrat.Company;
@@ -12,13 +13,15 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BonefireCRM.API.Company.Endpoints
 {
-    public class UpdateCompanyEndpoint : Endpoint<UpdateCompanyRequest, Results<Created<UpdateCompanyResponse>, InternalServerError>>
+    public class UpdateCompanyEndpoint : Endpoint<UpdateCompanyRequest, Results<Ok<UpdateCompanyResponse>, NotFound>>
     {
         private readonly CompanyService _companyService;
+        private readonly UserService _userService;
 
-        public UpdateCompanyEndpoint(CompanyService companyService)
+        public UpdateCompanyEndpoint(CompanyService companyService, UserService userService)
         {
             _companyService = companyService;
+            _userService = userService;
         }
 
         public override void Configure()
@@ -34,15 +37,20 @@ namespace BonefireCRM.API.Company.Endpoints
             });
         }
 
-        public override async Task<Results<Created<UpdateCompanyResponse>, InternalServerError>> ExecuteAsync(UpdateCompanyRequest request, CancellationToken ct)
+        public override async Task<Results<Ok<UpdateCompanyResponse>, NotFound>> ExecuteAsync(UpdateCompanyRequest request, CancellationToken ct)
         {
             var id = Route<Guid>("id");
-            var dtoCompany = request.MapToDto(id);
+
+            var registerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var userId = await _userService.GetUserIdAsync(registerId, ct);
+
+            var dtoCompany = request.MapToDto(id, userId);
+
             var result = await _companyService.UpdateCompanyAsync(dtoCompany, ct);
 
-            var response = result.Match<Results<Created<UpdateCompanyResponse>, InternalServerError>>(
-                updatedCompany => TypedResults.Created($"/companies/{updatedCompany.Id}", updatedCompany.MapToResponse()),
-                _ => TypedResults.InternalServerError());
+            var response = result.Match<Results<Ok<UpdateCompanyResponse>, NotFound>>(
+                updatedCompany => TypedResults.Ok(updatedCompany.MapToResponse()),
+                _ => TypedResults.NotFound());
 
             return response;
         }

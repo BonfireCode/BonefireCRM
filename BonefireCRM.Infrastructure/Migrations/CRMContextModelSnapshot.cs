@@ -17,7 +17,7 @@ namespace BonefireCRM.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.10")
+                .HasAnnotation("ProductVersion", "10.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -61,7 +61,7 @@ namespace BonefireCRM.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Activities");
+                    b.ToTable("Activities", (string)null);
 
                     b.HasDiscriminator<string>("ActivityType").HasValue("Activity");
 
@@ -102,7 +102,7 @@ namespace BonefireCRM.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Companies");
+                    b.ToTable("Companies", (string)null);
                 });
 
             modelBuilder.Entity("BonefireCRM.Domain.Entities.Contact", b =>
@@ -161,7 +161,7 @@ namespace BonefireCRM.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Contacts");
+                    b.ToTable("Contacts", (string)null);
                 });
 
             modelBuilder.Entity("BonefireCRM.Domain.Entities.Deal", b =>
@@ -209,7 +209,7 @@ namespace BonefireCRM.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Deals");
+                    b.ToTable("Deals", (string)null);
                 });
 
             modelBuilder.Entity("BonefireCRM.Domain.Entities.DealParticipant", b =>
@@ -242,7 +242,7 @@ namespace BonefireCRM.Infrastructure.Migrations
                     b.HasIndex("DealId", "ContactId")
                         .IsUnique();
 
-                    b.ToTable("DealParticipants");
+                    b.ToTable("DealParticipants", (string)null);
                 });
 
             modelBuilder.Entity("BonefireCRM.Domain.Entities.DealParticipantRole", b =>
@@ -274,7 +274,7 @@ namespace BonefireCRM.Infrastructure.Migrations
 
                     b.HasIndex("RegisteredByUserId");
 
-                    b.ToTable("DealParticipantRoles");
+                    b.ToTable("DealParticipantRoles", (string)null);
                 });
 
             modelBuilder.Entity("BonefireCRM.Domain.Entities.FollowUpReminder", b =>
@@ -309,7 +309,7 @@ namespace BonefireCRM.Infrastructure.Migrations
 
                     b.HasIndex("DueDate");
 
-                    b.ToTable("FollowUpReminders");
+                    b.ToTable("FollowUpReminders", (string)null);
                 });
 
             modelBuilder.Entity("BonefireCRM.Domain.Entities.LifecycleStage", b =>
@@ -331,7 +331,7 @@ namespace BonefireCRM.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LifecycleStages");
+                    b.ToTable("LifecycleStages", (string)null);
                 });
 
             modelBuilder.Entity("BonefireCRM.Domain.Entities.Pipeline", b =>
@@ -356,7 +356,7 @@ namespace BonefireCRM.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Pipelines");
+                    b.ToTable("Pipelines", (string)null);
                 });
 
             modelBuilder.Entity("BonefireCRM.Domain.Entities.PipelineStage", b =>
@@ -394,7 +394,7 @@ namespace BonefireCRM.Infrastructure.Migrations
                     b.HasIndex("PipelineId", "OrderIndex")
                         .IsUnique();
 
-                    b.ToTable("PipelineStages");
+                    b.ToTable("PipelineStages", (string)null);
                 });
 
             modelBuilder.Entity("BonefireCRM.Domain.Entities.User", b =>
@@ -430,7 +430,7 @@ namespace BonefireCRM.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("BonefireCRM.Domain.Entities.Assignment", b =>
@@ -497,7 +497,7 @@ namespace BonefireCRM.Infrastructure.Migrations
 
                     b.HasIndex("SentAt");
 
-                    b.ToTable("Activities", t =>
+                    b.ToTable("Activities", null, t =>
                         {
                             t.Property("Subject")
                                 .HasColumnName("Email_Subject");
@@ -526,7 +526,7 @@ namespace BonefireCRM.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.ToTable("Activities", t =>
+                    b.ToTable("Activities", null, t =>
                         {
                             t.Property("Notes")
                                 .HasColumnName("Meeting_Notes");

@@ -9,6 +9,6 @@ namespace BonefireCRM.Domain.Infrastructure.Persistance
         Task<T> AddAsync(T entity, CancellationToken ct);
         Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities, CancellationToken ct);
         Task<T> UpdateAsync(T entity, CancellationToken ct);
-        Task<bool> DeleteAsync(T entity, CancellationToken ct);
+        Task<bool> DeleteAsync(Guid id, CancellationToken ct);
     }
 }

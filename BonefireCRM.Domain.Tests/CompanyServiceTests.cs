@@ -170,14 +170,14 @@ namespace BonefireCRM.Domain.Tests
             //Arrange
             var id = _fixture.Create<Guid>();
 
-            _companyRepository.DeleteAsync(Arg.Any<Company>(), CancellationToken.None)
+            _companyRepository.DeleteAsync(id, CancellationToken.None)
                 .Returns(true);
 
             //Act
             var result = await _companyService.DeleteCompanyAsync(id, CancellationToken.None);
 
             //Assert
-            await _companyRepository.Received(1).DeleteAsync(Arg.Any<Company>(), CancellationToken.None);
+            await _companyRepository.Received(1).DeleteAsync(id, CancellationToken.None);
 
             result.Should().BeTrue();
         }

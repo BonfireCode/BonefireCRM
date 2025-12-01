@@ -3,9 +3,9 @@ using BonefireCRM.Domain.Enums;
 
 namespace BonefireCRM.Infrastructure.Persistance
 {
-    internal static class CRMContextExtentions
+    public static class CRMContextExtentions
     {
-        public static void Seed(this CRMContext context)
+        public static void SeedDefaultData(this CRMContext context)
         {
             SeedPipelines(context);
             SeedLifecycleStages(context);

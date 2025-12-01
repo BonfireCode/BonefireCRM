@@ -37,7 +37,7 @@ namespace BonefireCRM.API.Company.Mappers
             };
         }
 
-        internal static UpdateCompanyDTO MapToDto(this UpdateCompanyRequest request, Guid id)
+        internal static UpdateCompanyDTO MapToDto(this UpdateCompanyRequest request, Guid id, Guid userId)
         {
             return new()
             {
@@ -46,6 +46,7 @@ namespace BonefireCRM.API.Company.Mappers
                 Industry = request.Industry,
                 Address = request.Address,
                 PhoneNumber = request.PhoneNumber,
+                UserId = userId,
             };
         }
     }

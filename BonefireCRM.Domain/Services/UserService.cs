@@ -56,8 +56,7 @@ namespace BonefireCRM.Domain.Services
                 return Fin<bool>.Fail(new DeleteUserException());
             }
 
-            var user = new User { Id = id, RegisterId = registerId };
-            var isDeleted = await _userRepository.DeleteAsync(user, ct);
+            var isDeleted = await _userRepository.DeleteAsync(id, ct);
             if (!isDeleted)
             {
                 return Fin<bool>.Fail(new DeleteEntityException<User>());

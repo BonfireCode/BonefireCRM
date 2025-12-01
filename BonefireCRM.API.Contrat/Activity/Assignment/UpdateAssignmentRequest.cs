@@ -4,9 +4,6 @@ namespace BonefireCRM.API.Contrat.Activity.Assignment
 {
     public sealed class UpdateAssignmentRequest
     {
-        [Description("The unique identifier of the assignment to be updated.")]
-        public Guid Id { get; set; }
-
         [Description("The unique identifier of the contact associated with the assignment.")]
         public Guid ContactId { get; set; }
 
