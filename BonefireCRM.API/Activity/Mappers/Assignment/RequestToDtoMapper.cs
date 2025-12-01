@@ -50,6 +50,7 @@ namespace BonefireCRM.API.Activity.Mappers.Assignment
             return new()
             {
                 Id = id,
+                UserId = userId,
                 CompanyId = request.CompanyId,
                 ContactId = request.ContactId,
                 DealId = request.DealId,
@@ -57,7 +58,6 @@ namespace BonefireCRM.API.Activity.Mappers.Assignment
                 Description = request.Description,
                 DueDate = request.DueDate,
                 IsCompleted = request.IsCompleted,
-                UserId = userId,
             };
         }
     }

@@ -9,6 +9,7 @@ using BonefireCRM.API.Extensions;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
+using System.Security.Claims;
 
 namespace BonefireCRM.API.Contact.Endpoints
 {

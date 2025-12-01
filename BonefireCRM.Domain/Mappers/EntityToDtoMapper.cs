@@ -3,6 +3,7 @@ using BonefireCRM.Domain.DTOs.Activity.Call;
 using BonefireCRM.Domain.DTOs.Activity.Meeting;
 using BonefireCRM.Domain.DTOs.Company;
 using BonefireCRM.Domain.DTOs.Contact;
+using BonefireCRM.Domain.DTOs.Deal;
 using BonefireCRM.Domain.DTOs.DealParticipantRole;
 using BonefireCRM.Domain.DTOs.LifeCycleStage;
 using BonefireCRM.Domain.DTOs.Pipeline;
@@ -240,6 +241,51 @@ namespace BonefireCRM.Domain.Mappers
                 LifecycleStageId = contact.LifecycleStageId,
                 CompanyId = contact.CompanyId ?? Guid.Empty,
                 UserId = contact.UserId,
+            };
+        }
+
+        internal static GetDealDTO MapToGetDto(this Deal deal)
+        {
+            return new()
+            { 
+                Id = deal.Id,
+                Amount = deal.Amount,
+                ExpectedCloseDate = deal.ExpectedCloseDate,
+                Title = deal.Title,
+                PipelineStageId = deal.PipelineStageId,
+                CompanyId = deal.CompanyId,
+                PrimaryContactId = deal.PrimaryContactId,
+                UserId = deal.UserId,
+            };
+        }
+
+        internal static CreatedDealDTO MapToCreatedDto(this Deal deal)
+        {
+            return new()
+            {
+                Id = deal.Id,
+                Amount = deal.Amount,
+                ExpectedCloseDate = deal.ExpectedCloseDate,
+                Title = deal.Title,
+                PipelineStageId = deal.PipelineStageId,
+                CompanyId = deal.CompanyId,
+                PrimaryContactId = deal.PrimaryContactId,
+                UserId = deal.UserId,
+            };
+        }
+
+        internal static UpdatedDealDTO MapToUpdatedDto(this Deal deal)
+        {
+            return new()
+            {
+                Id = deal.Id,
+                Amount = deal.Amount,
+                ExpectedCloseDate = deal.ExpectedCloseDate,
+                Title = deal.Title,
+                PipelineStageId = deal.PipelineStageId,
+                CompanyId = deal.CompanyId,
+                PrimaryContactId = deal.PrimaryContactId,
+                UserId = deal.UserId,
             };
         }
 

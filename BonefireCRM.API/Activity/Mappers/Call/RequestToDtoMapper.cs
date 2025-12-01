@@ -5,6 +5,7 @@
 using BonefireCRM.API.Contrat.Call;
 using BonefireCRM.Domain.Constants;
 using BonefireCRM.Domain.DTOs.Activity.Call;
+using BonefireCRM.Domain.Entities;
 
 namespace BonefireCRM.API.Activity.Mappers.Call
 {
@@ -48,13 +49,13 @@ namespace BonefireCRM.API.Activity.Mappers.Call
             return new()
             {
                 Id = id,
+                UserId = userId,
                 DealId = request.DealId,
                 ContactId = request.ContactId,
                 CompanyId = request.CompanyId,
                 CallTime = request.CallTime,
                 Duration = request.Duration,
                 Notes = request.Notes,
-                UserId = userId,
             };
         }
     }

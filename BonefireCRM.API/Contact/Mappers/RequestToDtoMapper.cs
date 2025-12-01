@@ -50,6 +50,7 @@ namespace BonefireCRM.API.Contact.Mappers
             return new()
             {
                 Id = id,
+                UserId = userId,
                 Email = request.Email,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
@@ -57,7 +58,6 @@ namespace BonefireCRM.API.Contact.Mappers
                 PhoneNumber = request.PhoneNumber,
                 LifecycleStageId = request.LifecycleStageId,
                 CompanyId = request.CompanyId,
-                UserId = userId,
             };
         }
     }

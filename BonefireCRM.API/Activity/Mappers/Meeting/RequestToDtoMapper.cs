@@ -5,6 +5,7 @@
 using BonefireCRM.API.Contrat.Meeting;
 using BonefireCRM.Domain.Constants;
 using BonefireCRM.Domain.DTOs.Activity.Meeting;
+using BonefireCRM.Domain.Entities;
 
 namespace BonefireCRM.API.Activity.Mappers.Meeting
 {
@@ -50,6 +51,7 @@ namespace BonefireCRM.API.Activity.Mappers.Meeting
             return new()
             {
                 Id = id,
+                UserId = userId,
                 EndTime = request.EndTime,
                 StartTime = request.StartTime,
                 Notes = request.Notes,
@@ -57,7 +59,6 @@ namespace BonefireCRM.API.Activity.Mappers.Meeting
                 CompanyId = request.CompanyId,
                 ContactId = request.ContactId,
                 DealId = request.DealId,
-                UserId = userId,
             };
         }
     }
