@@ -29,7 +29,7 @@ jobs:
 
     - name: Move snapshots folders inside test folders
       run: |
-        find . -type d -name "Snapshots" | while read snapshotFolder; do
+        find ./ -type d -name "Snapshots" | while read snapshotFolder; do
           echo "Found Snapshots folder: $snapshotFolder"
           parent="$(dirname "$snapshotFolder")"
           echo "Parent directory: $parent"
@@ -37,6 +37,7 @@ jobs:
           echo "Target directory: $target"
           mkdir -p "$target"
           mv "$snapshotFolder"/* "$target"
+          echo "Files inside directory: $target"
           ls -l "$target"
         done
 
@@ -46,7 +47,7 @@ jobs:
         name: build-output
         retention-days: 1
         path: |
-          **/*.Tests/bin/Release/net*/
+          **/bin/Release/net*/
           !**/ref/*
 
   Test:
@@ -62,11 +63,16 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: build-output
-        path: ./build
+        path: ./
+
+    - name: Files inside Downloaded artifact
+      run: |
+        echo "build-output folder"
+        ls -l
 
     - name: Test solution
       run: |
-        find ./build -type f -name "*.Tests.dll" | while read testDll; do
+        find ./ -type f -name "*.Tests.dll" | while read testDll; do
           echo "Running tests in $testDll"
           chmod +x "$testDll"
           dotnet "$testDll" || exit $?
