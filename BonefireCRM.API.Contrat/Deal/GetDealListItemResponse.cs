@@ -1,11 +1,10 @@
-﻿using BonefireCRM.API.Contrat.Deal.Participant;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace BonefireCRM.API.Contrat.Deal
 {
-    public sealed class UpdateDealRequest
+    public sealed class GetDealListItemResponse
     {
-        [Description("The unique identifier of the deal to update.")]
+        [Description("The unique identifier of the deal.")]
         public Guid Id { get; set; }
 
         [Description("The title or name of the deal.")]
@@ -26,7 +25,7 @@ namespace BonefireCRM.API.Contrat.Deal
         [Description("Used in B2C deals. The unique identifier of the primary contact associated with the deal.")]
         public Guid? PrimaryContactId { get; set; }
 
-        [Description("A list of participants assigned to the deal.")]
-        public IEnumerable<UpdateDealParticipantRequest> DealParticipants { get; set; } = [];
+        [Description("The unique identifier of the user who created the deal.")]
+        public Guid UserId { get; set; }
     }
 }

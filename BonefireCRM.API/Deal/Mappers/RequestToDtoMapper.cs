@@ -3,8 +3,10 @@
 // </copyright>
 
 using BonefireCRM.API.Contrat.Deal;
+using BonefireCRM.API.Contrat.Deal.Participant;
 using BonefireCRM.Domain.Constants;
 using BonefireCRM.Domain.DTOs.Deal;
+using BonefireCRM.Domain.DTOs.Deal.Participant;
 
 namespace BonefireCRM.API.Deal.Mappers
 {
@@ -40,6 +42,7 @@ namespace BonefireCRM.API.Deal.Mappers
                 PrimaryContactId = request.PrimaryContactId,
                 CompanyId = request.CompanyId,
                 UserId = userId,
+                DealParticipants = request.DealParticipants.Select(c => c.MapToDto()),
             };
         }
 
@@ -55,24 +58,24 @@ namespace BonefireCRM.API.Deal.Mappers
                 ExpectedCloseDate = request.ExpectedCloseDate,
                 PipelineStageId = request.PipelineStageId,
                 PrimaryContactId = request.PrimaryContactId,
+                DealParticipants = request.DealParticipants.Select(c => c.MapToDto(id)),
             };
         }
 
-        internal static GetAllDealParticipantsDTO MapToDto(this GetDealParticipantsRequest request, Guid dealId)
+        private static AssignDealParticipantDTO MapToDto(this AssignDealParticipantRequest request)
         {
             return new()
             {
-                DealId = dealId,
-                SortDirection = DefaultValues.SORTDIRECTION,
-                PageNumber = request.PageNumber ?? DefaultValues.PAGENUMBER,
-                PageSize = request.PageSize ?? DefaultValues.PAGESIZE,
+                ContactId = request.ContactId,
+                DealParticipantRoleId = request.DealParticipantRoleId,
             };
         }
 
-        internal static AssignDealParticipantDTO MapToDto(this AssignDealParticipantRequest request, Guid dealId)
+        private static UpdateDealParticipantDTO MapToDto(this UpdateDealParticipantRequest request, Guid dealId)
         {
-            return new()
+            return new ()
             {
+                Id = request.Id,
                 DealId = dealId,
                 ContactId = request.ContactId,
                 DealParticipantRoleId = request.DealParticipantRoleId,

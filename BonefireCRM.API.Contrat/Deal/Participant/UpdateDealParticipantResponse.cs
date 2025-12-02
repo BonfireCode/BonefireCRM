@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel;
 
-namespace BonefireCRM.API.Contrat.Deal
+namespace BonefireCRM.API.Contrat.Deal.Participant
 {
-    public sealed class AssignDealParticipantResponse
+    public sealed class UpdateDealParticipantResponse
     {
-        [Description("The unique identifier of the deal.")]
-        public Guid DealId { get; set; }
+        [Description("The unique identifier of the deal participant.")]
+        public Guid Id { get; set; }
 
         [Description("The unique identifier of the contact assigned to the deal.")]
         public Guid ContactId { get; set; }

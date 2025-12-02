@@ -4,6 +4,7 @@ using BonefireCRM.Domain.DTOs.Activity.Meeting;
 using BonefireCRM.Domain.DTOs.Company;
 using BonefireCRM.Domain.DTOs.Contact;
 using BonefireCRM.Domain.DTOs.Deal;
+using BonefireCRM.Domain.DTOs.Deal.Participant;
 using BonefireCRM.Domain.DTOs.DealParticipantRole;
 using BonefireCRM.Domain.DTOs.LifeCycleStage;
 using BonefireCRM.Domain.DTOs.Pipeline;
@@ -244,6 +245,21 @@ namespace BonefireCRM.Domain.Mappers
             };
         }
 
+        internal static GetDealListItemDTO MapToGetListItemDto(this Deal deal)
+        {
+            return new()
+            {
+                Id = deal.Id,
+                Amount = deal.Amount,
+                ExpectedCloseDate = deal.ExpectedCloseDate,
+                Title = deal.Title,
+                PipelineStageId = deal.PipelineStageId,
+                CompanyId = deal.CompanyId,
+                PrimaryContactId = deal.PrimaryContactId,
+                UserId = deal.UserId
+            };
+        }
+
         internal static GetDealDTO MapToGetDto(this Deal deal)
         {
             return new()
@@ -256,6 +272,7 @@ namespace BonefireCRM.Domain.Mappers
                 CompanyId = deal.CompanyId,
                 PrimaryContactId = deal.PrimaryContactId,
                 UserId = deal.UserId,
+                DealParticipants = deal.DealParticipants.Select(dp => dp.MapToGetDto()),
             };
         }
 
@@ -271,6 +288,7 @@ namespace BonefireCRM.Domain.Mappers
                 CompanyId = deal.CompanyId,
                 PrimaryContactId = deal.PrimaryContactId,
                 UserId = deal.UserId,
+                DealParticipants = deal.DealParticipants.Select(dp => dp.MapToAssignedDto()),
             };
         }
 
@@ -286,6 +304,7 @@ namespace BonefireCRM.Domain.Mappers
                 CompanyId = deal.CompanyId,
                 PrimaryContactId = deal.PrimaryContactId,
                 UserId = deal.UserId,
+                DealParticipants = deal.DealParticipants.Select(dp => dp.MapToUpdatedDto()),
             };
         }
 
@@ -303,7 +322,7 @@ namespace BonefireCRM.Domain.Mappers
         {
             return new()
             {
-                DealId = deal.DealId,
+                Id = deal.Id,
                 ContactId = deal.ContactId,
                 DealParticipantRoleId = deal.DealParticipantRoleId,
             };
@@ -313,7 +332,17 @@ namespace BonefireCRM.Domain.Mappers
         {
             return new()
             {
-                DealId = deal.DealId,
+                Id = deal.Id,
+                ContactId = deal.ContactId,
+                DealParticipantRoleId = deal.DealParticipantRoleId,
+            };
+        }
+
+        internal static UpdatedDealParticipantDTO MapToUpdatedDto(this DealParticipant deal)
+        {
+            return new()
+            {
+                Id = deal.Id,
                 ContactId = deal.ContactId,
                 DealParticipantRoleId = deal.DealParticipantRoleId,
             };

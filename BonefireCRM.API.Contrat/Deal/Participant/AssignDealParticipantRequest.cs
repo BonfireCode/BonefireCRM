@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace BonefireCRM.API.Contrat.Deal
+namespace BonefireCRM.API.Contrat.Deal.Participant
 {
     public sealed class AssignDealParticipantRequest
     {

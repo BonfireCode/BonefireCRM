@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using BonefireCRM.API.Contrat.Deal.Participant;
+using System.ComponentModel;
 
 namespace BonefireCRM.API.Contrat.Deal
 {
@@ -27,5 +28,8 @@ namespace BonefireCRM.API.Contrat.Deal
 
         [Description("The unique identifier of the user who created the deal.")]
         public Guid UserId { get; set; }
+
+        [Description("A list of participants assigned to the deal.")]
+        public IEnumerable<AssignDealParticipantResponse> DealParticipants { get; set; } = [];
     }
 }

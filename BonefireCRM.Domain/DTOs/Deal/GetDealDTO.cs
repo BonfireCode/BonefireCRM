@@ -1,4 +1,6 @@
-﻿namespace BonefireCRM.Domain.DTOs.Deal
+﻿using BonefireCRM.Domain.DTOs.Deal.Participant;
+
+namespace BonefireCRM.Domain.DTOs.Deal
 {
     public class GetDealDTO
     {
@@ -10,5 +12,6 @@
         public Guid? CompanyId { get; set; }
         public Guid? PrimaryContactId { get; set; }
         public Guid UserId { get; set; }
+        public IEnumerable<GetDealParticipantDTO> DealParticipants { get; set; } = [];
     }
 }

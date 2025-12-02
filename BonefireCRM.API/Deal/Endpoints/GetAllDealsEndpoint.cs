@@ -6,12 +6,13 @@ using System.Security.Claims;
 using BonefireCRM.API.Contrat.Deal;
 using BonefireCRM.API.Deal.Mappers;
 using BonefireCRM.API.Extensions;
+using BonefireCRM.Domain.DTOs.Deal;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
 
 namespace BonefireCRM.API.Deal.Endpoints
 {
-    public class GetAllDealsEndpoint : Endpoint<GetDealsRequest, IEnumerable<GetDealResponse>>
+    public class GetAllDealsEndpoint : Endpoint<GetDealsRequest, IEnumerable<GetDealListItemResponse>>
     {
         private readonly DealService _dealService;
         private readonly UserService _userService;
@@ -31,11 +32,11 @@ namespace BonefireCRM.API.Deal.Endpoints
                 s.Summary = "Retrieves all specific deals";
                 s.Description = "Fetches detailed information about deals";
 
-                s.AddGetAllResponses<IEnumerable<GetDealResponse>>("Deals");
+                s.AddGetAllResponses<IEnumerable<GetDealListItemDTO>>("Deals");
             });
         }
 
-        public override async Task<IEnumerable<GetDealResponse>> ExecuteAsync(GetDealsRequest request, CancellationToken ct)
+        public override async Task<IEnumerable<GetDealListItemResponse>> ExecuteAsync(GetDealsRequest request, CancellationToken ct)
         {
             var registerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             var userId = await _userService.GetUserIdAsync(registerId, ct);

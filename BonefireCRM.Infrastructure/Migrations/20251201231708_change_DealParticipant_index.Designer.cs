@@ -4,6 +4,7 @@ using BonefireCRM.Infrastructure.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BonefireCRM.Infrastructure.Migrations
 {
     [DbContext(typeof(CRMContext))]
-    partial class CRMContextModelSnapshot : ModelSnapshot
+    [Migration("20251201231708_change_DealParticipant_index")]
+    partial class change_DealParticipant_index
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

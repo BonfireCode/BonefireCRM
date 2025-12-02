@@ -1,8 +1,6 @@
-﻿using BonefireCRM.Domain.DTOs.Deal.Participant;
-
-namespace BonefireCRM.Domain.DTOs.Deal
+﻿namespace BonefireCRM.Domain.DTOs.Deal
 {
-    public class CreatedDealDTO
+    public class GetDealListItemDTO
     {
         public Guid Id { get; set; }
         public string Title { get; set; } = string.Empty;
@@ -12,6 +10,5 @@ namespace BonefireCRM.Domain.DTOs.Deal
         public Guid? CompanyId { get; set; }
         public Guid? PrimaryContactId { get; set; }
         public Guid UserId { get; set; }
-        public IEnumerable<AssignedDealParticipantDTO> DealParticipants { get; set; } = [];
     }
 }

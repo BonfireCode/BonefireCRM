@@ -3,13 +3,15 @@
 // </copyright>
 
 using BonefireCRM.API.Contrat.Deal;
+using BonefireCRM.API.Contrat.Deal.Participant;
 using BonefireCRM.Domain.DTOs.Deal;
+using BonefireCRM.Domain.DTOs.Deal.Participant;
 
 namespace BonefireCRM.API.Deal.Mappers
 {
     internal static class DtoToResponseMapper
     {
-        internal static GetDealResponse MapToResponse(this GetDealDTO dto)
+        internal static GetDealListItemResponse MapToResponse(this GetDealListItemDTO dto)
         {
             return new()
             {
@@ -24,23 +26,19 @@ namespace BonefireCRM.API.Deal.Mappers
             };
         }
 
-        internal static GetDealParticipantResponse MapToResponse(this GetDealParticipantDTO dto)
+        internal static GetDealResponse MapToResponse(this GetDealDTO dto)
         {
             return new()
             {
-                DealId = dto.DealId,
-                DealParticipantRoleId = dto.DealParticipantRoleId,
-                ContactId = dto.ContactId,
-            };
-        }
-
-        internal static AssignDealParticipantResponse MapToResponse(this AssignedDealParticipantDTO dto)
-        {
-            return new()
-            {
-                DealId = dto.DealId,
-                ContactId = dto.ContactId,
-                DealParticipantRoleId = dto.DealParticipantRoleId,
+                Id = dto.Id,
+                CompanyId = dto.CompanyId,
+                UserId = dto.UserId,
+                Amount = dto.Amount,
+                ExpectedCloseDate = dto.ExpectedCloseDate,
+                PipelineStageId = dto.PipelineStageId,
+                PrimaryContactId = dto.PrimaryContactId,
+                Title = dto.Title,
+                DealParticipants = dto.DealParticipants?.Select(dp => dp.MapToResponse()),
             };
         }
 
@@ -56,6 +54,7 @@ namespace BonefireCRM.API.Deal.Mappers
                 ExpectedCloseDate = dto.ExpectedCloseDate,
                 PipelineStageId = dto.PipelineStageId,
                 Title = dto.Title,
+                DealParticipants = dto.DealParticipants.Select(dp => dp.MapToResponse()),
             };
         }
 
@@ -71,6 +70,37 @@ namespace BonefireCRM.API.Deal.Mappers
                 PipelineStageId = dto.PipelineStageId,
                 PrimaryContactId = dto.PrimaryContactId,
                 Title = dto.Title,
+                DealParticipants = dto.DealParticipants.Select(dp => dp.MapToResponse()),
+            };
+        }
+
+        private static UpdateDealParticipantResponse MapToResponse(this UpdatedDealParticipantDTO dto)
+        {
+            return new()
+            {
+                Id = dto.Id,
+                DealParticipantRoleId = dto.DealParticipantRoleId,
+                ContactId = dto.ContactId,
+            };
+        }
+
+        private static GetDealParticipantResponse MapToResponse(this GetDealParticipantDTO dto)
+        {
+            return new()
+            {
+                Id = dto.Id,
+                DealParticipantRoleId = dto.DealParticipantRoleId,
+                ContactId = dto.ContactId,
+            };
+        }
+
+        private static AssignDealParticipantResponse MapToResponse(this AssignedDealParticipantDTO dto)
+        {
+            return new()
+            {
+                Id = dto.Id,
+                DealParticipantRoleId = dto.DealParticipantRoleId,
+                ContactId = dto.ContactId,
             };
         }
     }
