@@ -21,7 +21,14 @@ namespace BonefireCRM.Integration.Tests.Common
 
         protected override Task<AuthenticateResult> HandleAuthenticateAsync()
         {
-            var appUser = _appDbContext.Users.Single();
+            var appUser = _appDbContext.Users.SingleOrDefault();
+
+            appUser ??= new ApplicationUser
+                {
+                    Id = Guid.NewGuid(),
+                    UserName = "anonymous",
+                    Email = "anonymous@est.com"
+                };
 
             var claims = new[] 
             { 

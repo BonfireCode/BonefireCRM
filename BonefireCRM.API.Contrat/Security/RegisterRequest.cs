@@ -8,9 +8,9 @@ namespace BonefireCRM.API.Contrat.Security
         public required string UserName { get; set; }
 
         [Description("The email address of the user.")]
-        public required string Email { get; init; }
+        public required string Email { get; set; }
 
         [Description("The password of the user.")]
-        public required string Password { get; init; }
+        public required string Password { get; set; }
     }
 }

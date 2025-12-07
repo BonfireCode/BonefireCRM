@@ -38,18 +38,11 @@ namespace BonefireCRM.Integration.Tests.Common
                 TablesToIgnore = ["__EFMigrationsHistory"],
                 WithReseed = true
             });
-
-            //var routeEndpoints = Services
-            //    .GetRequiredService<Microsoft.AspNetCore.Routing.EndpointDataSource>()
-            //    .Endpoints;
-
-            //foreach (var ep in routeEndpoints)
-            //    Console.WriteLine(ep.DisplayName);
         }
 
         protected override void ConfigureApp(IWebHostBuilder builder)
         {
-            builder.UseEnvironment("Development");
+            builder.UseEnvironment("Testing");
         }
 
         protected override void ConfigureServices(IServiceCollection services)
@@ -112,6 +105,18 @@ namespace BonefireCRM.Integration.Tests.Common
                 var crmContext = scope.ServiceProvider.GetRequiredService<CRMContext>();
 
                 var result = await func(crmContext);
+                return result;
+            }
+        }
+
+        public async Task<T> ExecuteScopedAppDbContextAsync<T>(Func<AppDbContext, Task<T>> func)
+        {
+            var scopeFactory = Services.GetRequiredService<IServiceScopeFactory>();
+            using (var scope = scopeFactory.CreateScope())
+            {
+                var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+                var result = await func(appDbContext);
                 return result;
             }
         }
