@@ -118,7 +118,7 @@ namespace BonefireCRM.Domain.Mappers
         {
             return new()
             {
-                Id = dealId,
+                Id = dto.Id,
                 DealId = dealId,
                 ContactId = dto.ContactId,
                 DealParticipantRoleId = dto.DealParticipantRoleId,
