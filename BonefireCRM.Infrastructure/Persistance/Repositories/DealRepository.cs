@@ -14,7 +14,7 @@ namespace BonefireCRM.Infrastructure.Persistance.Repositories
             _context = context;
         }
 
-        public async Task<Deal?> GetDealWithParticipantsAsync(Guid id, CancellationToken ct)
+        public async Task<Deal?> GetDealIncludeParticipantsAsync(Guid id, CancellationToken ct)
         {
             return await _context.Deals
                 .Include(d => d.DealParticipants)
@@ -34,38 +34,26 @@ namespace BonefireCRM.Infrastructure.Persistance.Repositories
             }
 
             _context.Entry(entityFound).CurrentValues.SetValues(deal);
-            UpdateDealParticipants(deal, entityFound);
+            ManageDealParticipants(deal, entityFound);
 
             await _context.SaveChangesAsync(ct);
 
             return deal;
         }
 
-        private void UpdateDealParticipants(Deal deal, Deal entityFound)
+        private void ManageDealParticipants(Deal deal, Deal entityFound)
         {
-            var incomingParticipantIds = deal.DealParticipants.Select(dp => dp.Id).ToHashSet();
-            var existingParticipantIds = entityFound.DealParticipants.Select(dp => dp.Id);
+            _context.DealParticipants.RemoveRange(entityFound.DealParticipants);
+            entityFound.DealParticipants.Clear();
 
-            var removedParticipants = entityFound.DealParticipants
-                .Where(dp => !incomingParticipantIds.Contains(dp.Id));
-
-            if (removedParticipants.Any())
+            foreach (var dealParticipant in deal.DealParticipants)
             {
-                _context.Set<DealParticipant>().RemoveRange(removedParticipants);
-            }
+                if (dealParticipant.Id != Guid.Empty)
+                    _context.Entry(dealParticipant).State = EntityState.Modified;
+                else
+                    _context.Entry(dealParticipant).State = EntityState.Added;
 
-            var addedParticipants = deal.DealParticipants
-                .Where(dp => !existingParticipantIds.Contains(dp.Id))
-                .Select(dp => new DealParticipant
-                {
-                    DealId = entityFound.Id,
-                    ContactId = dp.ContactId,
-                    DealParticipantRoleId = dp.DealParticipantRoleId
-                });
-
-            if (addedParticipants.Any())
-            {
-                _context.Set<DealParticipant>().AddRange(addedParticipants);
+                entityFound.DealParticipants.Add(dealParticipant);
             }
         }
     }

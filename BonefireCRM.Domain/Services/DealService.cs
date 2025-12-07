@@ -35,7 +35,7 @@ namespace BonefireCRM.Domain.Services
 
         public async Task<Option<GetDealDTO>> GetDealAsync(Guid id, CancellationToken ct)
         {
-            var deal = await _dealRepository.GetDealWithParticipantsAsync(id, ct);
+            var deal = await _dealRepository.GetDealIncludeParticipantsAsync(id, ct);
             if (deal is null)
             {
                 return Option<GetDealDTO>.None;
