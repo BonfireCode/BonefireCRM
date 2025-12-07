@@ -1,7 +1,7 @@
 ﻿using BonefireCRM.Domain.Entities;
 using BonefireCRM.Domain.Infrastructure.Persistance;
 
-namespace BonefireCRM.Infrastructure.Persistance
+namespace BonefireCRM.Infrastructure.Persistance.Repositories
 {
     internal class UserRepository : BaseRepository<User>, IUserRepository
     {

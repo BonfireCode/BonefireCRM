@@ -3,7 +3,7 @@ using LanguageExt;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace BonefireCRM.Infrastructure.Persistance
+namespace BonefireCRM.Infrastructure.Persistance.Repositories
 {
     internal class DealRepository : BaseRepository<Deal>, IDealRepository
     {

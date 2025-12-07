@@ -1,5 +1,4 @@
 ﻿using BonefireCRM.Domain.DTOs.Pipeline;
-using BonefireCRM.Domain.Entities;
 using BonefireCRM.Domain.Infrastructure.Persistance;
 using BonefireCRM.Domain.Mappers;
 using BonefireCRM.SourceGenerator;
@@ -9,14 +8,14 @@ namespace BonefireCRM.Domain.Services
 {
     public class PipelineService
     {
-        private readonly IBaseRepository<Pipeline> _pipelineRepository;
+        private readonly IPipelineRepository _pipelineRepository;
 
-        public PipelineService(IBaseRepository<Pipeline> pipelineRepository)
+        public PipelineService(IPipelineRepository pipelineRepository)
         {
             _pipelineRepository = pipelineRepository;
         }
 
-        public IEnumerable<GetPipelineDTO> GetAllPipelines(GetAllPipelinesDTO getAllPipelinesDTO, CancellationToken ct)
+        public IEnumerable<GetPipelineListItemDTO> GetAllPipelines(GetAllPipelinesDTO getAllPipelinesDTO, CancellationToken ct)
         {
             var filterExpression = PipelineQueryExpressions.Filter(getAllPipelinesDTO);
 
@@ -27,14 +26,14 @@ namespace BonefireCRM.Domain.Services
 
             var pipelines = _pipelineRepository.GetAll(filterExpression, sortExpression, getAllPipelinesDTO.SortDirection, skip, take, ct);
 
-            var getPipelinesResultDTO = pipelines.Select(c => c.MapToGetDto());
+            var getPipelinesResultDTO = pipelines.Select(c => c.MapToGetListItemDto());
 
             return getPipelinesResultDTO;
         }
 
         public async Task<Option<GetPipelineDTO>> GetPipelineAsync(Guid id, CancellationToken ct)
         {
-            var pipeline = await _pipelineRepository.GetByIdAsync(id, ct);
+            var pipeline = await _pipelineRepository.GetPipelineIncludeStagesAsync(id, ct);
             if (pipeline is null)
             {
                 return Option<GetPipelineDTO>.None;

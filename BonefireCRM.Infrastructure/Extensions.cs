@@ -3,6 +3,7 @@ using BonefireCRM.Domain.Infrastructure.Persistance;
 using BonefireCRM.Domain.Infrastructure.Security;
 using BonefireCRM.Infrastructure.Emailing;
 using BonefireCRM.Infrastructure.Persistance;
+using BonefireCRM.Infrastructure.Persistance.Repositories;
 using BonefireCRM.Infrastructure.Security;
 using EntityFramework.Exceptions.SqlServer;
 using Microsoft.AspNetCore.Authentication;
@@ -38,6 +39,7 @@ namespace Microsoft.Extensions.DependencyInjection
             builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IDealRepository, DealRepository>();
+            builder.Services.AddScoped<IPipelineRepository, PipelineRepository>();
 
             builder.Services.AddDbContext<AppDbContext>(options =>
             {

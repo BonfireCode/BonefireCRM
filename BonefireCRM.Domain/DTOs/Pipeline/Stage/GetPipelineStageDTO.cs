@@ -1,12 +1,10 @@
 ﻿using BonefireCRM.Domain.Enums;
 
-namespace BonefireCRM.Domain.DTOs.PipelineStage
+namespace BonefireCRM.Domain.DTOs.Pipeline.Stage
 {
     public class GetPipelineStageDTO
     {
         public Guid Id { get; set; }
-
-        public Guid PipelineId { get; set; }
 
         public string Name { get; set; } = string.Empty;
 
