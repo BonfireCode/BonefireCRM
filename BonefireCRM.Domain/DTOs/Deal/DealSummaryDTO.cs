@@ -1,6 +1,6 @@
 ﻿namespace BonefireCRM.Domain.DTOs.Deal
 {
-    public class GetDealListItemDTO
+    public abstract class DealSummaryDTO
     {
         public Guid Id { get; set; }
         public string Title { get; set; } = string.Empty;

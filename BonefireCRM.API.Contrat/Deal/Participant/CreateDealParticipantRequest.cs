@@ -2,7 +2,7 @@
 
 namespace BonefireCRM.API.Contrat.Deal.Participant
 {
-    public sealed class AssignDealParticipantRequest
+    public sealed class CreateDealParticipantRequest
     {
         [Description("The unique identifier of the contact being assigned to the deal.")]
         public Guid ContactId { get; set; }

@@ -49,9 +49,9 @@ namespace BonefireCRM.Infrastructure.Persistance.Repositories
             foreach (var dealParticipant in deal.DealParticipants)
             {
                 if (dealParticipant.Id != Guid.Empty)
-                    _context.Entry(dealParticipant).State = EntityState.Modified;
+                    _context.Update(dealParticipant);
                 else
-                    _context.Entry(dealParticipant).State = EntityState.Added;
+                    _context.Add(dealParticipant);
 
                 entityFound.DealParticipants.Add(dealParticipant);
             }

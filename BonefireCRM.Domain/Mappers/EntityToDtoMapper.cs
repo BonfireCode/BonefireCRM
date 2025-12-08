@@ -245,7 +245,7 @@ namespace BonefireCRM.Domain.Mappers
             };
         }
 
-        internal static GetDealListItemDTO MapToGetListItemDto(this Deal deal)
+        internal static GetDealSummaryDTO MapToSummaryDto(this Deal deal)
         {
             return new()
             {
@@ -257,6 +257,14 @@ namespace BonefireCRM.Domain.Mappers
                 CompanyId = deal.CompanyId,
                 PrimaryContactId = deal.PrimaryContactId,
                 UserId = deal.UserId
+            };
+        }
+
+        internal static GetDealsDTO MapToGetDto(this IEnumerable<Deal> deal)
+        {
+            return new()
+            {
+                Deals = deal.Select(d => d.MapToSummaryDto()),
             };
         }
 
@@ -288,7 +296,7 @@ namespace BonefireCRM.Domain.Mappers
                 CompanyId = deal.CompanyId,
                 PrimaryContactId = deal.PrimaryContactId,
                 UserId = deal.UserId,
-                DealParticipants = deal.DealParticipants.Select(dp => dp.MapToAssignedDto()),
+                DealParticipants = deal.DealParticipants.Select(dp => dp.MapToCreateDto()),
             };
         }
 
@@ -304,7 +312,7 @@ namespace BonefireCRM.Domain.Mappers
                 CompanyId = deal.CompanyId,
                 PrimaryContactId = deal.PrimaryContactId,
                 UserId = deal.UserId,
-                DealParticipants = deal.DealParticipants.Select(dp => dp.MapToUpdatedDto()),
+                DealParticipants = deal.DealParticipants.Select(dp => dp.MapToUpsertedDto()),
             };
         }
 
@@ -329,7 +337,7 @@ namespace BonefireCRM.Domain.Mappers
             };
         }
 
-        internal static AssignedDealParticipantDTO MapToAssignedDto(this DealParticipant deal)
+        internal static CreatedDealParticipantDTO MapToCreateDto(this DealParticipant deal)
         {
             return new()
             {
@@ -349,7 +357,7 @@ namespace BonefireCRM.Domain.Mappers
             };
         }
 
-        internal static UpdatedDealParticipantDTO MapToUpdatedDto(this DealParticipant deal)
+        internal static UpsertedDealParticipantDTO MapToUpsertedDto(this DealParticipant deal)
         {
             return new()
             {

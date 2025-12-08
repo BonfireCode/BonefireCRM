@@ -24,6 +24,6 @@ namespace BonefireCRM.API.Contrat.Deal
         public Guid? PrimaryContactId { get; set; }
 
         [Description("A list of participants assigned to the deal.")]
-        public IEnumerable<AssignDealParticipantRequest> DealParticipants { get; set; } = [];
+        public IEnumerable<CreateDealParticipantRequest> DealParticipants { get; set; } = [];
     }
 }

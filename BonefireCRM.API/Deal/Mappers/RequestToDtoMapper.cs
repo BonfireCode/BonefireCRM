@@ -62,7 +62,7 @@ namespace BonefireCRM.API.Deal.Mappers
             };
         }
 
-        private static AssignDealParticipantDTO MapToDto(this AssignDealParticipantRequest request)
+        private static CreateDealParticipantDTO MapToDto(this CreateDealParticipantRequest request)
         {
             return new()
             {
@@ -71,7 +71,7 @@ namespace BonefireCRM.API.Deal.Mappers
             };
         }
 
-        private static UpdateDealParticipantDTO MapToDto(this UpdateDealParticipantRequest request, Guid dealId)
+        private static UpsertDealParticipantDTO MapToDto(this UpsertDealParticipantRequest request, Guid dealId)
         {
             return new ()
             {

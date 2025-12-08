@@ -11,18 +11,11 @@ namespace BonefireCRM.API.Deal.Mappers
 {
     internal static class DtoToResponseMapper
     {
-        internal static GetDealListItemResponse MapToResponse(this GetDealListItemDTO dto)
+        internal static GetDealsResponse MapToResponse(this GetDealsDTO dto)
         {
             return new()
             {
-                Id = dto.Id,
-                CompanyId = dto.CompanyId,
-                UserId = dto.UserId,
-                Amount = dto.Amount,
-                ExpectedCloseDate = dto.ExpectedCloseDate,
-                PipelineStageId = dto.PipelineStageId,
-                PrimaryContactId = dto.PrimaryContactId,
-                Title = dto.Title,
+                Deals = dto.Deals.Select(d => d.MapToResponse()),
             };
         }
 
@@ -39,6 +32,21 @@ namespace BonefireCRM.API.Deal.Mappers
                 PrimaryContactId = dto.PrimaryContactId,
                 Title = dto.Title,
                 DealParticipants = dto.DealParticipants?.Select(dp => dp.MapToResponse()),
+            };
+        }
+
+        internal static DealSummaryResponse MapToResponse(this DealSummaryDTO dto)
+        {
+            return new ()
+            {
+                Id = dto.Id,
+                Amount = dto.Amount,
+                ExpectedCloseDate = dto.ExpectedCloseDate,
+                PipelineStageId = dto.PipelineStageId,
+                Title = dto.Title,
+                CompanyId = dto.CompanyId,
+                PrimaryContactId = dto.PrimaryContactId,
+                UserId = dto.UserId,
             };
         }
 
@@ -74,7 +82,7 @@ namespace BonefireCRM.API.Deal.Mappers
             };
         }
 
-        private static UpdateDealParticipantResponse MapToResponse(this UpdatedDealParticipantDTO dto)
+        private static UpsertDealParticipantResponse MapToResponse(this UpsertedDealParticipantDTO dto)
         {
             return new()
             {
@@ -94,7 +102,7 @@ namespace BonefireCRM.API.Deal.Mappers
             };
         }
 
-        private static AssignDealParticipantResponse MapToResponse(this AssignedDealParticipantDTO dto)
+        private static CreatedDealParticipantResponse MapToResponse(this CreatedDealParticipantDTO dto)
         {
             return new()
             {

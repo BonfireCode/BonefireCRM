@@ -2,7 +2,7 @@
 
 namespace BonefireCRM.API.Contrat.Deal
 {
-    public sealed class GetDealListItemResponse
+    public abstract class DealSummary
     {
         [Description("The unique identifier of the deal.")]
         public Guid Id { get; set; }

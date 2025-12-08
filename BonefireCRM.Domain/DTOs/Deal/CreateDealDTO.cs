@@ -11,6 +11,6 @@ namespace BonefireCRM.Domain.DTOs.Deal
         public Guid? CompanyId { get; set; }
         public Guid? PrimaryContactId { get; set; }
         public Guid UserId { get; set; }
-        public IEnumerable<AssignDealParticipantDTO> DealParticipants { get; set; } = [];
+        public IEnumerable<CreateDealParticipantDTO> DealParticipants { get; set; } = [];
     }
 }

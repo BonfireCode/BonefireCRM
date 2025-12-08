@@ -105,7 +105,7 @@ namespace BonefireCRM.Domain.Mappers
             };
         }
 
-        internal static DealParticipant MapToDealParticipant(this AssignDealParticipantDTO dto)
+        internal static DealParticipant MapToDealParticipant(this CreateDealParticipantDTO dto)
         {
             return new()
             {
@@ -114,7 +114,7 @@ namespace BonefireCRM.Domain.Mappers
             };
         }
 
-        internal static DealParticipant MapToDealParticipant(this UpdateDealParticipantDTO dto, Guid dealId)
+        internal static DealParticipant MapToDealParticipant(this UpsertDealParticipantDTO dto, Guid dealId)
         {
             return new()
             {

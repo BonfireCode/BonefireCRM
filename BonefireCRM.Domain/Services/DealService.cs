@@ -17,7 +17,7 @@ namespace BonefireCRM.Domain.Services
             _dealRepository = dealRepository;
         }
 
-        public IEnumerable<GetDealListItemDTO> GetAllDeals(GetAllDealsDTO getAllDealsDTO, CancellationToken ct)
+        public GetDealsDTO GetAllDeals(GetAllDealsDTO getAllDealsDTO, CancellationToken ct)
         {
             var filterExpression = DealQueryExpressions.Filter(getAllDealsDTO);
 
@@ -28,9 +28,7 @@ namespace BonefireCRM.Domain.Services
 
             var deals = _dealRepository.GetAll(filterExpression, sortExpression, getAllDealsDTO.SortDirection, skip, take, ct);
 
-            var getDealsResultDTO = deals.Select(c => c.MapToGetListItemDto());
-
-            return getDealsResultDTO;
+            return deals.MapToGetDto();
         }
 
         public async Task<Option<GetDealDTO>> GetDealAsync(Guid id, CancellationToken ct)
