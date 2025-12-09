@@ -260,11 +260,11 @@ namespace BonefireCRM.Domain.Mappers
             };
         }
 
-        internal static GetDealsDTO MapToGetDto(this IEnumerable<Deal> deal)
+        internal static GetDealsDTO MapToGetDto(this IEnumerable<Deal> deals)
         {
             return new()
             {
-                Deals = deal.Select(d => d.MapToSummaryDto()),
+                Deals = deals.Select(d => d.MapToSummaryDto()),
             };
         }
 
@@ -327,13 +327,21 @@ namespace BonefireCRM.Domain.Mappers
             };
         }
 
-        internal static GetPipelineListItemDTO MapToGetListItemDto(this Pipeline pipeline)
+        internal static GetPipelinesDTO MapToGetDto(this IEnumerable<Pipeline> pipelines)
         {
-            return new GetPipelineListItemDTO
+            return new GetPipelinesDTO()
             {
-                Id = pipeline.Id,
-                Name = pipeline.Name,
-                IsDefault = pipeline.IsDefault,
+                Pipelines = pipelines.Select(p => p.MapToSummaryDto()),
+            };
+        }
+
+        private static GetPipelineSummaryDTO MapToSummaryDto(this Pipeline p)
+        {
+            return new GetPipelineSummaryDTO
+            {
+                Id = p.Id,
+                Name = p.Name,
+                IsDefault = p.IsDefault,
             };
         }
 

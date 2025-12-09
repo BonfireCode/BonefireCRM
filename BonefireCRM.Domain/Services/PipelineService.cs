@@ -15,7 +15,7 @@ namespace BonefireCRM.Domain.Services
             _pipelineRepository = pipelineRepository;
         }
 
-        public IEnumerable<GetPipelineListItemDTO> GetAllPipelines(GetAllPipelinesDTO getAllPipelinesDTO, CancellationToken ct)
+        public GetPipelinesDTO GetAllPipelines(GetAllPipelinesDTO getAllPipelinesDTO, CancellationToken ct)
         {
             var filterExpression = PipelineQueryExpressions.Filter(getAllPipelinesDTO);
 
@@ -26,9 +26,7 @@ namespace BonefireCRM.Domain.Services
 
             var pipelines = _pipelineRepository.GetAll(filterExpression, sortExpression, getAllPipelinesDTO.SortDirection, skip, take, ct);
 
-            var getPipelinesResultDTO = pipelines.Select(c => c.MapToGetListItemDto());
-
-            return getPipelinesResultDTO;
+            return pipelines.MapToGetDto();
         }
 
         public async Task<Option<GetPipelineDTO>> GetPipelineAsync(Guid id, CancellationToken ct)

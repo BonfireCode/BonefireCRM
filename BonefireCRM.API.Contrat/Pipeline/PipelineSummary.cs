@@ -2,7 +2,7 @@
 
 namespace BonefireCRM.API.Contrat.Pipeline
 {
-    public sealed class GetPipelineListItemResponse
+    public abstract class PipelineSummary
     {
         [Description("The unique identifier of the pipeline.")]
         public Guid Id { get; set; }

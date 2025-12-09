@@ -11,7 +11,15 @@ namespace BonefireCRM.API.Pipeline.Mappers
 {
     internal static class DtoToResponseMapper
     {
-        internal static GetPipelineListItemResponse MapToResponse(this GetPipelineListItemDTO dto)
+        internal static GetPipelinesResponse MapToResponse(this GetPipelinesDTO dto)
+        {
+            return new()
+            {
+                Pipelines = dto.Pipelines.Select(d => d.MapToResponse()),
+            };
+        }
+
+        internal static GetPipelineSumaryResponse MapToResponse(this GetPipelineSummaryDTO dto)
         {
             return new()
             {

@@ -10,7 +10,7 @@ using FastEndpoints;
 
 namespace BonefireCRM.API.Pipeline.Endpoints
 {
-    public class GetAllPipelinesEndpoint : Endpoint<GetPipelinesRequest, IEnumerable<GetPipelineListItemResponse>>
+    public class GetAllPipelinesEndpoint : Endpoint<GetPipelinesRequest, GetPipelinesResponse>
     {
         private readonly PipelineService _pipelineService;
 
@@ -28,19 +28,17 @@ namespace BonefireCRM.API.Pipeline.Endpoints
                 s.Summary = "Retrieves all specific pipelines";
                 s.Description = "Fetches detailed information about pipelines";
 
-                s.AddGetAllResponses<IEnumerable<GetPipelineListItemResponse>>("Pipelines");
+                s.AddGetAllResponses<GetPipelinesResponse>("Pipelines");
             });
         }
 
-        public override async Task<IEnumerable<GetPipelineListItemResponse>> ExecuteAsync(GetPipelinesRequest request, CancellationToken ct)
+        public override async Task<GetPipelinesResponse> ExecuteAsync(GetPipelinesRequest request, CancellationToken ct)
         {
             var dtoPipelines = request.MapToDto();
 
             var result = _pipelineService.GetAllPipelines(dtoPipelines, ct);
 
-            var response = result.Select(c => c.MapToResponse());
-
-            return await Task.Run(() => response);
+            return await Task.Run(result.MapToResponse);
         }
     }
 }
