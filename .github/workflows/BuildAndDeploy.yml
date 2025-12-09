@@ -11,7 +11,7 @@ on:
 
 jobs:
   Build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -29,20 +29,24 @@ jobs:
 
     - name: Move snapshots folders inside test folders
       run: |
-        $currentLocation = $(Get-Location)
-        $snapshotFolders = Get-ChildItem $currentLocation -Recurse -Directory -Filter "Snapshots"
-        foreach ($snapshotsFolder in $snapshotFolders) {
-            $wantedLocation = Join-Path $snapshotsFolder.Parent.FullName "bin/Release/net10.0/Snapshots"
-            Move-Item $snapshotsFolder $wantedLocation
-        }
+        find ./ -type d -name "Snapshots" | while read snapshotFolder; do
+          echo "Found Snapshots folder: $snapshotFolder"
+          parent="$(dirname "$snapshotFolder")"
+          echo "Parent directory: $parent"
+          target="$parent/bin/Release/net10.0/Snapshots"
+          echo "Target directory: $target"
+          mkdir -p "$target"
+          mv "$snapshotFolder"/* "$target"
+          ls -l "$target"
+        done
       
     - name: Test solution
       run: |
-        Get-ChildItem -Path . -Recurse -Filter '*.Tests.exe' | ForEach-Object {
-            Write-Host "Running tests in $($_.FullName)"
-            & $_.FullName
-            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-        }
+        find ./ -type f -name "*.Tests.dll" | while read testDll; do
+          echo "Running tests in $testDll"
+          chmod +x "$testDll"
+          dotnet "$testDll" || exit $?
+        done
 
     - name: Publish API
       run: dotnet publish ./BonefireCRM.API/BonefireCRM.API.csproj -c Release -o ./publish/api
@@ -65,7 +69,7 @@ jobs:
           
   Deploy:
     needs: Build
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
     - name: Download API artifact
       uses: actions/download-artifact@v4
