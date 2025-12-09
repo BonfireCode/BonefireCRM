@@ -14,12 +14,12 @@ namespace BonefireCRM.API.PipelineStage.Mappers
         {
             return new()
             {
-                Id = request.Id,
+                Id = request.PipelineStageId,
                 PipelineId = pipelineId,
                 Name = request.Name,
                 OrderIndex = request.OrderIndex,
                 Status = Enum.TryParse<DealClosureStatus>(request.Status, true, out var s) ? s : null,
-                SortBy = request.SortBy ?? nameof(request.Id),
+                SortBy = request.SortBy ?? "Id",
                 SortDirection = request.SortDirection ?? Domain.Constants.DefaultValues.SORTDIRECTION,
                 PageNumber = request.PageNumber ?? Domain.Constants.DefaultValues.PAGENUMBER,
                 PageSize = request.PageSize ?? Domain.Constants.DefaultValues.PAGESIZE,

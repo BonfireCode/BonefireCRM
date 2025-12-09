@@ -5,7 +5,7 @@ namespace BonefireCRM.API.Contrat.PipelineStage
     public sealed class GetPipelineStagesRequest
     {
         [Description("The unique identifier of the pipeline stage.")]
-        public Guid? Id { get; set; }
+        public Guid? PipelineStageId { get; set; }
 
         [Description("The name of the pipeline stage.")]
         public string? Name { get; set; } = string.Empty;
