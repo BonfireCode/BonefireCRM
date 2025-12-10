@@ -4,6 +4,7 @@ using BonefireCRM.Domain.DTOs.Activity.Meeting;
 using BonefireCRM.Domain.DTOs.Company;
 using BonefireCRM.Domain.DTOs.Contact;
 using BonefireCRM.Domain.DTOs.Deal;
+using BonefireCRM.Domain.DTOs.Deal.Participant;
 using BonefireCRM.Domain.DTOs.DealParticipantRole;
 using BonefireCRM.Domain.DTOs.Security;
 using BonefireCRM.Domain.DTOs.User;
@@ -104,6 +105,26 @@ namespace BonefireCRM.Domain.Mappers
             };
         }
 
+        internal static DealParticipant MapToDealParticipant(this CreateDealParticipantDTO dto)
+        {
+            return new()
+            {
+                ContactId = dto.ContactId,
+                DealParticipantRoleId = dto.DealParticipantRoleId,
+            };
+        }
+
+        internal static DealParticipant MapToDealParticipant(this UpsertDealParticipantDTO dto, Guid dealId)
+        {
+            return new()
+            {
+                Id = dto.Id,
+                DealId = dealId,
+                ContactId = dto.ContactId,
+                DealParticipantRoleId = dto.DealParticipantRoleId,
+            };
+        }
+
         internal static DealParticipantRole MapToDealParticipantRole(this CreateDealParticipantRoleDTO dto)
         {
             return new()
@@ -167,6 +188,7 @@ namespace BonefireCRM.Domain.Mappers
                 CompanyId = dto.CompanyId,
                 PrimaryContactId = dto.PrimaryContactId,
                 UserId = dto.UserId,
+                DealParticipants = dto.DealParticipants.Select( dp => dp.MapToDealParticipant()).ToList(),
             };
         }
 
@@ -182,6 +204,7 @@ namespace BonefireCRM.Domain.Mappers
                 CompanyId = dto.CompanyId,
                 PrimaryContactId = dto.PrimaryContactId,
                 UserId = dto.UserId,
+                DealParticipants = dto.DealParticipants.Select(dp => dp.MapToDealParticipant(dto.Id)).ToList(),
             };
         }
 

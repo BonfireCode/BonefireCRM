@@ -1,10 +1,12 @@
-﻿using BonefireCRM.API.Contrat.Deal.Participant;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace BonefireCRM.API.Contrat.Deal
 {
-    public sealed class CreateDealRequest
+    public abstract class DealSummary
     {
+        [Description("The unique identifier of the deal.")]
+        public Guid Id { get; set; }
+
         [Description("The title or name of the deal.")]
         public string Title { get; set; } = string.Empty;
 
@@ -14,7 +16,7 @@ namespace BonefireCRM.API.Contrat.Deal
         [Description("The expected date when the deal is anticipated to close.")]
         public DateTime ExpectedCloseDate { get; set; }
 
-        [Description("The unique identifier of the pipeline stage assigned to the deal.")]
+        [Description("The unique identifier of the pipeline stage associated with the deal.")]
         public Guid PipelineStageId { get; set; }
 
         [Description("Used in B2B deals. The unique identifier of the company associated with the deal.")]
@@ -23,7 +25,7 @@ namespace BonefireCRM.API.Contrat.Deal
         [Description("Used in B2C deals. The unique identifier of the primary contact associated with the deal.")]
         public Guid? PrimaryContactId { get; set; }
 
-        [Description("A list of participants assigned to the deal.")]
-        public IEnumerable<CreateDealParticipantRequest> DealParticipants { get; set; } = [];
+        [Description("The unique identifier of the user who created the deal.")]
+        public Guid UserId { get; set; }
     }
 }

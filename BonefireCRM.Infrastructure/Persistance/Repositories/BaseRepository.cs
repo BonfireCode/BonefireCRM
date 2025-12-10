@@ -3,7 +3,7 @@ using LanguageExt;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace BonefireCRM.Infrastructure.Persistance
+namespace BonefireCRM.Infrastructure.Persistance.Repositories
 {
     internal class BaseRepository<T> : IBaseRepository<T> where T : class
     {

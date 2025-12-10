@@ -1,14 +1,11 @@
 ﻿using System.ComponentModel;
 
-namespace BonefireCRM.API.Contrat.PipelineStage
+namespace BonefireCRM.API.Contrat.Pipeline.Stage
 {
     public sealed class GetPipelineStageResponse
     {
         [Description("The unique identifier of the pipeline stage.")]
         public Guid Id { get; set; }
-
-        [Description("The identifier of the pipeline this stage belongs to.")]
-        public Guid PipelineId { get; set; }
 
         [Description("The name of the pipeline stage.")]
         public string Name { get; set; } = string.Empty;

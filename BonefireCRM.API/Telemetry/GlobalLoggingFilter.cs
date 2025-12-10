@@ -1,4 +1,7 @@
-﻿
+﻿// <copyright file="GlobalLoggingFilter.cs" company="Bonefire">
+// Copyright (c) Bonefire. All rights reserved.
+// </copyright>
+
 namespace BonefireCRM.API.Telemetry
 {
     public class GlobalLoggingFilter : IEndpointFilter
