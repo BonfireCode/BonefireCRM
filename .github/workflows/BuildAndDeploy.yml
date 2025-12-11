@@ -42,11 +42,14 @@ jobs:
       
     - name: Test solution
       run: |
-        find ./ -type f -name "*.Tests.dll" | while read testDll; do
+        find ./ -path "*/bin/*" -type f -name "*.Tests.dll" | while read testDll; do
           echo "Running tests in $testDll"
           chmod +x "$testDll"
           dotnet "$testDll" || exit $?
         done
+
+    - name: Clean solution
+      run: dotnet clean
 
     - name: Publish API
       run: dotnet publish ./BonefireCRM.API/BonefireCRM.API.csproj -c Release -o ./publish/api
@@ -65,11 +68,12 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: webapp
+        retention-days: 1
         path: ./publish/webapp
           
   Deploy:
     needs: Build
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
     - name: Download API artifact
       uses: actions/download-artifact@v4
