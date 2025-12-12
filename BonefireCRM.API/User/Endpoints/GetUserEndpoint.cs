@@ -2,7 +2,6 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
-using BonefireCRM.API.Contrat.Call;
 using BonefireCRM.API.Contrat.User;
 using BonefireCRM.API.Extensions;
 using BonefireCRM.API.User.Mappers;
@@ -23,15 +22,14 @@ namespace BonefireCRM.API.User.Endpoints
 
         public override void Configure()
         {
-            Get("/Users/{id:guid}");
-            AllowAnonymous();
+            Get("/users/{id:guid}");
 
             Summary(s =>
             {
                 s.Summary = "Retrieves a specific user by ID.";
                 s.Description = "Fetches detailed information about a user identified by its unique ID.";
                 s.Params["id"] = "The unique identifier (GUID) of the user to retrieve.";
-                s.AddGetResponses<GetCallResponse>("User", true);
+                s.AddGetResponses<GetUserResponse>("User", true);
             });
         }
 

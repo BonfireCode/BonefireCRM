@@ -73,7 +73,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 {
                     var crmContext = services.GetRequiredService<CRMContext>();
                     crmContext.Database.Migrate();
-                    crmContext.Seed();
+                    crmContext.SeedDefaultData();
 
                     var appContext = services.GetRequiredService<AppDbContext>();
                     appContext.Database.Migrate();
@@ -107,7 +107,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 options.DefaultScheme = IdentityConstants.BearerScheme;
                 options.DefaultAuthenticateScheme = "Identity.BearerAndApplication";
             })
-                .AddScheme<AuthenticationSchemeOptions, CompositeAuthenticationHandler>("Identity.BearerAndApplication", null)
+                .AddScheme<AuthenticationSchemeOptions, CompositeAuthenticationHandler>("Identity.BearerAndApplication", _ => { })
                 .AddBearerToken(IdentityConstants.BearerScheme)
                 .AddIdentityCookies();
 

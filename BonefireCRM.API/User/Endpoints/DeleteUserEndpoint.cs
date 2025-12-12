@@ -24,8 +24,7 @@ namespace BonefireCRM.API.User.Endpoints
 
         public override void Configure()
         {
-            Delete("/Users/{id:guid}");
-            AllowAnonymous();
+            Delete("/users/{id:guid}");
 
             Summary(s =>
             {

@@ -25,6 +25,6 @@
 
         public Guid UserId { get; set; }
 
-        public IEnumerable<DealParticipant> DealParticipants { get; set; } = [];
+        public List<DealParticipant> DealParticipants { get; set; } = [];
     }
 }

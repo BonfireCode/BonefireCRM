@@ -4,9 +4,6 @@ namespace BonefireCRM.API.Contrat.Call
 {
     public sealed class UpdateCallRequest
     {
-        [Description("The unique identifier of the call to be updated.")]
-        public Guid Id { get; set; }
-
         [Description("The unique identifier of the contact associated with the call.")]
         public Guid ContactId { get; set; }
 

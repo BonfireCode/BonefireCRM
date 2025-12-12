@@ -2,12 +2,12 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
+using System.Security.Claims;
 using BonefireCRM.API.Contrat.DealParticipantRole;
 using BonefireCRM.API.DealParticipantRole.Mappers;
 using BonefireCRM.API.Extensions;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
-using System.Security.Claims;
 
 namespace BonefireCRM.API.DealParticipantRole.Endpoints
 {

@@ -17,11 +17,9 @@ namespace BonefireCRM.API.Activity.Mappers.Meeting
             {
                 Id = request.Id,
                 Subject = request.Subject,
-                Notes = request.Description,
-                StartTime = request.MeetingDateTime,
-                EndTime = request.MeetingDateTime.HasValue 
-                    ? request.MeetingDateTime.Value.AddMinutes(request.DurationMinutes ?? 0) 
-                    : DateTime.MinValue,
+                Notes = request.Notes,
+                StartTime = request.StartTime,
+                EndTime = request.EndTime,
                 UserId = request.UserId,
                 ContactId = request.ContactId,
                 CompanyId = request.CompanyId,

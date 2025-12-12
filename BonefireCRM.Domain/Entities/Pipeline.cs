@@ -9,6 +9,6 @@
 
         public bool IsDefault { get; set; }
 
-        public IEnumerable<PipelineStage> Stages { get; set; } = [];
+        public List<PipelineStage> Stages { get; set; } = [];
     }
 }

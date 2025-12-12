@@ -174,14 +174,14 @@ namespace BonefireCRM.Domain.Tests
             // Arange
             var id = _fixture.Create<Guid>();
 
-            _callRepository.DeleteAsync(Arg.Any<Call>(), CancellationToken.None)
+            _callRepository.DeleteAsync(id, CancellationToken.None)
                 .Returns(true);
 
             //Act
             var result = await _activityService.DeleteCallAsync(id, CancellationToken.None);
 
             //Assert
-            await _callRepository.Received(1).DeleteAsync(Arg.Any<Call>(), CancellationToken.None);
+            await _callRepository.Received(1).DeleteAsync(id, CancellationToken.None);
 
             result.Should().BeTrue();
         }
@@ -433,14 +433,14 @@ namespace BonefireCRM.Domain.Tests
             // Arange
             var id = _fixture.Create<Guid>();
 
-            _meetingRepository.DeleteAsync(Arg.Any<Meeting>(), CancellationToken.None)
+            _meetingRepository.DeleteAsync(id, CancellationToken.None)
                 .Returns(true);
 
             //Act
             var result = await _activityService.DeleteMeetingAsync(id, CancellationToken.None);
 
             //Assert
-            await _meetingRepository.Received(1).DeleteAsync(Arg.Any<Meeting>(), CancellationToken.None);
+            await _meetingRepository.Received(1).DeleteAsync(id, CancellationToken.None);
 
             result.Should().BeTrue();
         }
@@ -689,14 +689,14 @@ namespace BonefireCRM.Domain.Tests
             // Arange
             var id = _fixture.Create<Guid>();
 
-            _assignmentRepository.DeleteAsync(Arg.Any<Assignment>(), CancellationToken.None)
+            _assignmentRepository.DeleteAsync(id, CancellationToken.None)
                 .Returns(true);
 
             //Act
             var result = await _activityService.DeleteAssignmentAsync(id, CancellationToken.None);
 
             //Assert
-            await _assignmentRepository.Received(1).DeleteAsync(Arg.Any<Assignment>(), CancellationToken.None);
+            await _assignmentRepository.Received(1).DeleteAsync(id, CancellationToken.None);
 
             result.Should().BeTrue();
         }

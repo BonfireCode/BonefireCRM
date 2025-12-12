@@ -3,7 +3,6 @@
 // </copyright>
 
 using System.Security.Claims;
-using BonefireCRM.API.Contrat.Call;
 using BonefireCRM.API.Contrat.User;
 using BonefireCRM.API.Extensions;
 using BonefireCRM.API.User.Mappers;
@@ -24,8 +23,7 @@ namespace BonefireCRM.API.User.Endpoints
 
         public override void Configure()
         {
-            Put("/Users/{id:guid}");
-            AllowAnonymous();
+            Put("/users/{id:guid}");
 
             Summary(s =>
             {
