@@ -28,6 +28,6 @@ namespace BonefireCRM.Domain.Entities
 
         public Guid UserId { get; set; }
 
-        public List<DealParticipant> DealParticipants { get; set; } = [];
+        public IList<DealParticipant> DealParticipants { get; set; } = [];
     }
 }

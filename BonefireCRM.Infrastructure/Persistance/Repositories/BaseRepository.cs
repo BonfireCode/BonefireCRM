@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Linq.Expressions;
 
-namespace BonefireCRM.Infrastructure.Persistance
+namespace BonefireCRM.Infrastructure.Persistance.Repositories
 {
     internal class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {

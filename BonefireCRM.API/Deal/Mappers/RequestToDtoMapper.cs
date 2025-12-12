@@ -3,8 +3,10 @@
 // </copyright>
 
 using BonefireCRM.API.Contrat.Deal;
+using BonefireCRM.API.Contrat.Deal.Participant;
 using BonefireCRM.Domain.Constants;
 using BonefireCRM.Domain.DTOs.Deal;
+using BonefireCRM.Domain.DTOs.Deal.Participant;
 
 namespace BonefireCRM.API.Deal.Mappers
 {
@@ -40,6 +42,7 @@ namespace BonefireCRM.API.Deal.Mappers
                 PrimaryContactId = request.PrimaryContactId,
                 CompanyId = request.CompanyId,
                 UserId = userId,
+                DealParticipants = request.DealParticipants.Select(c => c.MapToDto()),
             };
         }
 
@@ -55,6 +58,27 @@ namespace BonefireCRM.API.Deal.Mappers
                 ExpectedCloseDate = request.ExpectedCloseDate,
                 PipelineStageId = request.PipelineStageId,
                 PrimaryContactId = request.PrimaryContactId,
+                DealParticipants = request.DealParticipants.Select(c => c.MapToDto(id)),
+            };
+        }
+
+        private static CreateDealParticipantDTO MapToDto(this CreateDealParticipantRequest request)
+        {
+            return new()
+            {
+                ContactId = request.ContactId,
+                DealParticipantRoleId = request.DealParticipantRoleId,
+            };
+        }
+
+        private static UpsertDealParticipantDTO MapToDto(this UpsertDealParticipantRequest request, Guid dealId)
+        {
+            return new ()
+            {
+                Id = request.Id,
+                DealId = dealId,
+                ContactId = request.ContactId,
+                DealParticipantRoleId = request.DealParticipantRoleId,
             };
         }
     }

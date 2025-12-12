@@ -72,7 +72,7 @@ jobs:
 
     - name: Test solution
       run: |
-        find ./ -type f -name "*.Tests.dll" | while read testDll; do
+        find ./ -path "*/bin/*" -type f -name "*.Tests.dll" | while read testDll; do
           echo "Running tests in $testDll"
           chmod +x "$testDll"
           dotnet "$testDll" || exit $?
