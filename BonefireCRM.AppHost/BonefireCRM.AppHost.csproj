@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BonefireCRM.API\BonefireCRM.API.csproj" />
-    <ProjectReference Include="..\BonefireCRM.Web\BonefireCRM.Web.Server\BonefireCRM.Web.Server.csproj" />
   </ItemGroup>
 
 </Project>
