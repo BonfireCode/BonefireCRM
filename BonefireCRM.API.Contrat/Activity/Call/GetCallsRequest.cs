@@ -7,14 +7,14 @@ namespace BonefireCRM.API.Contrat.Call
         [Description("The unique identifier of the call.")]
         public Guid? Id { get; set; }
 
-        [Description("The description of the call.")]
-        public string? Description { get; set; }
+        [Description("The notes of the call.")]
+        public string? Notes { get; set; }
 
         [Description("The date and time of the call.")]
-        public DateTime? CallDateTime { get; set; }
+        public DateTime? CallTime { get; set; }
 
         [Description("The duration of the call in minutes.")]
-        public int? DurationMinutes { get; set; }
+        public TimeSpan? Duration { get; set; }
 
         [Description("The unique identifier of the contact associated with the call.")]
         public Guid? ContactId { get; set; }

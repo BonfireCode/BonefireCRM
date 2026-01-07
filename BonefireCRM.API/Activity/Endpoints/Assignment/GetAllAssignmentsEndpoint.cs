@@ -22,7 +22,7 @@ namespace BonefireCRM.API.Activity.Endpoints.Assignment
 
         public override void Configure()
         {
-            Get("/assignment");
+            Get("/activity/assignments");
 
             Summary(s =>
             {

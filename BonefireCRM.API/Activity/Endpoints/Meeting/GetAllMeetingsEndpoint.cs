@@ -21,7 +21,7 @@ namespace BonefireCRM.API.Activity.Endpoints.Meeting
 
         public override void Configure()
         {
-            Get("/meetings");
+            Get("/activity/meetings");
 
             Summary(s =>
             {
@@ -40,7 +40,7 @@ namespace BonefireCRM.API.Activity.Endpoints.Meeting
 
             var response = result.Select(m => m.MapToResponse());
 
-            return await System.Threading.Tasks.Task.Run(() => response);
+            return await Task.Run(() => response);
         }
     }
 }

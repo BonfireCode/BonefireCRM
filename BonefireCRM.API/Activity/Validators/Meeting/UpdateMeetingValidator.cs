@@ -12,10 +12,6 @@ namespace BonefireCRM.API.Activity.Validators.Meeting
     {
         public UpdateMeetingValidator()
         {
-            RuleFor(x => x.Id)
-                .NotEmpty()
-                .WithMessage("this field is required!");
-
             RuleFor(x => x.ContactId)
                 .NotEmpty()
                 .WithMessage("this field is required!");

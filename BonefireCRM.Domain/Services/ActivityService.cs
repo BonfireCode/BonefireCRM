@@ -57,9 +57,7 @@ namespace BonefireCRM.Domain.Services
         {
             //Domain validations if needed
 
-            var call = new Call { Id = id };
-
-            var isDeleted = await _callRepository.DeleteAsync(call, ct);
+            var isDeleted = await _callRepository.DeleteAsync(id, ct);
 
             return isDeleted;
         }
@@ -125,9 +123,7 @@ namespace BonefireCRM.Domain.Services
         {
             //Domain validations if needed
 
-            var meeting = new Meeting { Id = id };
-
-            var isDeleted = await _meetingRepository.DeleteAsync(meeting, ct);
+            var isDeleted = await _meetingRepository.DeleteAsync(id, ct);
 
             return isDeleted;
         }
@@ -193,9 +189,7 @@ namespace BonefireCRM.Domain.Services
         {
             //Domain validations if needed
 
-            var assignment = new Assignment { Id = id };
-
-            var isDeleted = await _assignmentRepository.DeleteAsync(assignment, ct);
+            var isDeleted = await _assignmentRepository.DeleteAsync(id, ct);
 
             return isDeleted;
         }

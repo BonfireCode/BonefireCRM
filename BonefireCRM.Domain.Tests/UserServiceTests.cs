@@ -192,7 +192,7 @@ namespace BonefireCRM.Domain.Tests
 
             // Assert
             await _appUserManager.Received(1).DeleteUserAsync(registerId);
-            await _userRepository.DidNotReceive().DeleteAsync(Arg.Any<User>(), CancellationToken.None);
+            await _userRepository.DidNotReceive().DeleteAsync(id, CancellationToken.None);
 
             result.IsFail.Should().BeTrue();
         }
@@ -207,7 +207,7 @@ namespace BonefireCRM.Domain.Tests
             _appUserManager.DeleteUserAsync(registerId)
                 .Returns(true);
 
-            _userRepository.DeleteAsync(Arg.Any<User>(), CancellationToken.None)
+            _userRepository.DeleteAsync(id, CancellationToken.None)
                 .Returns(true);
 
             // Act
@@ -215,7 +215,7 @@ namespace BonefireCRM.Domain.Tests
 
             // Assert
             await _appUserManager.Received(1).DeleteUserAsync(registerId);
-            await _userRepository.Received(1).DeleteAsync(Arg.Is<User>(u => u.Id == id && u.RegisterId == registerId), CancellationToken.None);
+            await _userRepository.Received(1).DeleteAsync(id, CancellationToken.None);
 
             result.IsSucc.Should().BeTrue();
             result.IfSucc(deleted => deleted.Should().BeTrue());
@@ -231,7 +231,7 @@ namespace BonefireCRM.Domain.Tests
             _appUserManager.DeleteUserAsync(registerId)
                 .Returns(true);
 
-            _userRepository.DeleteAsync(Arg.Any<User>(), CancellationToken.None)
+            _userRepository.DeleteAsync(id, CancellationToken.None)
                 .Returns(false);
 
             // Act
@@ -239,7 +239,7 @@ namespace BonefireCRM.Domain.Tests
 
             // Assert
             await _appUserManager.Received(1).DeleteUserAsync(registerId);
-            await _userRepository.Received(1).DeleteAsync(Arg.Is<User>(u => u.Id == id && u.RegisterId == registerId), CancellationToken.None);
+            await _userRepository.Received(1).DeleteAsync(id, CancellationToken.None);
 
             result.IsFail.Should().BeTrue();
         }

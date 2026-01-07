@@ -173,30 +173,34 @@ namespace BonefireCRM.Domain.Tests
         public async Task DeleteContactAsync_ContactFound_ReturnTrueAsync()
         {
             // Arange
-            _contactRepository.DeleteAsync(Arg.Any<Contact>(), CancellationToken.None)
+            var id = _fixture.Create<Guid>();
+
+            _contactRepository.DeleteAsync(id, CancellationToken.None)
                 .Returns(true);
 
             // Act
-            var result = await _contactService.DeleteContactAsync(new(), CancellationToken.None);
+            var result = await _contactService.DeleteContactAsync(id, CancellationToken.None);
 
             // Assert
-            await _contactRepository.Received(1).DeleteAsync(Arg.Any<Contact>(), CancellationToken.None);
+            await _contactRepository.Received(1).DeleteAsync(id, CancellationToken.None);
 
             result.Should().BeTrue();
         }
 
         [Fact]
-        public async Task DeleteContactAsync_ContactFound_ReturnFalseAsync()
+        public async Task DeleteContactAsync_ContactNotFound_ReturnFalseAsync()
         {
             // Arange
-            _contactRepository.DeleteAsync(Arg.Any<Contact>(), CancellationToken.None)
+            var id = _fixture.Create<Guid>();
+
+            _contactRepository.DeleteAsync(id, CancellationToken.None)
                 .Returns(false);
 
             // Act
             var result = await _contactService.DeleteContactAsync(new(), CancellationToken.None);
 
             // Assert
-            await _contactRepository.Received(1).DeleteAsync(Arg.Any<Contact>(), CancellationToken.None);
+            await _contactRepository.Received(0).DeleteAsync(id, CancellationToken.None);
 
             result.Should().BeFalse();
         }

@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BonefireCRM.API.Activity.Endpoints.Meeting
 {
-    public class UpdateMeetingEndpoint : Endpoint<UpdateMeetingRequest, Results<Ok<UpdateMeetingResponse>, NotFound, InternalServerError>>
+    public class UpdateMeetingEndpoint : Endpoint<UpdateMeetingRequest, Results<Ok<UpdateMeetingResponse>, NotFound>>
     {
         private readonly ActivityService _activityService;
         private readonly UserService _userService;
@@ -25,7 +25,7 @@ namespace BonefireCRM.API.Activity.Endpoints.Meeting
 
         public override void Configure()
         {
-            Put("/activity/mettings/{id:guid}");
+            Put("/activity/meetings/{id:guid}");
 
             Summary(s =>
             {
@@ -36,9 +36,10 @@ namespace BonefireCRM.API.Activity.Endpoints.Meeting
             });
         }
 
-        public override async Task<Results<Ok<UpdateMeetingResponse>, NotFound, InternalServerError>> ExecuteAsync(UpdateMeetingRequest request, CancellationToken ct)
+        public override async Task<Results<Ok<UpdateMeetingResponse>, NotFound>> ExecuteAsync(UpdateMeetingRequest request, CancellationToken ct)
         {
             var id = Route<Guid>("id");
+
             var registerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             var userId = await _userService.GetUserIdAsync(registerId, ct);
 
@@ -46,9 +47,9 @@ namespace BonefireCRM.API.Activity.Endpoints.Meeting
 
             var result = await _activityService.UpdateMeetingAsync(dtoMeeting, ct);
 
-            var response = result.Match<Results<Ok<UpdateMeetingResponse>, NotFound, InternalServerError>>(
+            var response = result.Match<Results<Ok<UpdateMeetingResponse>, NotFound>>(
                 updatedMeeting => TypedResults.Ok(updatedMeeting.MapToResponse()),
-                _ => TypedResults.InternalServerError());
+                _ => TypedResults.NotFound());
 
             return response;
         }

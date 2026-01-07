@@ -2,13 +2,13 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
+using System.Security.Claims;
 using BonefireCRM.API.Activity.Mappers.Call;
 using BonefireCRM.API.Contrat.Call;
 using BonefireCRM.API.Extensions;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
-using System.Security.Claims;
 
 namespace BonefireCRM.API.Activity.Endpoints.Call
 {

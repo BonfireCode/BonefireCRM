@@ -2,17 +2,17 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
+using System.Security.Claims;
 using BonefireCRM.API.Contrat.DealParticipantRole;
 using BonefireCRM.API.DealParticipantRole.Mappers;
 using BonefireCRM.API.Extensions;
 using BonefireCRM.Domain.Services;
 using FastEndpoints;
 using Microsoft.AspNetCore.Http.HttpResults;
-using System.Security.Claims;
 
 namespace BonefireCRM.API.DealParticipantRole.Endpoints
 {
-    public class UpdateDealParticipantRoleEndpoint : Endpoint<UpdateDealParticipantRoleRequest, Results<Ok<UpdateDealParticipantRoleResponse>, NotFound, InternalServerError>>
+    public class UpdateDealParticipantRoleEndpoint : Endpoint<UpdateDealParticipantRoleRequest, Results<Ok<UpdateDealParticipantRoleResponse>, NotFound>>
     {
         private readonly DealParticipantRoleService _contactService;
         private readonly UserService _userService;
@@ -36,20 +36,20 @@ namespace BonefireCRM.API.DealParticipantRole.Endpoints
             });
         }
 
-        public override async Task<Results<Ok<UpdateDealParticipantRoleResponse>, NotFound, InternalServerError>> ExecuteAsync(UpdateDealParticipantRoleRequest request, CancellationToken ct)
+        public override async Task<Results<Ok<UpdateDealParticipantRoleResponse>, NotFound>> ExecuteAsync(UpdateDealParticipantRoleRequest request, CancellationToken ct)
         {
+            var id = Route<Guid>("id");
+
             var registerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             var userId = await _userService.GetUserIdAsync(registerId, ct);
-
-            var id = Route<Guid>("id");
 
             var dtoDealParticipantRole = request.MapToDto(id, userId);
 
             var result = await _contactService.UpdateDealParticipantRoleAsync(dtoDealParticipantRole, ct);
 
-            var response = result.Match<Results<Ok<UpdateDealParticipantRoleResponse>, NotFound, InternalServerError>>(
+            var response = result.Match<Results<Ok<UpdateDealParticipantRoleResponse>, NotFound>>(
                 updatedDealParticipantRole => TypedResults.Ok(updatedDealParticipantRole.MapToResponse()),
-                _ => TypedResults.InternalServerError());
+                _ => TypedResults.NotFound());
 
             return response;
         }

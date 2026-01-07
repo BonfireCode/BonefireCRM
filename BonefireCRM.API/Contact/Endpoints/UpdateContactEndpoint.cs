@@ -2,6 +2,7 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
+using System.Security.Claims;
 using BonefireCRM.API.Contact.Mappers;
 using BonefireCRM.API.Contrat.Contact;
 using BonefireCRM.API.Extensions;
@@ -12,7 +13,7 @@ using System.Security.Claims;
 
 namespace BonefireCRM.API.Contact.Endpoints
 {
-    public class UpdateContactEndpoint : Endpoint<UpdateContactRequest, Results<Ok<UpdateContactResponse>, NotFound, InternalServerError>>
+    public class UpdateContactEndpoint : Endpoint<UpdateContactRequest, Results<Ok<UpdateContactResponse>, NotFound>>
     {
         private readonly ContactService _contactService;
         private readonly UserService _userService;
@@ -36,9 +37,10 @@ namespace BonefireCRM.API.Contact.Endpoints
             });
         }
 
-        public override async Task<Results<Ok<UpdateContactResponse>, NotFound, InternalServerError>> ExecuteAsync(UpdateContactRequest request, CancellationToken ct)
+        public override async Task<Results<Ok<UpdateContactResponse>, NotFound>> ExecuteAsync(UpdateContactRequest request, CancellationToken ct)
         {
             var id = Route<Guid>("id");
+
             var registerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             var userId = await _userService.GetUserIdAsync(registerId, ct);
 
@@ -46,9 +48,9 @@ namespace BonefireCRM.API.Contact.Endpoints
 
             var result = await _contactService.UpdateContactAsync(dtoContact, ct);
 
-            var response = result.Match<Results<Ok<UpdateContactResponse>, NotFound, InternalServerError>>(
+            var response = result.Match<Results<Ok<UpdateContactResponse>, NotFound>>(
                 updatedContact => TypedResults.Ok(updatedContact.MapToResponse()),
-                _ => TypedResults.InternalServerError());
+                _ => TypedResults.NotFound());
 
             return response;
         }

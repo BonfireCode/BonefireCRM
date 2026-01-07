@@ -45,7 +45,7 @@ namespace BonefireCRM.API.Contact.Mappers
             };
         }
 
-        internal static UpdateContactDTO MapToDto(this UpdateContactRequest request, Guid id,  Guid userId)
+        internal static UpdateContactDTO MapToDto(this UpdateContactRequest request, Guid id, Guid userId)
         {
             return new()
             {

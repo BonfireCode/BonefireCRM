@@ -21,7 +21,7 @@ namespace BonefireCRM.API.Activity.Endpoints.Call
 
         public override void Configure()
         {
-            Get("/calls");
+            Get("/activity/calls");
 
             Summary(s =>
             {
