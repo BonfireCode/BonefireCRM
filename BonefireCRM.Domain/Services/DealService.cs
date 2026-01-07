@@ -1,23 +1,23 @@
 ﻿using BonefireCRM.Domain.DTOs.Deal;
 using BonefireCRM.Domain.Entities;
 using BonefireCRM.Domain.Exceptions;
-using BonefireCRM.Domain.Infrastructure.Persistance;
 using BonefireCRM.Domain.Mappers;
 using BonefireCRM.SourceGenerator;
 using LanguageExt;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BonefireCRM.Domain.Services
 {
     public class DealService
     {
-        private readonly IBaseRepository<Deal> _dealRepository;
+        private readonly IDealRepository _dealRepository;
 
-        public DealService(IBaseRepository<Deal> dealRepository)
+        public DealService(IDealRepository dealRepository)
         {
             _dealRepository = dealRepository;
         }
 
-        public IEnumerable<GetDealDTO> GetAllDeals(GetAllDealsDTO getAllDealsDTO, CancellationToken ct)
+        public GetDealsDTO GetAllDeals(GetAllDealsDTO getAllDealsDTO, CancellationToken ct)
         {
             var filterExpression = DealQueryExpressions.Filter(getAllDealsDTO);
 
@@ -28,14 +28,12 @@ namespace BonefireCRM.Domain.Services
 
             var deals = _dealRepository.GetAll(filterExpression, sortExpression, getAllDealsDTO.SortDirection, skip, take, ct);
 
-            var getDealsResultDTO = deals.Select(c => c.MapToGetDto());
-
-            return getDealsResultDTO;
+            return deals.MapToGetDto();
         }
 
         public async Task<Option<GetDealDTO>> GetDealAsync(Guid id, CancellationToken ct)
         {
-            var deal = await _dealRepository.GetByIdAsync(id, ct);
+            var deal = await _dealRepository.GetDealIncludeParticipantsAsync(id, ct);
             if (deal is null)
             {
                 return Option<GetDealDTO>.None;
@@ -74,7 +72,8 @@ namespace BonefireCRM.Domain.Services
 
             var deal = updateDealDTO.MapToDeal();
 
-            var updatedDeal = await _dealRepository.UpdateAsync(deal, ct);
+            var updatedDeal = await _dealRepository.UpdateDealAsync(deal, ct);
+
             if (updatedDeal is null)
             {
                 return Fin<UpdatedDealDTO>.Fail(new UpdateEntityException<Deal>());

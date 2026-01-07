@@ -14,7 +14,6 @@ namespace Microsoft.Extensions.DependencyInjection
             builder.Services.AddScoped<LifecycleStageService>();
             builder.Services.AddScoped<DealParticipantRoleService>();
             builder.Services.AddScoped<PipelineService>();
-            builder.Services.AddScoped<PipelineStageService>();
             builder.Services.AddScoped<DealService>();
             builder.Services.AddScoped<SecurityService>();
             builder.Services.AddScoped<SeedUserDataService>();

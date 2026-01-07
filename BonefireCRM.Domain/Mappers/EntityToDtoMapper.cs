@@ -4,10 +4,11 @@ using BonefireCRM.Domain.DTOs.Activity.Meeting;
 using BonefireCRM.Domain.DTOs.Company;
 using BonefireCRM.Domain.DTOs.Contact;
 using BonefireCRM.Domain.DTOs.Deal;
+using BonefireCRM.Domain.DTOs.Deal.Participant;
 using BonefireCRM.Domain.DTOs.DealParticipantRole;
 using BonefireCRM.Domain.DTOs.LifeCycleStage;
 using BonefireCRM.Domain.DTOs.Pipeline;
-using BonefireCRM.Domain.DTOs.PipelineStage;
+using BonefireCRM.Domain.DTOs.Pipeline.Stage;
 using BonefireCRM.Domain.DTOs.User;
 using BonefireCRM.Domain.Entities;
 
@@ -244,6 +245,29 @@ namespace BonefireCRM.Domain.Mappers
             };
         }
 
+        internal static GetDealSummaryDTO MapToSummaryDto(this Deal deal)
+        {
+            return new()
+            {
+                Id = deal.Id,
+                Amount = deal.Amount,
+                ExpectedCloseDate = deal.ExpectedCloseDate,
+                Title = deal.Title,
+                PipelineStageId = deal.PipelineStageId,
+                CompanyId = deal.CompanyId,
+                PrimaryContactId = deal.PrimaryContactId,
+                UserId = deal.UserId
+            };
+        }
+
+        internal static GetDealsDTO MapToGetDto(this IEnumerable<Deal> deals)
+        {
+            return new()
+            {
+                Deals = deals.Select(d => d.MapToSummaryDto()),
+            };
+        }
+
         internal static GetDealDTO MapToGetDto(this Deal deal)
         {
             return new()
@@ -256,6 +280,7 @@ namespace BonefireCRM.Domain.Mappers
                 CompanyId = deal.CompanyId,
                 PrimaryContactId = deal.PrimaryContactId,
                 UserId = deal.UserId,
+                DealParticipants = deal.DealParticipants.Select(dp => dp.MapToGetDto()),
             };
         }
 
@@ -271,6 +296,7 @@ namespace BonefireCRM.Domain.Mappers
                 CompanyId = deal.CompanyId,
                 PrimaryContactId = deal.PrimaryContactId,
                 UserId = deal.UserId,
+                DealParticipants = deal.DealParticipants.Select(dp => dp.MapToCreateDto()),
             };
         }
 
@@ -286,6 +312,7 @@ namespace BonefireCRM.Domain.Mappers
                 CompanyId = deal.CompanyId,
                 PrimaryContactId = deal.PrimaryContactId,
                 UserId = deal.UserId,
+                DealParticipants = deal.DealParticipants.Select(dp => dp.MapToUpsertedDto()),
             };
         }
 
@@ -296,6 +323,55 @@ namespace BonefireCRM.Domain.Mappers
                 Id = pipeline.Id,
                 Name = pipeline.Name,
                 IsDefault = pipeline.IsDefault,
+                PipelineStages = pipeline.Stages.Select(ps => ps.MapToGetDto()),
+            };
+        }
+
+        internal static GetPipelinesDTO MapToGetDto(this IEnumerable<Pipeline> pipelines)
+        {
+            return new GetPipelinesDTO()
+            {
+                Pipelines = pipelines.Select(p => p.MapToSummaryDto()),
+            };
+        }
+
+        private static GetPipelineSummaryDTO MapToSummaryDto(this Pipeline p)
+        {
+            return new GetPipelineSummaryDTO
+            {
+                Id = p.Id,
+                Name = p.Name,
+                IsDefault = p.IsDefault,
+            };
+        }
+
+        internal static CreatedDealParticipantDTO MapToCreateDto(this DealParticipant deal)
+        {
+            return new()
+            {
+                Id = deal.Id,
+                ContactId = deal.ContactId,
+                DealParticipantRoleId = deal.DealParticipantRoleId,
+            };
+        }
+
+        internal static GetDealParticipantDTO MapToGetDto(this DealParticipant deal)
+        {
+            return new()
+            {
+                Id = deal.Id,
+                ContactId = deal.ContactId,
+                DealParticipantRoleId = deal.DealParticipantRoleId,
+            };
+        }
+
+        internal static UpsertedDealParticipantDTO MapToUpsertedDto(this DealParticipant deal)
+        {
+            return new()
+            {
+                Id = deal.Id,
+                ContactId = deal.ContactId,
+                DealParticipantRoleId = deal.DealParticipantRoleId,
             };
         }
 
@@ -304,7 +380,6 @@ namespace BonefireCRM.Domain.Mappers
             return new GetPipelineStageDTO
             {
                 Id = pipelineStage.Id,
-                PipelineId = pipelineStage.PipelineId,
                 Name = pipelineStage.Name,
                 OrderIndex = pipelineStage.OrderIndex,
                 Status = pipelineStage.Status,

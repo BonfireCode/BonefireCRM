@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using BonefireCRM.API.Contrat.Deal.Participant;
+using System.ComponentModel;
 
 namespace BonefireCRM.API.Contrat.Deal
 {
@@ -21,5 +22,8 @@ namespace BonefireCRM.API.Contrat.Deal
 
         [Description("Used in B2C deals. The unique identifier of the primary contact associated with the deal.")]
         public Guid? PrimaryContactId { get; set; }
+
+        [Description("A list of participants assigned to the deal.")]
+        public IEnumerable<CreateDealParticipantRequest> DealParticipants { get; set; } = [];
     }
 }

@@ -8,7 +8,7 @@ namespace BonefireCRM.Infrastructure.Persistance.Configurations
     {
         public void Configure(EntityTypeBuilder<DealParticipant> entity)
         {
-            entity.HasIndex(dc => new { dc.DealId, dc.ContactId }).IsUnique();
+            entity.HasIndex(dp => new { dp.DealId, dp.ContactId, dp.DealParticipantRoleId }).IsUnique();
 
             entity.HasOne<Deal>()
                 .WithMany(d => d.DealParticipants)

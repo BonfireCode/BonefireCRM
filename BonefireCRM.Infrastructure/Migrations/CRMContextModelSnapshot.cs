@@ -239,7 +239,7 @@ namespace BonefireCRM.Infrastructure.Migrations
 
                     b.HasIndex("DealParticipantRoleId");
 
-                    b.HasIndex("DealId", "ContactId")
+                    b.HasIndex("DealId", "ContactId", "DealParticipantRoleId")
                         .IsUnique();
 
                     b.ToTable("DealParticipants", (string)null);
