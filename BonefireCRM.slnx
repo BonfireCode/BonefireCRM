@@ -27,5 +27,4 @@
     <Build />
     <Deploy />
   </Project>
-  <Project Path="BonefireCRM.Web/BonefireCRM.Web.Server/BonefireCRM.Web.Server.csproj" />
 </Solution>

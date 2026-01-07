@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { environment } from './../environments/environment';
 
 interface WeatherForecast {
   date: string;
@@ -11,28 +12,28 @@ interface WeatherForecast {
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css'],
-    standalone: false
+    styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+
+  title = 'bonefirecrm.web.client';
   public forecasts: WeatherForecast[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.getForecasts();
   }
 
   getForecasts() {
-    this.http.get<WeatherForecast[]>('/weatherforecast').subscribe(
+    this.http.get<WeatherForecast[]>(`/weatherforecast`).subscribe(
       (result) => {
         this.forecasts = result;
+        this.cdr.detectChanges();
       },
       (error) => {
         console.error(error);
       }
     );
   }
-
-  title = 'bonefirecrm.web.client';
 }

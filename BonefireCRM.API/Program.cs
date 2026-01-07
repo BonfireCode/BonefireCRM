@@ -2,6 +2,7 @@
 // Copyright (c) Bonefire. All rights reserved.
 // </copyright>
 
+using BonefireCRM.API;
 using BonefireCRM.API.Exception;
 using BonefireCRM.API.Telemetry;
 using FastEndpoints;
@@ -64,5 +65,12 @@ app.MapScalarApiReference(options =>
     options.EnablePersistentAuthentication());
 
 app.MapDefaultEndpoints();
+
+app.UseDefaultFiles();
+app.MapStaticAssets();
+
+app.MapTestingFrontendEndpoints();
+
+app.MapFallbackToFile("/index.html");
 
 app.Run();

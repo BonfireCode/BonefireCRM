@@ -54,22 +54,12 @@ jobs:
     - name: Publish API
       run: dotnet publish ./BonefireCRM.API/BonefireCRM.API.csproj -c Release -o ./publish/api
 
-    - name: Publish WebApp
-      run: dotnet publish ./BonefireCRM.Web/BonefireCRM.Web.Server/BonefireCRM.Web.Server.csproj -c Release -o ./publish/webapp
-
     - name: Upload API build artifact
       uses: actions/upload-artifact@v4
       with:
         name: api
         retention-days: 1
         path: ./publish/api
-
-    - name: Upload WebApp build artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: webapp
-        retention-days: 1
-        path: ./publish/webapp
           
   Deploy:
     needs: Build
@@ -81,12 +71,6 @@ jobs:
         name: api
         retention-days: 1
         path: ./publish/api
-
-    - name: Download WebApp artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: webapp
-        path: ./publish/webapp
           
     - name: Deploy API to MonsterASP.NET via WebDeploy
       uses: rasmusbuchholdt/simply-web-deploy@2.1.0
@@ -96,12 +80,3 @@ jobs:
         server-username: ${{ secrets.API_SERVER_USERNAME }}
         server-password: ${{ secrets.API_SERVER_PASSWORD }}
         source-path: '\publish\api\'
-
-    - name: Deploy WebApp to MonsterASP.NET via WebDeploy
-      uses: rasmusbuchholdt/simply-web-deploy@2.1.0
-      with:
-        website-name: ${{ secrets.WEB_WEBSITE_NAME }}
-        server-computer-name: ${{ secrets.WEB_SERVER_COMPUTER_NAME }}
-        server-username: ${{ secrets.WEB_SERVER_USERNAME }}
-        server-password: ${{ secrets.WEB_SERVER_PASSWORD }}
-        source-path: '\publish\webapp\'

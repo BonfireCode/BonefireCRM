@@ -1,6 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <Sdk Name="Aspire.AppHost.Sdk" Version="9.0.0" />
+﻿<Project Sdk="Aspire.AppHost.Sdk/13.0.1">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -12,16 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BonefireCRM.API\BonefireCRM.API.csproj" />
-    <ProjectReference Include="..\BonefireCRM.Web\BonefireCRM.Web.Server\BonefireCRM.Web.Server.csproj" />
+    <PackageReference Include="Aspire.Hosting.JavaScript" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspire.Hosting.AppHost" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <ProjectReference Include="..\BonefireCRM.API\BonefireCRM.API.csproj" />
   </ItemGroup>
 
 </Project>
